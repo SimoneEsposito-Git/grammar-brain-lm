@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from scipy.stats import zscore, pearsonr, norm
+from scipy.stats import zscore, pearsonr
 import matplotlib.pyplot as plt
 import cortex
 
@@ -8,12 +8,7 @@ from himalaya.ridge import GroupRidgeCV
 from himalaya.kernel_ridge import MultipleKernelRidgeCV, linear_kernel
 from himalaya.kernel_ridge import solve_multiple_kernel_ridge_random_search
 from himalaya.backend import set_backend
-from himalaya.scoring import r2_score_split, correlation_score_split
-from himalaya.kernel_ridge import predict_and_score_weighted_kernel_ridge
-
-from statsmodels.stats.multitest import fdrcorrection
 from sklearn.model_selection import LeaveOneGroupOut
-
 
 import utils
 
@@ -142,6 +137,62 @@ def build_kernels_from_groups(X, groups_delayed):
     
     return np.stack(kernels, axis=0)
 
+def downsample(self, dsdict: Dict, interp: str = 'lanczos'):
+        '''Downsamples each DataSequence in [dsdict] using the settings specified in the
+        initializer.
+        '''
+        # If each value in dict is another dict (e.g. when we get multiple layers of a contextual LM), downsample each dict separately.
+        if type(list(dsdict.values())[0]) == dict:
+            downsampled_dict = dict()
+            for key in dsdict.keys():
+                downsampled_dict[key] = mapdict(dsdict[key], lambda h: h.chunksums(interp,
+                                                **self.interpargs))
+            return downsampled_dict
+        else:
+            return mapdict(dsdict, lambda h: h.chunksums(interp,
+                                                         **self.interpargs))
+            
+def contextual_embeddings(model_name: str,
+                          layer_num: int,
+                          add_special_tokens: bool = True,
+                          avg_tokens: bool = True,
+                          pretrained: bool = True,
+                          context_length: int = 10,
+                          downsample: bool = True):
+        '''Returns embeddings extracted from contextual models.
+
+        Note: Embeddings are currently extracted by feeding in a word and the previous
+              (context_length - 1) words. This can be modified by using different context
+              methods (eg if sentence markers are given), or by using preceding and subsequent
+              words as context.
+
+        args:
+            layer_num: The layer from which to extract embeddings.
+            model_name: Name of model to use (e.g. 'bert-base-multilingual-cased', 'xlm-mlm-xnli15-1024')
+            add_special_tokens: Add the special tokens from the model's tokenizer (e.g. 'CLS' & 'SEP' for BERT)
+            avg_tokens: Take the average of the tokens over the window, instead of just the last one.
+            pretrained: If True, uses a pretrained model. If False, uses randomly initialized model.
+            context_length: The number of words preceeding the embedded word to feed as context.
+            downsample: If True, downsamples responses before returning.
+        '''
+        # Get stimulus for stories.
+        stimulus = dict()
+        for stimulus_name, ds in list(self.wordseqs.items()):
+            logger.info(f'extracting {model_name} features for {stimulus_name}')
+            stimulus[stimulus_name] = get_contextual_embeddings(ds=ds,
+                    model_name=model_name,
+                    pretrained=pretrained,
+                    context_length=context_length,
+                    layer_num=layer_num,
+                    add_special_tokens=add_special_tokens,
+                    avg_tokens=avg_tokens)
+        if downsample:
+            return self.downsample(stimulus)
+        else:
+            return stimulus
+
+    
+
 def main(fdir, subject, modality, semantic_key, nuis_reading, nuis_listening, delays, alphas):
     R_trn = load_responses_train(fdir, subject, modality)
     R_val = load_responses_val(fdir, subject, modality)
@@ -199,10 +250,6 @@ def main(fdir, subject, modality, semantic_key, nuis_reading, nuis_listening, de
     dual_weights = backend.to_numpy(results[1])
     cv_scores = backend.to_numpy(results[2])
     
-    X_val = stack_features(F_val, ['story_11'], use_keys, standardize=True)
-    X_val = delay_and_stack(X_val, ['story_11'], delays)
-    Y_val = zscore(R_val['story_11'].mean(0)[5:])
-
     Ks_val = []
     for gi, key in enumerate(use_keys):
         # Columns belonging to this feature group
@@ -240,19 +287,15 @@ def main(fdir, subject, modality, semantic_key, nuis_reading, nuis_listening, de
     r    = scores['r'] # chnage name to just r
     r_sq = scores['r2'] # chnage name to just r2, misleading
     
-    r = np.nan_to_num(r)
-
-    # 8) FDR-Correction
-    # convert r to z-scores assuming null is r ~ 0 (this is oversimplified but works well)
-    T = X_val.shape[0]
-    z = r * np.sqrt(T - 3) 
-    pvals = 1 - norm.cdf(z)  # one-sided test: positive correlations
-    
-    sig_mask, _ = fdrcorrection(pvals, alpha=0.05)
-    
-    r_sig = r * sig_mask    # mask out non-significant voxels
-
     # 8) Map to flatmap and save outputs
+    # for i in range(5):
+    #     # make volume data based on the surface and transform used to compute the score:
+    #     vol = cortex.Volume(r[i], "01", transform, cmap='inferno', vmin=0, vmax=0.5)
+    #     print(vol.shape)
+    # 
+    #     cortex.quickshow(vol, **plot_args)
+    #     plt.title('R for single word prediction')
+    #     plt.show()
     
     plot_args = dict(cmap='inferno',
                     with_colorbar=True, with_labels=True,
@@ -279,7 +322,6 @@ def main(fdir, subject, modality, semantic_key, nuis_reading, nuis_listening, de
     print(" - outputs/subject{}_{}_flatmap.png".format(subject, modality))
 
 if __name__ == "__main__":
-    
     # ----------------------------
     # Configuration
     # ----------------------------

@@ -8,10 +8,16 @@ import numpy as np
 import itertools as itools
 import scipy.sparse
 import h5py
-from h5py._hl.dataset import Dataset
+from h5py._hl.dataset import Dataset.
 from h5py._hl.group import Group
 import torch
-
+from data_sequence import DataSequence 
+from typing import Dict, List, Union
+try:
+    from transformers import AutoConfig, AutoModel, AutoTokenizer
+except Exception:
+    print('Could not import BertModel, BertTokenizer from transformers')
+    
 def load_data(fname, key=None):
     """Function to load data from an hdf file.
 
@@ -99,7 +105,7 @@ def map_to_flat(voxels, mapper_file):
     img[pixmask] = mimg
     return img.T[::-1]
 
-
+"""
 def get_contextual_embeddings(text, tokenizer, model, args,
         bad_words=['paragraph_start', 'paragraph_end', 'clause_start', 'clause_end', 'sentence_start', 'sentence_end'],
         model_start_delimiter='[CLS]',
@@ -174,3 +180,117 @@ def get_contextual_embeddings(text, tokenizer, model, args,
         embeddings_dict_bylayer['layer{layer_num}'.format(layer_num=layer_num)] = np.concatenate(embeddings_dict_bylayer['layer{layer_num}'.format(layer_num=layer_num)], axis=0)
 
     return embeddings_dict_bylayer, context_length
+"""
+def contextual_embeddings(
+                              model_name: str,
+                              layer_num: int,
+                              add_special_tokens: bool = True,
+                              avg_tokens: bool = True,
+                              pretrained: bool = True,
+                              context_length: int = 10,
+                              downsample: bool = True):
+        '''Returns embeddings extracted from contextual models.
+
+        Note: Embeddings are currently extracted by feeding in a word and the previous
+              (context_length - 1) words. This can be modified by using different context
+              methods (eg if sentence markers are given), or by using preceding and subsequent
+              words as context.
+
+        args:
+            layer_num: The layer from which to extract embeddings.
+            model_name: Name of model to use (e.g. 'bert-base-multilingual-cased', 'xlm-mlm-xnli15-1024')
+            add_special_tokens: Add the special tokens from the model's tokenizer (e.g. 'CLS' & 'SEP' for BERT)
+            avg_tokens: Take the average of the tokens over the window, instead of just the last one.
+            pretrained: If True, uses a pretrained model. If False, uses randomly initialized model.
+            context_length: The number of words preceeding the embedded word to feed as context.
+            downsample: If True, downsamples responses before returning.
+        '''
+        # Get stimulus for stories.
+        stimulus = dict()
+        for stimulus_name, ds in list(self.wordseqs.items()):
+            logger.info(f'extracting {model_name} features for {stimulus_name}')
+            stimulus[stimulus_name] = get_contextual_embeddings(ds=ds,
+                    model_name=model_name,
+                    pretrained=pretrained,
+                    context_length=context_length,
+                    layer_num=layer_num,
+                    add_special_tokens=add_special_tokens,
+                    avg_tokens=avg_tokens)
+        if downsample:
+            return self.downsample(stimulus)
+        else:
+            return stimulus
+        
+def get_contextual_embeddings(ds: DataSequence,
+                              model_name: str,
+                              context_length: int,
+                              layer_num: int,
+                              bad_words: List[str],
+                              add_special_tokens: bool = True,
+                              avg_tokens:bool = True,
+                              pretrained: bool = True):
+    '''Returns the embeddings from multilingual BERT corresponding to the values in ds.
+
+    args:
+        ds: A DataSequence containing stimuli for which to retrieve embeddings.
+        context_length: The number of words preceeding the embedded word to feed as context.
+        layer_num: The layer from which to extract embeddings.
+        bad_words: A list of words to ignore.
+    '''
+
+    torch.manual_seed(0)
+    if torch.cuda.is_available():
+        device = 'cuda'
+    else:
+        device = 'cpu'
+
+    config = AutoConfig.from_pretrained(model_name)
+    config.output_hidden_states = True
+    config.output_attentions = False
+    if pretrained:
+        model = AutoModel.from_pretrained(model_name, config=config)
+    else:
+        model = AutoModel.from_config(config)
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = model.to(device)
+    new_data = []
+    text = np.array(ds.data)
+    input_sequences = []
+    for word_index, word in enumerate(text):
+        input_sequences.append(text[max(0, word_index - context_length): word_index + 1])
+    for input_sequence in input_sequences:
+        input_sequence_bad_words_indices = np.where(np.isin(input_sequence, bad_words))[0]
+        input_sequence_cleaned = np.delete(input_sequence, input_sequence_bad_words_indices)
+        input_sequence_cleaned = ' '.join(input_sequence_cleaned)
+        encoded_input_sequence = tokenizer.encode_plus(text=input_sequence_cleaned,
+                                                        add_special_tokens=add_special_tokens,
+                                                        return_tensors='pt',
+                                                        return_special_tokens_mask=add_special_tokens)
+        tokens_tensor = encoded_input_sequence['input_ids']
+
+        with torch.no_grad():
+            outputs = model(tokens_tensor)
+            layer_embedding = outputs[-1][layer_num][0].to('cpu')  # [num_tokens x hidden_size]
+            if avg_tokens:
+                if add_special_tokens:
+                    # Discard the special tokens (logical not because they are marked as 1 and normal tokens as 0)
+                    special_mask = np.array(encoded_input_sequence['special_tokens_mask'])
+                    new_data.append(np.expand_dims(torch.mean(layer_embedding[np.logical_not(special_mask)], dim=0), axis=0))
+                else:
+                    new_data.append(np.expand_dims(torch.mean(layer_embedding, dim=0), axis=0))
+            else:
+                if add_special_tokens:
+                    # Take the last token after discarding the special ones so that it corresponds to the last word
+                    special_mask = np.array(encoded_input_sequence['special_tokens_mask'])
+                    new_data.append(np.expand_dims(layer_embedding[np.logical_not(special_mask)][-1], axis=0))
+                else:
+                    new_data.append(np.expand_dims(layer_embedding[-1], axis=0))
+
+    bad_words_indices = np.where(np.isin(text, bad_words))[0]
+    text_times = ds.data_times
+    text_times_cleaned = np.delete(text_times, bad_words_indices)
+    split_inds_array = np.array(ds.split_inds)
+    for index in bad_words_indices[::-1]:
+        split_inds_array[split_inds_array > index] = split_inds_array[split_inds_array > index] - 1
+    embedding_ds = DataSequence(np.squeeze(np.array(new_data)), split_inds_array, text_times_cleaned, ds.tr_times)
+    return embedding_ds

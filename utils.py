@@ -181,6 +181,20 @@ def get_contextual_embeddings(text, tokenizer, model, args,
 
     return embeddings_dict_bylayer, context_length
 """
+
+def downsample(dsdict: Dict, interp: str = 'lanczos'):
+        '''Downsamples each DataSequence in [dsdict] using the settings specified in the
+        initializer.
+        '''
+        # If each value in dict is another dict (e.g. when we get multiple layers of a contextual LM), downsample each dict separately.
+        if type(list(dsdict.values())[0]) == dict:
+            downsampled_dict = dict()
+            for key in dsdict.keys():
+                downsampled_dict[key] = mapdict(dsdict[key], lambda h: h.chunksums(interp, **interpargs))
+            return downsampled_dict
+        else:
+            return mapdict(dsdict, lambda h: h.chunksums(interp, **interpargs))
+
 def contextual_embeddings(
                               model_name: str,
                               layer_num: int,
@@ -207,7 +221,7 @@ def contextual_embeddings(
         '''
         # Get stimulus for stories.
         stimulus = dict()
-        for stimulus_name, ds in list(self.wordseqs.items()):
+        for stimulus_name, ds in list(wordseqs.items()):
             logger.info(f'extracting {model_name} features for {stimulus_name}')
             stimulus[stimulus_name] = get_contextual_embeddings(ds=ds,
                     model_name=model_name,
@@ -217,7 +231,7 @@ def contextual_embeddings(
                     add_special_tokens=add_special_tokens,
                     avg_tokens=avg_tokens)
         if downsample:
-            return self.downsample(stimulus)
+            return downsample(stimulus)
         else:
             return stimulus
         

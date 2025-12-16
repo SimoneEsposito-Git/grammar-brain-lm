@@ -1,160 +1,223 @@
-"""
-Utility function: loading data from hdf5 files and loading mapper files to display data on the
-cortical surface.
+# ============================================================================
+# Response Processing
+# ============================================================================
 
-"""
-
-import numpy as np
-import itertools as itools
-import scipy.sparse
-import h5py
-from h5py._hl.dataset import Dataset
-from h5py._hl.group import Group
-import torch
-from tqdm import tqdm
-from data_sequence import DataSequence 
-from typing import Dict, List, Union
-try:
-    from transformers import AutoConfig, AutoModel, AutoTokenizer
-except Exception:
-    print('Could not import BertModel, BertTokenizer from transformers')
+def load_responses(subjects, modality, split = 'trn', fdir = './responses'):
+    """Load fMRI response data for specified subjects.
     
-def load_data(fname, key=None):
-    """Function to load data from an hdf file.
+    Args:
+        subjects: List of subject identifiers.
+        modality: Type of fMRI modality to load.
+        split: Data split ('trn', 'val', or 'tst'). Defaults to 'trn'.
+        fdir: Directory containing response files. Defaults to './responses'.
+    
+    Returns:
+        Dictionary mapping subjects to their response data.
+    """
+    data = dict()
+    for subject in subjects:
+        fname = os.path.join(fdir, "responses", f"subject{subject}_{modality}_fmri_data_{split}.hdf")
+        with h5py.File(fname) as hf:
+            data[subject] = dict()
+            for k in hf.keys():
+                print("Subject {}, {} will be loaded".format(subject, k))
+                data[subject][k] = hf[k][()]
+    
+    return data
 
-    Parameters
-    ----------
-    fname: string
-        hdf5 file name
-    key: string
-        key name to load. If not provided, all keys will be loaded.
+def stack_responses(R, stories, trim, standardize=True):
+    """Stack response data across stories with optional standardization.
+    
+    Args:
+        R: Dictionary of response data by story.
+        stories: List of story identifiers to stack.
+        trim: Number of initial time points to trim.
+        standardize: Whether to z-score normalize. Defaults to True.
+    
+    Returns:
+        Tuple of (stacked responses array, array of story lengths).
+    """
+    Ys, lens = [], []
+    for s in stories:
+        Y = np.asarray(R[s][trim:])
+        if standardize:
+            Y = (Y - Y.mean(0)) / (Y.std(0) + 1e-8)
+        Ys.append(np.nan_to_num(Y))
+        lens.append(Y.shape[0])
+    return np.vstack(Ys), np.array(lens)
 
-    Returns
-    -------
-    data : dictionary
-        dictionary of arrays
+# ============================================================================
+# Feature Processing
+# ============================================================================
 
+def load_features(split = 'trn', fdir = './features'):
+    """Load feature data from HDF5 file.
+    
+    Args:
+        split: Data split ('trn', 'val', or 'tst'). Defaults to 'trn'.
+        fdir: Directory containing feature files. Defaults to './features'.
+    
+    Returns:
+        Dictionary containing loaded feature data.
     """
     data = dict()
     with h5py.File(fname) as hf:
-        if key is None:
-            for k in hf.keys():
-                print("{} will be loaded".format(k))
-                if type(hf[k]) == Dataset:
-                    data[k] = hf[k][()]
-                if type(hf[k]) == Group:
-                    data[k] = {}
-                    for j in hf[k].keys():
-                        data[k][j] = hf[k][j][()]
-        else:
-            data[key] = hf[key][()]
+        for k in hf.keys():
+            print("{} will be loaded".format(k))
+            data[k] = {}
+            for j in hf[k].keys():
+                data[k][j] = hf[k][j][()]
     return data
 
-
-def load_sparse_array(fname, varname):
-    """Load a numpy sparse array from an hdf file
-
-    Parameters
-    ----------
-    fname: string
-        file name containing array to be loaded
-    varname: string
-        name of variable to be loaded
-
-    Notes
-    -----
-    This function relies on variables being stored with specific naming
-    conventions, so cannot be used to load arbitrary sparse arrays.
-
-    By Mark Lescroart
-
-    """
-    with h5py.File(fname) as hf:
-        data = (hf['%s_data'%varname], hf['%s_indices'%varname], hf['%s_indptr'%varname])
-        sparsemat = scipy.sparse.csr_matrix(data, shape=hf['%s_shape'%varname])
-    return sparsemat
-
-
-def map_to_flat(voxels, mapper_file):
-    """Generate flatmap image for an individual subject from voxel array
-
-    This function maps a list of voxels into a flattened representation
-    of an individual subject's brain.
-
-    Parameters
-    ----------
-    voxels: array
-        n x 1 array of voxel values to be mapped
-    mapper_file: string
-        file containing mapping arrays
-
-    Returns
-    -------
-    image : array
-        flatmap image, (n x 1024)
-
-    By Mark Lescroart
-
-    """
-    pixmap = load_sparse_array(mapper_file, 'voxel_to_flatmap')
-    with h5py.File(mapper_file, mode='r') as hf:
-        pixmask = hf['flatmap_mask'][()]
-    badmask = np.array(pixmap.sum(1) > 0).ravel()
-    img = (np.nan * np.ones(pixmask.shape)).astype(voxels.dtype)
-    mimg = (np.nan * np.ones(badmask.shape)).astype(voxels.dtype)
-    mimg[badmask] = (pixmap * voxels.ravel())[badmask].astype(mimg.dtype)
-    img[pixmask] = mimg
-    return img.T[::-1]
-
-def get_chunk_indices(N, num_chunks):
-    """
-    Calculates the start indices for splitting a list of length N 
-    into a specified number of approximately equal-sized chunks (num_chunks).
-
-    Args:
-        N (int): The total length of the list.
-        num_chunks (int): The number of chunks (N') desired.
-
-    Returns:
-        list: A list of indices indicating where each chunk starts.
-    """
-    if num_chunks <= 0:
-        return []
-    if N <= 0:
-        return [0]
-
-    # The minimum number of items per chunk (integer division)
-    base_size = N // num_chunks
-    # The number of chunks that will have one extra item (the remainder)
-    remainder = N % num_chunks
-
-    indices = [0]  # The first chunk always starts at index 0
-    current_index = 0
-
-    for i in range(num_chunks):
-        # Determine the size of the current chunk
-        # Add 1 for the first 'remainder' chunks
-        chunk_size = base_size + (1 if i < remainder else 0)
-
-        # The end index of the current chunk is the start index of the next
-        current_index += chunk_size
-
-        # Only append the index if it's not the very last index (N), 
-        # as we are defining the *start* of the next chunk.
-        # We append the final index (N) to define the end of the last chunk.
-        if i < num_chunks - 1:
-            indices.append(current_index)
-        else:
-            # Append the final index (N) to define the end boundary for slicing
-            indices.append(N) 
-
-    # We only need the starting indices for the N' chunks, 
-    # and the final index N to end the last slice.
-    return indices[1:-1]
-
-def mapdict(d, fun):
-    return dict(list(zip(list(d.keys()), list(map(fun, list(d.values()))))))
+def features_with_embeddings(F, stories, embeddings, name):
+    """Merge embedding arrays into feature dictionary for specified stories.
     
+    Args:
+        F: Feature dictionary to copy and modify.
+        stories: List of story identifiers.
+        embeddings: Dictionary of embedding arrays by story.
+        name: Key name for the embeddings in the feature dictionary.
+    
+    Returns:
+        New feature dictionary with embeddings added.
+    """
+    new_dict = F.copy()
+    for story in stories:
+        # Only try to merge if the story exists in the target dictionary
+        if story_key in target_dict:
+            new_dict[story][name] = array_data[story]
+    return new_dict
+
+def stack_features(F, stories, keys, standardize=True):
+    """Stack selected features horizontally with optional standardization.
+    
+    Args:
+        F: Feature dictionary by story.
+        stories: List of story identifiers.
+        keys: List of feature keys to stack.
+        standardize: Whether to z-score normalize. Defaults to True.
+    
+    Returns:
+        Dictionary mapping stories to stacked feature arrays.
+    """
+    blocks = {}
+    for s in stories:
+        X = np.hstack([np.asarray(F[s][k]) for k in keys])
+        if standardize:
+            X = (X - X.mean(0)) / (X.std(0) + 1e-8)
+        blocks[s] = X
+    return blocks
+
+def delay_features(X, stories, delays, circpad=False):
+    """Create temporally delayed versions of features.
+    
+    Args:
+        X: Dictionary of feature arrays by story.
+        stories: List of story identifiers.
+        delays: List or array of delay values (in time points).
+        circpad: Whether to use circular padding. Defaults to False.
+    
+    Returns:
+        Dictionary mapping stories to delayed feature arrays.
+    """
+    X_d = {}
+    for s in stories:
+        stim = X[s]
+        nt,ndim = stim.shape
+        dstims = []
+        for di,d in enumerate(delays):
+            dstim = np.zeros((nt, ndim))
+            if d<0: ## negative delay
+                dstim[:d,:] = stim[-d:,:]
+                if circpad:
+                    dstim[d:,:] = stim[:-d,:]
+            elif d>0:
+                dstim[d:,:] = stim[:-d,:]
+                if circpad:
+                    dstim[:d,:] = stim[-d:,:]
+            else: ## d==0
+                dstim = stim.copy()
+            dstims.append(dstim)
+        X_d[s] = np.hstack(dstims)
+    return X_d
+
+def stack_stories(X, stories):
+    """Stack feature arrays across multiple stories.
+    
+    Args:
+        X: Feature array or dictionary.
+        stories: List of story identifiers.
+        delays: Delay parameters (not used in current implementation).
+    
+    Returns:
+        Vertically stacked array of all stories.
+    """
+    blocks = []
+    for s in stories:
+        blocks.append(X)
+    return np.vstack(blocks)
+
+def build_feature_groups(F_one_story, keys, n_delays):
+    """Build group indices for delayed feature columns.
+    
+    Args:
+        F_one_story: Feature dictionary for a single story.
+        keys: List of feature keys.
+        n_delays: Number of delay taps.
+    
+    Returns:
+        Array of group indices for each column in delayed design matrix.
+    """
+    group_idx_raw = []
+    for gi, k in enumerate(keys):
+        group_idx_raw.append(np.full(F_one_story[k].shape[1], gi, dtype=int))
+    group_idx_raw = np.hstack(group_idx_raw)
+    groups_delayed = np.repeat(group_idx_raw, n_delays)
+    return groups_delayed
+
+def build_kernels_from_groups(X, groups_delayed):
+    """Build separate kernel matrices for each feature group.
+    
+    Args:
+        X: Feature design matrix.
+        groups_delayed: Array of group indices for each column.
+    
+    Returns:
+        3D array of kernel matrices stacked along first axis.
+    """
+    kernels = []
+    unique_groups = np.unique(groups_delayed)
+    
+    for group in unique_groups:
+        mask = groups_delayed == group
+        X_group = X[:, mask]
+        kernel = X_group @ X_group.T
+        kernels.append(kernel)
+    
+    return np.stack(kernels, axis=0)
+
+# =============================================================================
+# Stimulus Processing
+# =============================================================================
+
+def load_stimulus_word_sequences(stories, names, trfile_dir, transcript_dir):
+    """Load word sequences for all stories into DataSequence objects.
+    
+    Returns:
+        Dictionary mapping story identifiers to DataSequence objects.
+    """
+    wordseq = {}
+
+    trfiles = load_generic_trfiles(names, trfile_dir)
+    transcripts = load_textgrid_transcripts(names, transcript_dir)
+
+    for story, name in zip(stories, names):
+        with open(f'./stimuli/{story}.txt') as f:
+            content = f.read().split()
+
+        ds = DataSequence.from_grid(transcripts[name], trfiles[name])
+        wordseq[story] = ds
+
 def downsample(dsdict: Dict, interp: str = 'mean'):
         '''Downsamples each DataSequence in [dsdict] using the settings specified in the
         initializer.

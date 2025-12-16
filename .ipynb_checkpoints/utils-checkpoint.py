@@ -11,6 +11,7 @@ import h5py
 from h5py._hl.dataset import Dataset
 from h5py._hl.group import Group
 import torch
+from tqdm import tqdm
 from data_sequence import DataSequence 
 from typing import Dict, List, Union
 try:
@@ -226,8 +227,11 @@ def get_chunk_indices(N, num_chunks):
     # We only need the starting indices for the N' chunks, 
     # and the final index N to end the last slice.
     return indices[1:-1]
+
+def mapdict(d, fun):
+    return dict(list(zip(list(d.keys()), list(map(fun, list(d.values()))))))
     
-def downsample(dsdict: Dict, interp: str = 'lanczos'):
+def downsample(dsdict: Dict, interp: str = 'mean'):
         '''Downsamples each DataSequence in [dsdict] using the settings specified in the
         initializer.
         '''
@@ -235,10 +239,10 @@ def downsample(dsdict: Dict, interp: str = 'lanczos'):
         if type(list(dsdict.values())[0]) == dict:
             downsampled_dict = dict()
             for key in dsdict.keys():
-                downsampled_dict[key] = mapdict(dsdict[key], lambda h: h.chunksums(interp, **interpargs))
+                downsampled_dict[key] = mapdict(dsdict[key], lambda h: h.chunksums(interp))
             return downsampled_dict
         else:
-            return mapdict(dsdict, lambda h: h.chunksums(interp, **interpargs))
+            return mapdict(dsdict, lambda h: h.chunksums(interp))
 
 def contextual_embeddings(    wordseqs: dict,
                               model_name: str,
@@ -247,7 +251,7 @@ def contextual_embeddings(    wordseqs: dict,
                               avg_tokens: bool = True,
                               pretrained: bool = True,
                               context_length: int = 10,
-                              downsample: bool = True):
+                              downsamp: bool = True):
         '''Returns embeddings extracted from contextual models.
 
         Note: Embeddings are currently extracted by feeding in a word and the previous
@@ -275,7 +279,7 @@ def contextual_embeddings(    wordseqs: dict,
                     layer_num=layer_num,
                     add_special_tokens=add_special_tokens,
                     avg_tokens=avg_tokens)
-        if downsample:
+        if downsamp:
             return downsample(stimulus)
         else:
             return stimulus
@@ -287,7 +291,8 @@ def get_contextual_embeddings(ds: DataSequence,
                              bad_words: List[str] = ['{BR}','{LG}','{LS}','{NS}'],
                              add_special_tokens: bool = True,
                              avg_tokens:bool = True,
-                             pretrained: bool = True):
+                             pretrained: bool = True,
+                             verbose: bool = False):
     '''Returns the embeddings from multilingual BERT corresponding to the values in ds.
     
     args:
@@ -303,13 +308,14 @@ def get_contextual_embeddings(ds: DataSequence,
     else:
         device = 'cpu'
 
-    # --- LOG 1: Device and Model Info ---
-    print(f"\n--- Model Setup ---")
-    print(f"Target Device: {device}")
-    print(f"Model Name: {model_name}")
-    print(f"Extraction Layer: {layer_num}")
-    print(f"Context Length: {context_length}")
-    print("-------------------")
+    # --- LOG 1: Device and Model Info (Kept) ---
+    if verbose:
+        print(f"\n--- Model Setup ---")
+        print(f"Target Device: {device}")
+        print(f"Model Name: {model_name}")
+        print(f"Extraction Layer: {layer_num}")
+        print(f"Context Length: {context_length}")
+        print("-------------------")
     
     config = AutoConfig.from_pretrained(model_name)
     config.output_hidden_states = True
@@ -323,28 +329,44 @@ def get_contextual_embeddings(ds: DataSequence,
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = model.to(device)
     
-    # --- LOG 2: Total Data Size ---
+    # --- LOG 2: Total Data Size (Kept) ---
     text = np.array(ds.data)
     print(f"Total input words (text) size: {len(text)}")
-    print(f"Number of chunks (input_sequences) to process: {len(text)}")
-
+    
     new_data = []
     input_sequences = []
     
     for word_index, word in enumerate(text):
         input_sequences.append(text[max(0, word_index - context_length): word_index + 1])
         
-    for word_index, input_sequence in enumerate(input_sequences):
+    # ----------------------------------------------------------------------
+    # 🚀 PROGRESS BAR IMPLEMENTATION 🚀
+    # The outer loop is replaced with tqdm to show word processing progress
+    # ----------------------------------------------------------------------
+    for word_index, input_sequence in enumerate(tqdm(input_sequences, desc=f"Generating {model_name} embeddings")):
         
-        # --- LOG 3: Per-word/Sequence Debugging (every N words) ---
-        if word_index % 50 == 0 or word_index == len(input_sequences) - 1:
-            print(f"\nProcessing word index {word_index}/{len(text)-1}...")
-            print(f"  Input sequence (raw, length {len(input_sequence)}): {' '.join(input_sequence[-3:])}...") # Show last few words
+        # LOG 3, 4, 5, 6 prints are removed or commented out.
         
         input_sequence_bad_words_indices = np.where(np.isin(input_sequence, bad_words))[0]
         input_sequence_cleaned = np.delete(input_sequence, input_sequence_bad_words_indices)
         input_sequence_cleaned = ' '.join(input_sequence_cleaned)
         
+        if not input_sequence_cleaned.strip():
+            # If the context is only bad words, append a zero-vector placeholder.
+            
+            # Use config.hidden_size for robustness
+            if 'hidden_size' not in config: 
+                 # Fallback for models where hidden_size might be nested or named differently
+                 hidden_size = 768 
+            else:
+                hidden_size = config.hidden_size
+            
+            new_data.append(np.expand_dims(np.zeros(hidden_size), axis=0))
+            
+            # Optional: Use tqdm.set_postfix to display skipped words if needed
+            # tqdm.set_postfix({'status': f'Skipped index {word_index}'})
+            continue 
+            
         encoded_input_sequence = tokenizer.encode_plus(text=input_sequence_cleaned,
                                                        add_special_tokens=add_special_tokens,
                                                        return_tensors='pt',
@@ -352,88 +374,77 @@ def get_contextual_embeddings(ds: DataSequence,
         
         tokens_tensor = encoded_input_sequence['input_ids']
 
-        # Move the input tensors to the same device as the model
         tokens_tensor = tokens_tensor.to(device)
         
-        # --- LOG 4: Tokenization and Device Check ---
-        if word_index % 50 == 0 or word_index == len(input_sequences) - 1:
-            print(f"  Cleaned input (for tokenizer): \"{input_sequence_cleaned}\"")
-            print(f"  Input Tokens Tensor shape: {tokens_tensor.shape}, Device: {tokens_tensor.device}")
-            
-        # You should also move the attention_mask if it exists
         if 'attention_mask' in encoded_input_sequence:
             encoded_input_sequence['attention_mask'] = encoded_input_sequence['attention_mask'].to(device)
 
         with torch.no_grad():
             
-            # Use attention mask if available (Best practice)
             if 'attention_mask' in encoded_input_sequence:
                 outputs = model(input_ids=tokens_tensor, 
                                 attention_mask=encoded_input_sequence['attention_mask'])
             else:
                 outputs = model(tokens_tensor)
                 
-            # Accessing hidden states using outputs.hidden_states is safer
             try:
-                # Assuming layer_embedding is extracted from outputs.hidden_states
                 layer_embedding = outputs.hidden_states[layer_num][0].to('cpu') 
             except (AttributeError, IndexError) as e:
-                # Fallback if outputs structure is different, using original logic
+                # Keep the warning print, as this indicates an unexpected model structure
                 print(f"WARNING: Could not use outputs.hidden_states. Falling back to outputs[-1]. Error: {e}")
                 layer_embedding = outputs[-1][layer_num][0].to('cpu') 
                 
-            # --- LOG 5: Embedding Shape and Device Check ---
-            if word_index % 50 == 0 or word_index == len(input_sequences) - 1:
-                print(f"  Layer Embedding Shape (on CPU): {layer_embedding.shape}") # [num_tokens x hidden_size]
-            
             if avg_tokens:
                 if add_special_tokens:
-                    # 1. Access the special_tokens_mask tensor
                     special_mask_tensor = encoded_input_sequence['special_tokens_mask']
-                    
-                    # 2. Convert to NumPy and SQUEEZE to ensure it's 1-dimensional
-                    # This is the fix for the IndexError: shape mismatch
                     special_mask = np.squeeze(special_mask_tensor.numpy())
                     
-                    # --- LOG 6: Mask Shape Check ---
-                    if word_index % 50 == 0 or word_index == len(input_sequences) - 1:
-                        print(f"  Special Mask shape (NumPy): {special_mask.shape}, Sum (tokens to discard): {np.sum(special_mask)}")
-
-                    # Apply boolean mask
-                    embedding_chunk = layer_embedding[np.logical_not(special_mask)]
+                    # FIX: Ensure mask is an array and then convert to PyTorch tensor
+                    inverted_mask_np = np.atleast_1d(np.logical_not(special_mask))
+                    pytorch_mask = torch.from_numpy(inverted_mask_np) 
+                    
+                    embedding_chunk = layer_embedding[pytorch_mask]
                     new_data.append(np.expand_dims(torch.mean(embedding_chunk, dim=0), axis=0))
                     
                 else:
                     new_data.append(np.expand_dims(torch.mean(layer_embedding, dim=0), axis=0))
             else:
                 if add_special_tokens:
-                    # Take the last token after discarding the special ones so that it corresponds to the last word
-                    
-                    # Fix special_mask creation here too, if avg_tokens is False
                     special_mask_tensor = encoded_input_sequence['special_tokens_mask']
                     special_mask = np.squeeze(special_mask_tensor.numpy())
                     
-                    new_data.append(np.expand_dims(layer_embedding[np.logical_not(special_mask)][-1], axis=0))
+                    # FIX: Ensure mask is an array and then convert to PyTorch tensor
+                    inverted_mask_np = np.atleast_1d(np.logical_not(special_mask))
+                    pytorch_mask = torch.from_numpy(inverted_mask_np) 
+                    
+                    new_data.append(np.expand_dims(layer_embedding[pytorch_mask][-1], axis=0))
                 else:
                     new_data.append(np.expand_dims(layer_embedding[-1], axis=0))
 
-    # --- LOG 7: Final Data Assembly ---
+    # --- LOG 7: Final Data Assembly (Kept) ---
     bad_words_indices = np.where(np.isin(text, bad_words))[0]
-    print(f"\n--- Final Data Assembly ---")
-    print(f"Total embeddings collected: {len(new_data)}")
-    print(f"Number of bad words removed from tracking: {len(bad_words_indices)}")
+    if verbose:
+        print(f"\n--- Final Data Assembly ---")
+        print(f"Total embeddings collected: {len(new_data)}")
+        print(f"Number of bad words removed from tracking: {len(bad_words_indices)}")
 
-    text_times = ds.data_times
-    text_times_cleaned = np.delete(text_times, bad_words_indices)
+    if ds.data_times is not None:
+        text_times = ds.data_times
+        text_times_cleaned = np.delete(text_times, bad_words_indices)
+    else:
+        text_times_cleaned = None
+        
     split_inds_array = np.array(ds.split_inds)
     
-    # ... (split index adjustment logic) ...
-    
+    for index in bad_words_indices[::-1]:
+        split_inds_array[split_inds_array > index] = split_inds_array[split_inds_array > index] - 1
+        
     embedding_ds = DataSequence(np.squeeze(np.array(new_data)), split_inds_array, text_times_cleaned, ds.tr_times)
     
-    # --- LOG 8: Final Output Shape ---
-    print(f"Final Embedding Data Shape: {embedding_ds.data.shape}")
-    print(f"Final Split Indices Length: {len(embedding_ds.split_inds)}")
-    print("-----------------------------\n")
+    # --- LOG 8: Final Output Shape (Kept) ---
+    if verbose:
+        print(f"Final Embedding Data Shape: {embedding_ds.data.shape}")
+        print(f"Final Split Indices Length: {len(embedding_ds.split_inds)}")
+        print("-----------------------------\n")
     
     return embedding_ds

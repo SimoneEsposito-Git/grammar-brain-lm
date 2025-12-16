@@ -1,8 +1,25 @@
+import os
+from typing import Dict, List
+
+import numpy as np
+import h5py
+import torch
+from transformers import AutoModel, AutoTokenizer, AutoConfig
+from tqdm import tqdm
+
+from data_sequence import DataSequence
+from textgrid_utils import load_generic_trfiles, load_textgrid_transcripts
+
+# Utility function that may need to be defined or imported from elsewhere
+def mapdict(d, func):
+    """Apply a function to all values in a dictionary."""
+    return {k: func(v) for k, v in d.items()}
+
 # ============================================================================
 # Response Processing
 # ============================================================================
 
-def load_responses(subjects, modality, split = 'trn', fdir = './responses'):
+def load_responses(subjects, modality, split = 'trn', fdir = './'):
     """Load fMRI response data for specified subjects.
     
     Args:
@@ -16,7 +33,7 @@ def load_responses(subjects, modality, split = 'trn', fdir = './responses'):
     """
     data = dict()
     for subject in subjects:
-        fname = os.path.join(fdir, "responses", f"subject{subject}_{modality}_fmri_data_{split}.hdf")
+        fname = os.path.join(fdir, "responses", f"{subject}_{modality}_fmri_data_{split}.hdf")
         with h5py.File(fname) as hf:
             data[subject] = dict()
             for k in hf.keys():
@@ -50,17 +67,18 @@ def stack_responses(R, stories, trim, standardize=True):
 # Feature Processing
 # ============================================================================
 
-def load_features(split = 'trn', fdir = './features'):
+def load_features(split = 'trn', fdir = './'):
     """Load feature data from HDF5 file.
     
     Args:
         split: Data split ('trn', 'val', or 'tst'). Defaults to 'trn'.
-        fdir: Directory containing feature files. Defaults to './features'.
+        fdir: Directory containing feature files. Defaults to './'.
     
     Returns:
         Dictionary containing loaded feature data.
     """
     data = dict()
+    fname = os.path.join(fdir, "features", f"features_{split}_NEW.hdf")
     with h5py.File(fname) as hf:
         for k in hf.keys():
             print("{} will be loaded".format(k))
@@ -84,8 +102,8 @@ def features_with_embeddings(F, stories, embeddings, name):
     new_dict = F.copy()
     for story in stories:
         # Only try to merge if the story exists in the target dictionary
-        if story_key in target_dict:
-            new_dict[story][name] = array_data[story]
+        if story in new_dict.keys():
+            new_dict[story][name] = embeddings[story]
     return new_dict
 
 def stack_features(F, stories, keys, standardize=True):
@@ -154,7 +172,7 @@ def stack_stories(X, stories):
     """
     blocks = []
     for s in stories:
-        blocks.append(X)
+        blocks.append(X[s])
     return np.vstack(blocks)
 
 def build_feature_groups(F_one_story, keys, n_delays):
@@ -212,11 +230,10 @@ def load_stimulus_word_sequences(stories, names, trfile_dir, transcript_dir):
     transcripts = load_textgrid_transcripts(names, transcript_dir)
 
     for story, name in zip(stories, names):
-        with open(f'./stimuli/{story}.txt') as f:
-            content = f.read().split()
-
         ds = DataSequence.from_grid(transcripts[name], trfiles[name])
         wordseq[story] = ds
+    
+    return wordseq
 
 def downsample(dsdict: Dict, interp: str = 'mean'):
         '''Downsamples each DataSequence in [dsdict] using the settings specified in the
@@ -238,7 +255,8 @@ def contextual_embeddings(    wordseqs: dict,
                               avg_tokens: bool = True,
                               pretrained: bool = True,
                               context_length: int = 10,
-                              downsamp: bool = True):
+                              downsamp: bool = True,
+                              interp: str = 'lanczos'):
         '''Returns embeddings extracted from contextual models.
 
         Note: Embeddings are currently extracted by feeding in a word and the previous
@@ -267,7 +285,7 @@ def contextual_embeddings(    wordseqs: dict,
                     add_special_tokens=add_special_tokens,
                     avg_tokens=avg_tokens)
         if downsamp:
-            return downsample(stimulus, interp='lanczos')
+            return downsample(stimulus, interp=interp)
         else:
             return stimulus
         

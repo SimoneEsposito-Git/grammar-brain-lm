@@ -11,86 +11,25 @@ tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 model = GPT2LMHeadModel.from_pretrained("gpt2")
 model.eval()
 
-# Load spaCy for POS tagging
-nlp = spacy.load("en_core_web_sm")
-
-"""
-def get_word_entropy(context_text, target_word):
-    inputs = tokenizer(context_text, return_tensors="pt")
-    with torch.no_grad():
-        outputs = model(**inputs)
-        predictions = outputs.logits[0, -1, :]  # Logits for the next word
-        probabilities = torch.softmax(predictions, dim=-1)
-    # Get ID of the target word
-    target_id = tokenizer.encode(target_word, add_special_tokens=False)[0]
-    prob = probabilities[target_id].item()
-    return -torch.log2(torch.tensor(prob)).item()
-
-def find_entropy_match(context_text, original_word, tolerance=0.1):
-    original_entropy = get_word_entropy(context_text, original_word)
-    doc = nlp(context_text+original_word)
-    original_pos = doc[-1].pos_
-    inputs = tokenizer(context_text, return_tensors="pt")
-    with torch.no_grad():
-        logits = model(**inputs).logits[0, -1, :]
-        probs = torch.softmax(logits, dim=-1)
-        
-    top_values, top_indices = torch.topk(probs, 500)
-    candidates = []
-    for i in range(len(top_indices)):
-        word = tokenizer.decode([top_indices[i]]).strip()
-        prob = top_values[i].item()
-        candidate_entropy = -torch.log2(torch.tensor(prob)).item()
-        
-        # print(word, candidate_entropy)
-        # Check POS and Entropy distance
-        
-        if abs(candidate_entropy - original_entropy) < tolerance:
-            # Linguistic constraint: check POS
-            doc = nlp(word)
-            # print(original_pos, doc[0].pos_)
-            if doc and doc[0].pos_ == original_pos and word.strip().lower() != original_word.strip().lower():
-                candidates.append((word, candidate_entropy))
-                
-    # Return the closest match
-    return sorted(candidates, key=lambda x: abs(x[1] - original_entropy))
-
-#print(find_entropy_match("is not the only universe there is. There are", " alternate"))
-
-def data_to_entropy_map(ds, context_length):
-    text = np.array(ds.data)
-    new_data = []
-    input_sequences = []
-    
-    for word_index, word in enumerate(text):
-        input_sequence = text[max(0, word_index - context_length): word_index + 1]
-        input_sequences.append(input_sequence)
-        
-    for seq in input_sequences:
-        if len(seq) < 2:
-            new_data.append(seq[-1].item())
-            continue
-        context = " ".join(seq[:-1]) 
-        target = seq[-1]
-        # print("Context:", repr(context), "Target:", repr(target))
-        entropy_match = find_entropy_match(context, " " + target)
-        if len(entropy_match) > 0:
-            # print("Match found:", entropy_match[0])
-            new_data.append(entropy_match[0][0])
-            print(target.item(), "->", entropy_match[0][0])
-        else:
-            new_data.append(target.item())
-            print("No match for:", repr(target.item()))
-    return new_data 
-"""
-
 def generate_context(ds, mode, **kwargs):
     if mode == "random":
         return precompute_random_masks(ds, **kwargs)
+    elif mode == "baseline":
+        return precompute_baseline_context(ds, **kwargs)
     elif mode in ["peak", "valley"]:
         return precompute_entropy_masks(ds, mode=mode, **kwargs)
     else:
         raise ValueError(f"Unknown mode: {mode}")
+
+
+def precompute_random_masks(ds, window_size=10):
+    text = np.array(ds.data)
+    for word_index, word in enumerate(text):
+        all_contexts.append(
+            " ".join(text[max(0, word_index - window_size) : word_index + 1])
+        )
+    return all_contexts
+
 
 def precompute_entropy_masks(ds, window_size=10, amount=3, mode="peak"):
     """

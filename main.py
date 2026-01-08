@@ -416,13 +416,43 @@ def main(
 
 if __name__ == "__main__":
     try:
-        parser = argparse.ArgumentParser(description="Run encoding model pipeline for fMRI analysis")
-        parser.add_argument("--subject", type=str, default="subject07", help="Subject identifier (default: subject07)")
-        parser.add_argument("--modality", type=str, default="listening", choices=["listening", "reading"], help="Data modality (default: listening)")
-        parser.add_argument("--mode", type=str, default="baseline", help="Feature extraction mode (default: baseline)")
-        parser.add_argument("--trfile-dir", type=str, default=os.path.join("stimuli", "textgrids", "trfiles"), help="Directory containing TR files")
-        parser.add_argument("--transcript-dir", type=str, default=os.path.join("stimuli", "textgrids", "transcripts"), help="Directory containing transcript files")
-        parser.add_argument("--fdir", type=str, default="./", help="Base directory path (default: ./)")
+        parser = argparse.ArgumentParser(
+            description="Run encoding model pipeline for fMRI analysis"
+        )
+        parser.add_argument(
+            "--subject",
+            type=str,
+            default="subject07",
+            help="Subject identifier (default: subject07)",
+        )
+        parser.add_argument(
+            "--modality",
+            type=str,
+            default="listening",
+            choices=["listening", "reading"],
+            help="Data modality (default: listening)",
+        )
+        parser.add_argument(
+            "--mode",
+            type=str,
+            default="baseline",
+            help="Feature extraction mode (default: baseline)",
+        )
+        parser.add_argument(
+            "--trfile-dir",
+            type=str,
+            default=os.path.join("stimuli", "textgrids", "trfiles"),
+            help="Directory containing TR files",
+        )
+        parser.add_argument(
+            "--transcript-dir",
+            type=str,
+            default=os.path.join("stimuli", "textgrids", "transcripts"),
+            help="Directory containing transcript files",
+        )
+        parser.add_argument(
+            "--fdir", type=str, default="./", help="Base directory path (default: ./)"
+        )
 
         args = parser.parse_args()
 
@@ -439,4 +469,5 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Fatal error: {e}")
         import traceback
+
         traceback.print_exc()

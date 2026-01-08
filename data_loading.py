@@ -99,7 +99,15 @@ def load_features(split="trn", fdir="./"):
 
 
 def prepare_features(
-    F_trn, F_val, mode, stories, story_names, data_dir, trfile_dir, transcript_dir, **kwargs
+    F_trn,
+    F_val,
+    mode,
+    stories,
+    story_names,
+    data_dir,
+    trfile_dir,
+    transcript_dir,
+    **kwargs,
 ):
     """
     Prepare features by loading or generating contextual embeddings.
@@ -115,6 +123,9 @@ def prepare_features(
     Returns:
         Tuple of updated training and validation feature dictionaries.
     """
+
+    if mode == "english1000":
+        return F_trn, F_val
 
     wordseq = load_stimulus_word_sequences(
         stories, story_names, trfile_dir, transcript_dir
@@ -140,9 +151,8 @@ def prepare_features(
     if contexts.get(mode) is None:
         contexts[mode] = {}
         for story in stories:
-            contexts[mode][story] = cu.generate_context(
-                wordseq[story], mode, **kwargs
-            )
+            print(f"Generating contexts for story: {story}", end=" ")
+            contexts[mode][story] = cu.generate_context(wordseq[story], mode, **kwargs)
         np.savez(context_file, **contexts)
 
     if embeddings.get(mode) is None:
@@ -411,7 +421,7 @@ def get_contextual_embeddings(
     model_name: str,
     context_length: int,
     layer_num: int,
-    context: List[str] = None,
+    context: List[str],
     pretrained: bool = True,
     verbose: bool = False,
 ):
@@ -456,14 +466,11 @@ def get_contextual_embeddings(
     # Build input sequences for all words
     input_sequences = []
     for word_index, word in enumerate(text):
-        if context is not None:
-            context = context[word_index] + " " + word
-            input_sequences.append(context)
-        else:
-            context = " ".join(
-                text[max(0, word_index - context_length) : word_index + 1]
-            )
-            input_sequences.append(context)
+        if context is None:
+            raise ValueError("Context must be provided.")
+
+        context = context[word_index] + " " + word
+        input_sequences.append(context)
 
     for word_index, context in enumerate(
         tqdm(input_sequences, desc=f"Generating {model_name} embeddings")

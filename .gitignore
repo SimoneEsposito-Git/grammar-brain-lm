@@ -3,5 +3,7 @@
 __pycache__/
 *.pyc
 .DS_Store
-responses/subject01*
-responses/subject07*
+responses/*
+responses/*
+data/*
+outputs/old/*

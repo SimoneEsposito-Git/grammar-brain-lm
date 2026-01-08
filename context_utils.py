@@ -22,7 +22,7 @@ def generate_context(ds, mode, **kwargs):
         raise ValueError(f"Unknown mode: {mode}")
 
 
-def precompute_random_masks(ds, window_size=10):
+def precompute_baseline_context(ds, window_size=10):
     text = np.array(ds.data)
     for word_index, word in enumerate(text):
         all_contexts.append(
@@ -52,7 +52,7 @@ def precompute_entropy_masks(ds, window_size=10, amount=3, mode="peak"):
     all_contexts = []
 
     # We loop through every word in the stimulus
-    for i in tqdm(range(len(text)), desc=f"Masking {mode}s"):
+    for i in tqdm(range(len(text)), desc=f"Generating {mode} contexts for story: {story}"):
         # Get the context window (excluding the word at index i)
         start_idx = max(0, i - window_size)
         context_words = text[start_idx:i].tolist()

@@ -1,7 +1,5 @@
 import os
 import numpy as np
-import matplotlib.pyplot as plt
-import utils
 import argparse
 
 from himalaya.kernel_ridge import MultipleKernelRidgeCV, linear_kernel
@@ -15,8 +13,10 @@ from sklearn.model_selection import LeaveOneGroupOut
 from typing import Dict, List, Union
 from scipy.stats import zscore, pearsonr, norm
 from statsmodels.stats.multitest import fdrcorrection
+
 import data_loading as dl
 import context_utils as cu
+import plotting_utils as pu
 
 try:
     backend = set_backend("torch_cuda")
@@ -256,71 +256,6 @@ def perform_group_ridge_cv(
     return results
 
 
-def plot_correlation_on_flatmap(
-    subject: str,
-    modality: str,
-    mode: str,
-    r: np.ndarray,
-    r_sig: np.ndarray,
-    save_fig: bool = True,
-    fdir: str = ".",
-):
-    """
-    Plot correlation values on a flatmap representation for a given subject and modality.
-    This function creates a two-panel visualization showing both significant and all correlation
-    values mapped onto a flattened cortical surface representation. The correlation data is
-    mapped from 3D to 2D using subject-specific mapper files.
-    Args:
-        subject (str): Subject identifier used to locate the mapper file and label outputs.
-        modality (str): Modality identifier (e.g., imaging modality or data type) for labeling.
-        mode (str): Analysis mode identifier used in the output filename.
-        r (np.ndarray): Array of correlation coefficients to be visualized.
-        r_sig (np.ndarray): Array of significant correlation coefficients (filtered by statistical threshold).
-        save_fig (bool, optional): Whether to save the figure to disk. Defaults to True.
-        fdir (str, optional): Directory path where mapper files are located. Defaults to ".".
-    Returns:
-        None
-    Side Effects:
-        - Creates 'outputs' directory if it doesn't exist
-        - Saves numpy arrays of correlation values and flatmap to disk
-        - Saves visualization as PNG file if save_fig is True
-        - Displays the plot using plt.show()
-    Note:
-        - Uses a hot colormap with white for bad values and gray (#555555) for values below minimum
-        - Both plots use vmin=0 and vmax=0.4 for consistent scaling
-        - Output files are saved with naming pattern: outputs/subject{subject}_{modality}_*.npy/png
-    """
-
-    cmap_ = plt.cm.hot
-    cmap_.set_bad(color="white")
-    cmap_.set_under(color="#555555")
-
-    map_file = os.path.join(fdir, "mappers", f"{subject}_mappers.hdf")
-    flatmap_sig = utils.map_to_flat(r_sig, map_file)
-    flatmap = utils.map_to_flat(r, map_file)
-
-    os.makedirs("outputs", exist_ok=True)
-    np.save(f"outputs/subject{subject}_{modality}_r.npy", r)
-    np.save(f"outputs/subject{subject}_{modality}_flatmap.npy", flatmap)
-
-    fig, axes = plt.subplots(2, 1, figsize=(10, 12))
-
-    axes[0].imshow(flatmap_sig, cmap=cmap_, vmin=0, vmax=0.4)
-    axes[0].axis("off")
-    axes[0].set_title(f"Significant r values: subject {subject}, {modality}")
-
-    axes[1].imshow(flatmap, cmap=cmap_, vmin=0, vmax=0.4)
-    axes[1].axis("off")
-    axes[1].set_title(f"All r values: subject {subject}, {modality}")
-
-    plt.tight_layout()
-    if save_fig:
-        output_path = f"outputs/images/{subject}_{modality}_{mode}.png"
-        print(f"Saving flatmap figure to {output_path}")
-        plt.savefig(output_path, bbox_inches="tight", dpi=150)
-    plt.show()
-
-
 def main(
     subject,
     modality,
@@ -361,22 +296,21 @@ def main(
     print(
         f"Subject: {subject}\nModality: {modality}\nMode: {mode}\nData Directory: {fdir}"
     )
-
-    print("Loading responses...")
     R_trn = dl.load_responses([subject], modality, split="trn", fdir=fdir)
     R_val = dl.load_responses([subject], modality, split="val", fdir=fdir)
 
-    print("Loading features...")
     F_trn = dl.load_features(split="trn")
     F_val = dl.load_features(split="val")
 
+    data_dir = os.path.join(fdir, "data")
+    
     F_trn, F_val = dl.prepare_features(
         F_trn,
         F_val,
         mode,
         STORIES,
         STORY_NAMES,
-        fdir,
+        data_dir,
         trfile_dir,
         transcript_dir,
         amount=2,
@@ -406,10 +340,13 @@ def main(
     os.makedirs("outputs", exist_ok=True)
     results_file = f"outputs/results/{subject}_{modality}_{mode}.npz"
     print(f"Saving results to {results_file}")
-    np.savez(results_file, score=score, r=r, r_sig=r_sig, r2=r2)
-
+    try:
+        np.savez(results_file, score=score, r=r, r_sig=r_sig, r2=r2)
+    except FileNotFoundError as e:
+        print(f"Error saving results: {e}. Please ensure the directory exists.")
+        return
     print("Plotting results...")
-    plot_correlation_on_flatmap(subject, modality, mode, r, r_sig, fdir=fdir)
+    pu.plot_correlation_on_flatmap(subject, modality, mode, r, r_sig, fdir=fdir)
 
     print("Script execution finished.")
 

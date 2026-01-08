@@ -5,6 +5,7 @@ import re
 import string
 
 from typing import List
+from tqdm import tqdm
 
 class TRFile(object):
     def __init__(self, trfilename, expectedtr=2.0045):
@@ -35,7 +36,6 @@ class TRFile(object):
         trdata_aslist = []
         for ll in open(local_filepath, encoding='utf-8'):
             trdata_aslist.append(ll)
-        print(f'TRFile {local_filepath} is loaded from local path')
 
         # Read the report file and populate the datastructure
         for idx, ll in enumerate(trdata_aslist):
@@ -65,7 +65,6 @@ class TRFile(object):
         badtrtimes = np.nonzero(itrtimes > (itrtimes.mean() * 1.5))[0]
         newtrs = []
         for btr in badtrtimes:
-            print('badtrtimes are fixed')
             # Insert new TR where it was missing..
             newtrtime = self.trtimes[btr] + self.expectedtr
             newtrs.append((newtrtime, btr))
@@ -132,7 +131,7 @@ def load_textgrid_transcripts(filenames, tg_dir):
     """
     transcript_dict = {}
     
-    for filename in filenames:
+    for filename in tqdm(filenames, desc="Loading TextGrid transcripts"):
         filepath = os.path.join(tg_dir, filename)
         if not filepath.endswith('.TextGrid'):
             filepath += '.TextGrid'

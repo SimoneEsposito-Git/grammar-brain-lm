@@ -43,8 +43,7 @@ def load_responses(subjects, modality, split="trn", fdir="./"):
         )
         with h5py.File(fname) as hf:
             data[subject] = dict()
-            for k in hf.keys():
-                print("Subject {}, {} will be loaded".format(subject, k))
+            for k in tqdm(hf.keys(), desc=f"Loading responses for {subject}", leave=False):
                 data[subject][k] = hf[k][()]
 
     return data
@@ -90,10 +89,9 @@ def load_features(split="trn", fdir="./"):
     data = dict()
     fname = os.path.join(fdir, "features", f"features_{split}_NEW.hdf")
     with h5py.File(fname) as hf:
-        for k in hf.keys():
-            print("{} will be loaded".format(k))
+        for k in tqdm(hf.keys(), desc=f"Loading features for split: {split}", leave=False):
             data[k] = {}
-            for j in hf[k].keys():
+            for j in tqdm(hf[k].keys(), desc=f"{k}", leave=False):
                 data[k][j] = hf[k][j][()]
     return data
 
@@ -136,39 +134,86 @@ def prepare_features(
 
     # Load or create contexts
     try:
-        contexts = np.load(context_file, allow_pickle=True)
+        loaded_contexts = np.load(context_file, allow_pickle=True)
+        # Convert NpzFile to plain dict
+        contexts = {
+            k: (
+                loaded_contexts[k].item()
+                if loaded_contexts[k].dtype == object
+                else loaded_contexts[k]
+            )
+            for k in loaded_contexts.files
+        }
     except FileNotFoundError:
         print(f"Warning: {context_file} not found. Creating new contexts.")
-        contexts = {mode: None}
+        contexts = {}
+    except EOFError:
+        print(f"Warning: {context_file} is empty or corrupted. Creating new contexts.")
+        contexts = {}
+
+    # Ensure mode exists
+    if mode not in contexts or contexts[mode] is None:
+        contexts[mode] = {}
+
+    # Generate contexts only for missing stories
+    missing_ctx = [s for s in stories if s not in contexts[mode]]
+    if len(missing_ctx) > 0:
+        for story in missing_ctx:
+            contexts[mode][story] = cu.generate_context(wordseq[story], mode, story, **kwargs)
+        # Save updated contexts
+        np.savez(
+            context_file, **{k: np.array(v, dtype=object) for k, v in contexts.items()}
+        )
 
     # Load or create embeddings
     try:
-        embeddings = np.load(embeddings_file, allow_pickle=True)
+        loaded_embeddings = np.load(embeddings_file, allow_pickle=True)
+        # Convert NpzFile to plain dict
+        embeddings = {
+            k: (
+                loaded_embeddings[k].item()
+                if loaded_embeddings[k].dtype == object
+                else loaded_embeddings[k]
+            )
+            for k in loaded_embeddings.files
+        }
     except FileNotFoundError:
         print(f"Warning: {embeddings_file} not found. Creating new embeddings.")
-        embeddings = {mode: None}
-
-    if contexts.get(mode) is None:
-        contexts[mode] = {}
-        for story in stories:
-            print(f"Generating contexts for story: {story}", end=" ")
-            contexts[mode][story] = cu.generate_context(wordseq[story], mode, **kwargs)
-        np.savez(context_file, **contexts)
-
-    if embeddings.get(mode) is None:
-        embeddings[mode] = {}
-        embeddings[mode] = dl.contextual_embeddings(
-            wordseq, "gpt2", 8, interp="lanczos", context=contexts[mode]
+        embeddings = {}
+    except EOFError:
+        print(
+            f"Warning: {embeddings_file} is empty or corrupted. Creating new embeddings."
         )
-        np.savez(embeddings_file, **embeddings)
+        embeddings = {}
+
+    # Ensure mode exists
+    if mode not in embeddings or embeddings[mode] is None:
+        embeddings[mode] = {}
+
+    # Generate embeddings only for missing stories
+    missing_emb = [s for s in stories if s not in embeddings[mode]]
+    if len(missing_emb) > 0:
+        new_emb = contextual_embeddings(
+            wordseq, "gpt2", 8, interp="lanczos", contexts=contexts[mode]
+        )
+        for s in missing_emb:
+            embeddings[mode][s] = new_emb[s]
+        # Save updated embeddings
+        np.savez(
+            embeddings_file,
+            **{k: np.array(v, dtype=object) for k, v in embeddings.items()},
+        )
 
     F_trn_ = F_trn.copy()
     F_val_ = F_val.copy()
 
     for story in stories[:-1]:
         # Only try to merge if the story exists in the target dictionary
-        if story in new_dict.keys():
-            F_trn_[story][mode] = embeddings[mode][story]
+        if story in F_trn_.keys():
+            if mode not in F_trn_[story]:
+                F_trn_[story][mode] = embeddings[mode][story]
+            else:
+                F_trn_[story][mode] = embeddings[mode][story]
 
     F_val_[stories[-1]][mode] = embeddings[mode][stories[-1]]
     return F_trn_, F_val_
@@ -322,6 +367,7 @@ def load_stimulus_word_sequences(
     wordseq = {}
 
     trfiles = load_generic_trfiles(names, trfile_dir)
+    print("Loading transcripts...", end=" ")
     transcripts = load_textgrid_transcripts(names, transcript_dir)
 
     for story, name in zip(stories, names):
@@ -376,7 +422,6 @@ def contextual_embeddings(
     layer_num: int,
     avg_tokens: bool = True,
     pretrained: bool = True,
-    context_length: int = 10,
     contexts: Dict = None,
     downsamp: bool = True,
     verbose: bool = False,
@@ -384,17 +429,11 @@ def contextual_embeddings(
 ):
     """Returns embeddings extracted from contextual models.
 
-    Note: Embeddings are currently extracted by feeding in a word and the previous
-          (context_length - 1) words. This can be modified by using different context
-          methods (eg if sentence markers are given), or by using preceding and subsequent
-          words as context.
-
     args:
         layer_num: The layer from which to extract embeddings.
         model_name: Name of model to use (e.g. 'bert-base-multilingual-cased', 'xlm-mlm-xnli15-1024')
         avg_tokens: Take the average of the tokens over the window, instead of just the last one.
         pretrained: If True, uses a pretrained model. If False, uses randomly initialized model.
-        context_length: The number of words preceeding the embedded word to feed as context.
         downsample: If True, downsamples responses before returning.
     """
     # Get stimulus for stories.
@@ -405,9 +444,8 @@ def contextual_embeddings(
             ds=ds,
             model_name=model_name,
             pretrained=pretrained,
-            context_length=context_length,
             layer_num=layer_num,
-            context=contexts[stimulus_name],
+            contexts=contexts[stimulus_name],
             verbose=verbose,
         )
     if downsamp:
@@ -419,9 +457,8 @@ def contextual_embeddings(
 def get_contextual_embeddings(
     ds: DataSequence,
     model_name: str,
-    context_length: int,
     layer_num: int,
-    context: List[str],
+    contexts: List[str],
     pretrained: bool = True,
     verbose: bool = False,
 ):
@@ -429,20 +466,17 @@ def get_contextual_embeddings(
 
     args:
         ds: A DataSequence containing stimuli for which to retrieve embeddings.
-        context_length: The number of words preceding the embedded word to feed as context.
         layer_num: The layer from which to extract embeddings.
         pretrained: If True, uses a pretrained model. If False, uses randomly initialized model.
         verbose: Print detailed logging information.
     """
     torch.manual_seed(0)
     device = "cuda" if torch.cuda.is_available() else "cpu"
-
     if verbose:
         print(f"\n--- Model Setup ---")
         print(f"Device: {device}")
         print(f"Model: {model_name}")
         print(f"Layer: {layer_num}")
-        print(f"Context Length: {context_length}")
         print("-------------------")
 
     config = AutoConfig.from_pretrained(model_name)
@@ -466,10 +500,9 @@ def get_contextual_embeddings(
     # Build input sequences for all words
     input_sequences = []
     for word_index, word in enumerate(text):
-        if context is None:
+        if contexts is None:
             raise ValueError("Context must be provided.")
-
-        context = context[word_index] + " " + word
+        context = contexts[word_index] + " " + word
         input_sequences.append(context)
 
     for word_index, context in enumerate(

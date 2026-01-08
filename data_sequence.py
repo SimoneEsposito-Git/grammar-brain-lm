@@ -1,22 +1,7 @@
 import numpy as np
 import itertools as itools
-# from text_lite.regression.interpdata import sincinterp2D, gabor_xfm2D, lanczosinterp2D
+from text_lite.regression.interpdata import sincinterp2D, gabor_xfm2D, lanczosinterp2D
 from scipy.interpolate import interp1d
-
-def lanczos_downsample_2d(data: np.ndarray, data_times: np.ndarray, tr_times: np.ndarray) -> np.ndarray:
-    """
-    Performs interpolation on the 2D 'data' from 'data_times' to 'tr_times'
-    (using a smooth interpolation as a public library alternative to Lanczos).
-    """
-    new_length = len(tr_times)
-    resampled_data = np.zeros((new_length, data.shape[1]))
-    
-    for i in range(data.shape[1]):
-        # Use cubic interpolation as a common smooth downsampling method
-        f = interp1d(data_times, data[:, i], kind='cubic', fill_value='extrapolate')
-        resampled_data[:, i] = f(tr_times)
-    
-    return resampled_data
 
 class DataSequence(object):
     """DataSequence class provides a nice interface for handling data that is both continuous
@@ -87,13 +72,13 @@ class DataSequence(object):
         """
         if interp=="sinc":
             ## downsample using sinc filter
-            return # sincinterp2D(self.data, self.data_times, self.tr_times, **kwargs)
+            return sincinterp2D(self.data, self.data_times, self.tr_times, **kwargs)
         elif interp=="lanczos":
             ## downsample using Lanczos filter
-            return lanczos_downsample_2d(self.data, self.data_times, self.tr_times, **kwargs)
+            return lanczosinterp2D(self.data, self.data_times, self.tr_times, **kwargs)
         elif interp=="gabor":
             ## downsample using Gabor filter
-            return # np.abs(gabor_xfm2D(self.data.T, self.data_times, self.tr_times, **kwargs)).T
+            return np.abs(gabor_xfm2D(self.data.T, self.data_times, self.tr_times, **kwargs)).T
         elif interp=="mean":
             dsize = self.data.shape[1]
             outmat = np.zeros((len(self.split_inds)+1, dsize))

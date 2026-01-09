@@ -159,7 +159,7 @@ def prepare_features(
     missing_ctx = [s for s in stories if s not in contexts[mode]]
     if len(missing_ctx) > 0:
         for story in missing_ctx:
-            contexts[mode][story] = cu.generate_context(wordseq[story], mode, story, **kwargs)
+            contexts[mode][story] = cu.generate_context(wordseq[story], mode, story=story, **kwargs)
         # Save updated contexts
         np.savez(
             context_file, **{k: np.array(v, dtype=object) for k, v in contexts.items()}

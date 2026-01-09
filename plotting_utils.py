@@ -6,6 +6,29 @@ from h5py._hl.group import Group
 import os
 import matplotlib.pyplot as plt
 
+def load_sparse_array(fname, varname):
+    """Load a numpy sparse array from an hdf file
+
+    Parameters
+    ----------
+    fname: string
+        file name containing array to be loaded
+    varname: string
+        name of variable to be loaded
+
+    Notes
+    -----
+    This function relies on variables being stored with specific naming
+    conventions, so cannot be used to load arbitrary sparse arrays.
+
+    By Mark Lescroart
+
+    """
+    with h5py.File(fname) as hf:
+        data = (hf['%s_data'%varname], hf['%s_indices'%varname], hf['%s_indptr'%varname])
+        sparsemat = scipy.sparse.csr_matrix(data, shape=hf['%s_shape'%varname])
+    return sparsemat
+
 def map_to_flat(voxels, mapper_file):
     """Generate flatmap image for an individual subject from voxel array
 
@@ -81,8 +104,6 @@ def plot_correlation_on_flatmap(
     flatmap = map_to_flat(r, map_file)
 
     os.makedirs("outputs", exist_ok=True)
-    np.save(f"outputs/subject{subject}_{modality}_r.npy", r)
-    np.save(f"outputs/subject{subject}_{modality}_flatmap.npy", flatmap)
 
     fig, axes = plt.subplots(2, 1, figsize=(10, 12))
 

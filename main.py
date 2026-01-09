@@ -265,6 +265,7 @@ def main(
     fdir,
     trfile_dir,
     transcript_dir,
+    **kwargs
 ):
     """
     Execute the main analysis pipeline for a given subject and modality.
@@ -313,7 +314,7 @@ def main(
         data_dir,
         trfile_dir,
         transcript_dir,
-        amount=2,
+        **kwargs
     )
 
     nuis = nuis_listening if modality == "listening" else nuis_reading
@@ -390,6 +391,12 @@ if __name__ == "__main__":
         parser.add_argument(
             "--fdir", type=str, default="./", help="Base directory path (default: ./)"
         )
+        parser.add_argument(
+            "--kwargs",
+            type=str,
+            default="{}",
+            help="Additional keyword arguments as a JSON string (default: '{}')",
+        )
 
         args = parser.parse_args()
 
@@ -402,6 +409,7 @@ if __name__ == "__main__":
             args.fdir,
             args.trfile_dir,
             args.transcript_dir,
+            **eval(args.kwargs)
         )
     except Exception as e:
         print(f"Fatal error: {e}")

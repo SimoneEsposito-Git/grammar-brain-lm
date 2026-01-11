@@ -9,6 +9,7 @@ from tqdm import tqdm
 
 from data_sequence import DataSequence
 from textgrid_utils import load_generic_trfiles, load_textgrid_transcripts
+from sklearn.preprocessing import normalize
 
 import context_utils as cu
 
@@ -43,7 +44,9 @@ def load_responses(subjects, modality, split="trn", fdir="./"):
         )
         with h5py.File(fname) as hf:
             data[subject] = dict()
-            for k in tqdm(hf.keys(), desc=f"Loading responses for {subject}", leave=False):
+            for k in tqdm(
+                hf.keys(), desc=f"Loading responses for {subject}", leave=False
+            ):
                 data[subject][k] = hf[k][()]
 
     return data
@@ -76,7 +79,7 @@ def stack_responses(R, stories, trim, standardize=True):
 # ============================================================================
 
 
-def load_features(split="trn", fdir="./"):
+def load_features(split="trn", fdir="./") -> Dict:
     """Load feature data from HDF5 file.
 
     Args:
@@ -89,7 +92,9 @@ def load_features(split="trn", fdir="./"):
     data = dict()
     fname = os.path.join(fdir, "features", f"features_{split}_NEW.hdf")
     with h5py.File(fname) as hf:
-        for k in tqdm(hf.keys(), desc=f"Loading features for split: {split}", leave=False):
+        for k in tqdm(
+            hf.keys(), desc=f"Loading features for split: {split}", leave=False
+        ):
             data[k] = {}
             for j in tqdm(hf[k].keys(), desc=f"{k}", leave=False):
                 data[k][j] = hf[k][j][()]
@@ -105,6 +110,9 @@ def prepare_features(
     data_dir,
     trfile_dir,
     transcript_dir,
+    overwrite_contexts=False,
+    overwrite_embeddings=False,
+    verbose=False,
     **kwargs,
 ):
     """
@@ -152,14 +160,16 @@ def prepare_features(
         contexts = {}
 
     # Ensure mode exists
-    if mode not in contexts or contexts[mode] is None:
+    if mode not in contexts or contexts[mode] is None or overwrite_contexts:
         contexts[mode] = {}
 
     # Generate contexts only for missing stories
     missing_ctx = [s for s in stories if s not in contexts[mode]]
     if len(missing_ctx) > 0:
         for story in missing_ctx:
-            contexts[mode][story] = cu.generate_context(wordseq[story], mode, story=story, **kwargs)
+            contexts[mode][story] = cu.generate_context(
+                wordseq[story], mode, story=story, **kwargs
+            )
         # Save updated contexts
         np.savez(
             context_file, **{k: np.array(v, dtype=object) for k, v in contexts.items()}
@@ -187,14 +197,19 @@ def prepare_features(
         embeddings = {}
 
     # Ensure mode exists
-    if mode not in embeddings or embeddings[mode] is None:
+    if mode not in embeddings or embeddings[mode] is None or overwrite_embeddings:
         embeddings[mode] = {}
 
     # Generate embeddings only for missing stories
     missing_emb = [s for s in stories if s not in embeddings[mode]]
     if len(missing_emb) > 0:
         new_emb = contextual_embeddings(
-            wordseq, "gpt2", 8, interp="lanczos", contexts=contexts[mode]
+            wordseq,
+            "openai-community/gpt2-large",
+            8,
+            interp="lanczos",
+            contexts=contexts[mode],
+            verbose=verbose,
         )
         for s in missing_emb:
             embeddings[mode][s] = new_emb[s]
@@ -347,6 +362,8 @@ def load_stimulus_word_sequences(
         "{lg}",
         "{ls}",
         "{ns}",
+        "{cg}",
+        "",
         "sp",
         "sentence_start",
         "sentence_end",
@@ -420,9 +437,8 @@ def contextual_embeddings(
     wordseqs: dict,
     model_name: str,
     layer_num: int,
+    contexts: dict,
     avg_tokens: bool = True,
-    pretrained: bool = True,
-    contexts: Dict = None,
     downsamp: bool = True,
     verbose: bool = False,
     interp: str = "lanczos",
@@ -433,7 +449,6 @@ def contextual_embeddings(
         layer_num: The layer from which to extract embeddings.
         model_name: Name of model to use (e.g. 'bert-base-multilingual-cased', 'xlm-mlm-xnli15-1024')
         avg_tokens: Take the average of the tokens over the window, instead of just the last one.
-        pretrained: If True, uses a pretrained model. If False, uses randomly initialized model.
         downsample: If True, downsamples responses before returning.
     """
     # Get stimulus for stories.
@@ -443,7 +458,6 @@ def contextual_embeddings(
         stimulus[stimulus_name] = get_contextual_embeddings(
             ds=ds,
             model_name=model_name,
-            pretrained=pretrained,
             layer_num=layer_num,
             contexts=contexts[stimulus_name],
             verbose=verbose,
@@ -459,7 +473,6 @@ def get_contextual_embeddings(
     model_name: str,
     layer_num: int,
     contexts: List[str],
-    pretrained: bool = True,
     verbose: bool = False,
 ):
     """Returns the embeddings from transformer models corresponding to the values in ds.
@@ -467,7 +480,6 @@ def get_contextual_embeddings(
     args:
         ds: A DataSequence containing stimuli for which to retrieve embeddings.
         layer_num: The layer from which to extract embeddings.
-        pretrained: If True, uses a pretrained model. If False, uses randomly initialized model.
         verbose: Print detailed logging information.
     """
     torch.manual_seed(0)
@@ -483,10 +495,7 @@ def get_contextual_embeddings(
     config.output_hidden_states = True
     config.output_attentions = False
 
-    if pretrained:
-        model = AutoModel.from_pretrained(model_name, config=config)
-    else:
-        model = AutoModel.from_config(config)
+    model = AutoModel.from_pretrained(model_name, config=config)
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = model.to(device)
@@ -502,38 +511,39 @@ def get_contextual_embeddings(
     for word_index, word in enumerate(text):
         if contexts is None:
             raise ValueError("Context must be provided.")
-        context = contexts[word_index] + " " + word
+        if contexts[word_index] == "":
+            context = word
+        else:
+            context = contexts[word_index] + " " + word
         input_sequences.append(context)
 
     for word_index, context in enumerate(
         tqdm(input_sequences, desc=f"Generating {model_name} embeddings")
     ):
         if word_index > 50:
-            verbose = False
+            verbose = False  # Only print verbose for first 50 words
         if verbose:
-            print(f"Processing word index {word_index}: {text[word_index]}")
+            print(f"\nProcessing word index {word_index}: {text[word_index]}")
             print(f"Context: {context}")
 
-        encoded_input_sequence = tokenizer.encode_plus(
+        encoded = tokenizer.encode_plus(
+            add_special_tokens=False,
             text=context,
             return_tensors="pt",
         )
 
-        tokens_tensor = encoded_input_sequence["input_ids"].to(device)
+        context_only = tokenizer.encode(contexts[word_index], add_special_tokens=False)
+        target_word_start_idx = len(context_only)
 
-        if "attention_mask" in encoded_input_sequence:
-            encoded_input_sequence["attention_mask"] = encoded_input_sequence[
-                "attention_mask"
-            ].to(device)
+        tokens_tensor = encoded["input_ids"].to(device)
+        if verbose:
+            print(
+                f"Tokenized context: {tokenizer.convert_ids_to_tokens(tokens_tensor[0])}"
+            )
+            print(f"Target word start index: {target_word_start_idx}")
 
         with torch.no_grad():
-            if "attention_mask" in encoded_input_sequence:
-                outputs = model(
-                    input_ids=tokens_tensor,
-                    attention_mask=encoded_input_sequence["attention_mask"],
-                )
-            else:
-                outputs = model(tokens_tensor)
+            outputs = model(tokens_tensor)
 
             try:
                 layer_embedding = outputs.hidden_states[layer_num][0].to("cpu")
@@ -543,7 +553,24 @@ def get_contextual_embeddings(
                 )
                 layer_embedding = outputs[-1][layer_num][0].to("cpu")
 
-            new_data.append(layer_embedding[-1].numpy())
+        word_vector_sequence = layer_embedding[target_word_start_idx:]
+        if verbose:
+            print(f"Shape of layer embedding: {layer_embedding.shape}")
+            print(f"Shape of word vector sequence: {word_vector_sequence.shape}")
+
+        if word_vector_sequence.shape[0] == 0:
+            # Fallback if context was truncated or empty
+            word_embedding = layer_embedding[-1].numpy()
+            if verbose:
+                print("Fallback: Using the last token's embedding.")
+        else:
+            # MEAN average the tokens of the target word
+            word_embedding = torch.mean(word_vector_sequence, dim=0).numpy()
+            if verbose:
+                print(f"Selected word embedding shape: {word_embedding.shape}")
+
+            # new_data.append(layer_embedding[-1].numpy())
+        new_data.append(word_embedding)
 
     if verbose:
         print(f"\n--- Final Data Assembly ---")

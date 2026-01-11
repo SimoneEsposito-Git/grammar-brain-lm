@@ -6,6 +6,7 @@ from h5py._hl.group import Group
 import os
 import matplotlib.pyplot as plt
 
+
 def load_sparse_array(fname, varname):
     """Load a numpy sparse array from an hdf file
 
@@ -25,9 +26,14 @@ def load_sparse_array(fname, varname):
 
     """
     with h5py.File(fname) as hf:
-        data = (hf['%s_data'%varname], hf['%s_indices'%varname], hf['%s_indptr'%varname])
-        sparsemat = scipy.sparse.csr_matrix(data, shape=hf['%s_shape'%varname])
+        data = (
+            hf["%s_data" % varname],
+            hf["%s_indices" % varname],
+            hf["%s_indptr" % varname],
+        )
+        sparsemat = scipy.sparse.csr_matrix(data, shape=hf["%s_shape" % varname])
     return sparsemat
+
 
 def map_to_flat(voxels, mapper_file):
     """Generate flatmap image for an individual subject from voxel array
@@ -50,9 +56,9 @@ def map_to_flat(voxels, mapper_file):
     By Mark Lescroart
 
     """
-    pixmap = load_sparse_array(mapper_file, 'voxel_to_flatmap')
-    with h5py.File(mapper_file, mode='r') as hf:
-        pixmask = hf['flatmap_mask'][()]
+    pixmap = load_sparse_array(mapper_file, "voxel_to_flatmap")
+    with h5py.File(mapper_file, mode="r") as hf:
+        pixmask = hf["flatmap_mask"][()]
     badmask = np.array(pixmap.sum(1) > 0).ravel()
     img = (np.nan * np.ones(pixmask.shape)).astype(voxels.dtype)
     mimg = (np.nan * np.ones(badmask.shape)).astype(voxels.dtype)
@@ -60,14 +66,16 @@ def map_to_flat(voxels, mapper_file):
     img[pixmask] = mimg
     return img.T[::-1]
 
+
 def plot_correlation_on_flatmap(
     subject: str,
     modality: str,
     mode: str,
     r: np.ndarray,
     r_sig: np.ndarray,
+    mapper_path: str,
     save_fig: bool = True,
-    fdir: str = ".",
+    contrast=False,
 ):
     """
     Plot correlation values on a flatmap representation for a given subject and modality.
@@ -82,24 +90,15 @@ def plot_correlation_on_flatmap(
         r_sig (np.ndarray): Array of significant correlation coefficients (filtered by statistical threshold).
         save_fig (bool, optional): Whether to save the figure to disk. Defaults to True.
         fdir (str, optional): Directory path where mapper files are located. Defaults to ".".
-    Returns:
-        None
-    Side Effects:
-        - Creates 'outputs' directory if it doesn't exist
-        - Saves numpy arrays of correlation values and flatmap to disk
-        - Saves visualization as PNG file if save_fig is True
-        - Displays the plot using plt.show()
-    Note:
-        - Uses a hot colormap with white for bad values and gray (#555555) for values below minimum
-        - Both plots use vmin=0 and vmax=0.4 for consistent scaling
-        - Output files are saved with naming pattern: outputs/subject{subject}_{modality}_*.npy/png
     """
+    if contrast:
+        cmap_ = plt.cm.berlin
+    else:
+        cmap_ = plt.cm.hot
+        cmap_.set_bad(color="white")
+        cmap_.set_under(color="#555555")
 
-    cmap_ = plt.cm.hot
-    cmap_.set_bad(color="white")
-    cmap_.set_under(color="#555555")
-
-    map_file = os.path.join(fdir, "mappers", f"{subject}_mappers.hdf")
+    map_file = os.path.join(mapper_path, f"{subject}_mappers.hdf")
     flatmap_sig = map_to_flat(r_sig, map_file)
     flatmap = map_to_flat(r, map_file)
 
@@ -107,11 +106,18 @@ def plot_correlation_on_flatmap(
 
     fig, axes = plt.subplots(2, 1, figsize=(10, 12))
 
-    axes[0].imshow(flatmap_sig, cmap=cmap_, vmin=0, vmax=0.4)
+    if contrast:
+        vmin_ = -0.4
+        vmax_ = 0.4
+    else:
+        vmin_ = 0
+        vmax_ = 0.4
+
+    axes[0].imshow(flatmap_sig, cmap=cmap_, vmin=vmin_, vmax=vmax_)
     axes[0].axis("off")
     axes[0].set_title(f"Significant r values: subject {subject}, {modality}")
 
-    axes[1].imshow(flatmap, cmap=cmap_, vmin=0, vmax=0.4)
+    axes[1].imshow(flatmap, cmap=cmap_, vmin=vmin_, vmax=vmax_)
     axes[1].axis("off")
     axes[1].set_title(f"All r values: subject {subject}, {modality}")
 

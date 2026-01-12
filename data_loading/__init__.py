@@ -16,7 +16,7 @@ from .file_io import (
     ensure_directory_exists,
 )
 from .preprocessing import *
-from .validation import validate_stories, validate_embeddings, check_data_alignment
+from .validation import validate_embeddings, check_data_alignment
 from .config import *
 
 
@@ -49,6 +49,9 @@ def load_data(
 
     R_trn = load_responses("trn", response_path, subjects, modality)
     R_val = load_responses("val", response_path, subjects, modality)
+    
+    if mode == "english1000":
+        return R_trn, R_val, F_trn, F_val, stories_train, stories_val
 
     dataseqs = load_dataseqs(dataseq_path, stories)
 
@@ -89,7 +92,7 @@ def prepare_data(
     stories_trn,
     stories_val,
     use_keys,
-    delays=np.arange(0, 5),
+    delays=np.arange(0, 9, 2),
 ):
     """
     Execute a complete encoding model pipeline for fMRI/neural data analysis.
@@ -185,7 +188,4 @@ __all__ = [
     "EmbeddingManager",
     "TRFile",
     "DataSequence",
-    "load_stories",
-    "preprocess_data",
-    "validate_stories",
 ]

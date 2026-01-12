@@ -18,7 +18,7 @@ NUIS_READING = ["letters", "numletters", "word_length_std", "numwords", "pauses"
 NUIS_LISTENING = ["phonemes", "numphonemes", "numwords", "pauses"]
 
 # Default paths
-DEFAULT_OUTPUT_PATH = Path("output")
+DEFAULT_OUTPUT_PATH = Path("outputs")
 DEFAULT_DATA_DIR = Path("data")
 DEFAULT_DATASEQ_PATH = DEFAULT_DATA_DIR / "stimuli" / "data_sequences"
 DEFAULT_FEATURE_PATH = DEFAULT_DATA_DIR / "features"

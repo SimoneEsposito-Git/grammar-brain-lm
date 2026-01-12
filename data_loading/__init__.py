@@ -2,8 +2,8 @@ from typing import List, Optional
 from scipy.stats import zscore
 import numpy as np
 
-from .embeddings import EmbeddingManager
-from .contexts import ContextManager
+from .embedding_manager import EmbeddingManager
+from .context_manager import ContextManager
 from .data_sequence import DataSequence
 from .tr_file import TRFile
 
@@ -60,7 +60,7 @@ def load_data(
         mode=mode,
         stories=stories,
         dataseqs=dataseqs,
-        overwrite=overwrite_embeddings,
+        overwrite=overwrite_contexts,
         **kwargs
     )
 

@@ -14,7 +14,7 @@ from typing import Dict, List, Union
 from scipy.stats import zscore, pearsonr, norm
 from statsmodels.stats.multitest import fdrcorrection
 
-import plotting_utils as pu
+import scripts.plotting_utils as pu
 
 from data_loading import load_data, prepare_data, config
 from data_loading.validation import validate_prepared_data

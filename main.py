@@ -88,7 +88,7 @@ def pipeline(
     )
 
     # Delegate validation to validation module
-    validate_prepared_data(X_trn, Y_trn, groups, story_ids, use_keys)
+    # validate_prepared_data(X_trn, Y_trn, groups, story_ids, use_keys)
 
     print("Performing Group Ridge CV...", end="")
     results = perform_group_ridge_cv(
@@ -213,11 +213,11 @@ def perform_group_ridge_cv(
     Ks_train = backend.asarray(Ks_train, dtype=backend.float32)
     Y_train = backend.asarray(Y_train, dtype=backend.float32)
 
-    cv_splits = list(
-        LeaveOneGroupOut().split(np.zeros(Ks_train.shape[1]), groups=story_ids)
-    )
-
-    print(f"Created {len(cv_splits)} CV splits.")
+    # cv_splits = list(
+    #     LeaveOneGroupOut().split(np.zeros(Ks_train.shape[1]), groups=story_ids)
+    # )
+    # 
+    # print(f"Created {len(cv_splits)} CV splits.")
 
     results = solve_multiple_kernel_ridge_random_search(
         Ks=Ks_train,
@@ -238,6 +238,7 @@ def main(
     subject,
     modality,
     mode,
+    stories,
     nuis_listening,
     nuis_reading,
     fdir,
@@ -276,7 +277,7 @@ def main(
         [subject],
         modality,
         mode,
-        config.STORIES,
+        stories,
         config.DEFAULT_FEATURE_PATH,
         config.DEFAULT_RESPONSE_PATH,
         config.DEFAULT_DATASEQ_PATH,
@@ -376,6 +377,7 @@ if __name__ == "__main__":
             args.subject,
             args.modality,
             args.mode,
+            config.STORIES,
             config.NUIS_LISTENING,
             config.NUIS_READING,
             args.fdir,

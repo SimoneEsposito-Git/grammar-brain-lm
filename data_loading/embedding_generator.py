@@ -1,5 +1,5 @@
 import os
-from typing import Dict, List
+from typing import Dict, List, Union
 
 import numpy as np
 import torch
@@ -7,6 +7,7 @@ from transformers import AutoModel, AutoTokenizer, AutoConfig
 from tqdm import tqdm
 
 from .data_sequence import DataSequence
+from .context_generator import MaskedContext
 
 def mapdict(d, func):
     """Apply a function to all values in a dictionary."""
@@ -65,16 +66,18 @@ def get_contextual_embeddings(
     ds: DataSequence,
     model_name: str,
     layer_num: int,
-    contexts: List[str],
+    contexts: List[Union[str, MaskedContext]],
     verbose: bool = False,
     story_name: str = "",
     model_abbr: str = "",
+    normalize: bool = True,
 ):
     """Returns the embeddings from transformer models corresponding to the values in ds.
 
     args:
         ds: A DataSequence containing stimuli for which to retrieve embeddings.
         layer_num: The layer from which to extract embeddings.
+        contexts: List of contexts (can be strings or MaskedContext objects with attention masks).
         verbose: Print detailed logging information.
     """
     torch.manual_seed(0)
@@ -101,16 +104,29 @@ def get_contextual_embeddings(
 
     new_data = []
 
-    # Build input sequences for all words
+    # Build input sequences for all words, extracting context strings and mask info
     input_sequences = []
+    mask_indices_list = []
+    
     for word_index, word in enumerate(text):
         if contexts is None:
             raise ValueError("Context must be provided.")
-        if contexts[word_index] == "":
+        
+        # Extract context string and mask indices from MaskedContext or string
+        if isinstance(contexts[word_index], MaskedContext):
+            context_str = contexts[word_index].context
+            mask_indices = contexts[word_index].mask_indices
+        else:
+            context_str = contexts[word_index]
+            mask_indices = []
+        
+        if context_str == "":
             context = word
         else:
-            context = contexts[word_index] + " " + word
+            context = context_str + " " + word
+        
         input_sequences.append(context)
+        mask_indices_list.append(mask_indices)
 
     for word_index, context in enumerate(
         tqdm(input_sequences, desc=f"Generating {model_abbr} embeddings for {story_name}")
@@ -127,18 +143,55 @@ def get_contextual_embeddings(
             return_tensors="pt",
         )
 
-        context_only = tokenizer.encode(contexts[word_index], add_special_tokens=False)
+        # Extract context string (for reference)
+        if isinstance(contexts[word_index], MaskedContext):
+            context_only_str = contexts[word_index].context
+            word_level_mask_indices = contexts[word_index].mask_indices
+        else:
+            context_only_str = contexts[word_index]
+            word_level_mask_indices = []
+
+        context_only = tokenizer.encode(context_only_str, add_special_tokens=False) if context_only_str else []
         target_word_start_idx = len(context_only)
 
         tokens_tensor = encoded["input_ids"].to(device)
+        attention_mask = encoded["attention_mask"].to(device)
+        
         if verbose:
             print(
                 f"Tokenized context: {tokenizer.convert_ids_to_tokens(tokens_tensor[0])}"
             )
             print(f"Target word start index: {target_word_start_idx}")
+            print(f"Word-level mask indices: {word_level_mask_indices}")
+
+        # Convert word-level mask indices to token-level mask indices
+        token_level_mask = None
+        if word_level_mask_indices:
+            # Build token-level mask by tracking which tokens correspond to masked words
+            token_level_mask = torch.ones_like(attention_mask, dtype=torch.float32)
+            
+            # Track token position for each word in context
+            token_idx = 0
+            word_idx = 0
+            context_words = context_only_str.split() if context_only_str else []
+            
+            for word in context_words:
+                word_tokens = tokenizer.encode(word, add_special_tokens=False)
+                word_token_count = len(word_tokens)
+                
+                # If this word is in the mask list, mask its tokens
+                if word_idx in word_level_mask_indices:
+                    token_level_mask[0, token_idx:token_idx + word_token_count] = 0.0
+                
+                token_idx += word_token_count
+                word_idx += 1
 
         with torch.no_grad():
-            outputs = model(tokens_tensor)
+            # Pass attention mask to model
+            if token_level_mask is not None:
+                outputs = model(tokens_tensor, attention_mask=token_level_mask)
+            else:
+                outputs = model(tokens_tensor, attention_mask=attention_mask)
 
             try:
                 layer_embedding = outputs.hidden_states[layer_num][0].to("cpu")
@@ -164,7 +217,12 @@ def get_contextual_embeddings(
             if verbose:
                 print(f"Selected word embedding shape: {word_embedding.shape}")
 
-            # new_data.append(layer_embedding[-1].numpy())
+        if normalize:
+            # z-score normalization
+            word_embedding = (word_embedding - np.mean(word_embedding)) / (np.std(word_embedding) + 1e-10)
+            if verbose:
+                print("Applied z-score normalization to the embedding.")
+                
         new_data.append(word_embedding)
 
     if verbose:

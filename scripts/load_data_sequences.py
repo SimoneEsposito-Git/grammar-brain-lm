@@ -106,7 +106,7 @@ def create_data_sequences(
             print(f"    First 10 words: {ds.data[:10]}")
 
 
-def _load_trfiles(stories, tr_dir):
+def load_trfiles(stories, tr_dir):
     """Loads a dictionary of generic TRFiles (i.e. not specifically from the session
     in which the data was collected.. this should be fine) for the given stories.
 
@@ -133,7 +133,7 @@ def _load_trfiles(stories, tr_dir):
     return trdict
 
 
-def _load_textgrids(stories, tg_dir):
+def load_textgrids(stories, tg_dir):
     """Loads TextGrid files and extracts word timing information.
 
     Parameters:

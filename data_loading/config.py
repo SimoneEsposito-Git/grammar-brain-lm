@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # Experiment configurations
-STORIES = [
+STORIES_OLD = [
     "story_01",
     "story_02",
     "story_03",
@@ -14,6 +14,33 @@ STORIES = [
     "story_10",
     "story_11",
 ]
+
+STORIES = [
+    "alternateithicatom_en",
+    "avatar_en",
+    "howtodraw_en",
+    "legacy_en",
+    "life_en",
+    "myfirstdaywiththeyankees_en",
+    "naked_en",
+    "odetostepfather_en",
+    "souls_en",
+    "undertheinfluence_en",
+    "wheretheressmoke_en"
+]
+
+BAD_WORDS = [
+    "{BR}",
+    "{LG}",
+    "{LS}",
+    "{NS}",
+    "{CG}",
+    "",
+    "sp",
+    "sentence_start",
+    "sentence_end",
+]
+
 NUIS_READING = ["letters", "numletters", "word_length_std", "numwords", "pauses"]
 NUIS_LISTENING = ["phonemes", "numphonemes", "numwords", "pauses"]
 

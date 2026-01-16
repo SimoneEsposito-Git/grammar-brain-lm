@@ -4,7 +4,7 @@ import os
 import re
 import string
 
-from typing import List
+from typing import List, Dict, Tuple
 from tqdm import tqdm
 
 class TRFile(object):
@@ -114,7 +114,7 @@ def load_generic_trfiles(trfile_names, tr_dir="/auto/k1/huth/text/story/stimrepo
             print(e)
     return trdict
 
-def load_textgrid_transcripts(filenames, tg_dir):
+def load_textgrid_transcripts_(filenames, tg_dir):
     """Loads TextGrid files and extracts word timing information.
     
     Parameters:
@@ -174,3 +174,66 @@ def load_textgrid_transcripts(filenames, tg_dir):
         transcript_dict[filename] = words
     
     return transcript_dict
+
+def load_textgrid_transcripts(filenames: List[str], tg_dir: str) -> Dict[str, List[Tuple[float, float, str]]]:
+    """
+    Load word-level transcripts from TextGrid files.
+    
+    Args:
+        filenames: List of TextGrid filenames (without extension)
+        tg_dir: Directory containing the TextGrid files
+    
+    Returns:
+        Dictionary mapping filenames to lists of (xmin, xmax, word) tuples
+    """
+    result = {}
+    
+    for filename in filenames:
+        filepath = f"{tg_dir}/{filename}.TextGrid"
+        transcripts = []
+        
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Find item [2] section (words tier)
+            item2_match = re.search(r'item \[2\]:(.*?)(?=item \[|$)', content, re.DOTALL)
+            
+            if not item2_match:
+                result[filename] = []
+                continue
+            
+            item2_content = item2_match.group(1)
+            
+            # Extract all intervals with xmin, xmax, and text
+            interval_pattern = r'intervals \[\d+\]:(.*?)(?=intervals \[|\s+item \[|$)'
+            intervals = re.finditer(interval_pattern, item2_content, re.DOTALL)
+            
+            for interval_match in intervals:
+                interval_text = interval_match.group(1)
+                
+                # Extract xmin
+                xmin_match = re.search(r'xmin\s*=\s*([\d.]+)', interval_text)
+                xmin = float(xmin_match.group(1)) if xmin_match else None
+                
+                # Extract xmax
+                xmax_match = re.search(r'xmax\s*=\s*([\d.]+)', interval_text)
+                xmax = float(xmax_match.group(1)) if xmax_match else None
+                
+                # Extract text (word)
+                text_match = re.search(r'text\s*=\s*"([^"]*)"', interval_text)
+                word = text_match.group(1) if text_match else ""
+                
+                if xmin is not None and xmax is not None:
+                    transcripts.append((xmin, xmax, word))
+            
+            result[filename] = transcripts
+            
+        except FileNotFoundError:
+            print(f"Warning: File not found: {filepath}")
+            result[filename] = []
+        except Exception as e:
+            print(f"Error processing {filepath}: {e}")
+            result[filename] = []
+    
+    return result

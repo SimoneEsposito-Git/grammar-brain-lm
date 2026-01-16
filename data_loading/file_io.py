@@ -21,31 +21,40 @@ def load_contexts(contexts_file: str) -> Dict:
     return np.load(contexts_file, allow_pickle=True).item()
 
 
-def load_features(split: str, path: str) -> Dict:
+def load_features(split: str, path: str, stories: List[str] = None) -> Dict:
     """Load training features."""
     data = dict()
     fname = os.path.join(path, f"features_{split}.hdf")
     with h5py.File(fname) as hf:
-        for k in tqdm(
+        for i, k in enumerate(tqdm(
             hf.keys(), desc=f"Loading features for split: {split}", leave=False
-        ):
-            data[k] = {}
+        )):
+            if stories is not None:
+                story_key = stories[i]
+            else: 
+                story_key = k
+                
+            data[story_key] = {}
             for j in tqdm(hf[k].keys(), desc=f"{k}", leave=False):
-                data[k][j] = hf[k][j][()]
+                data[story_key][j] = hf[k][j][()]
     return data
 
 
-def load_responses(split: str, path: str, subjects: List[str], modality: str) -> Dict:
+def load_responses(split: str, path: str, subjects: List[str], modality: str, stories: List[str] = None) -> Dict:
     """Load fMRI response data for specified subjects."""
     data = dict()
     for subject in subjects:
         fname = os.path.join(path, f"{subject}_{modality}_fmri_data_{split}.hdf")
         with h5py.File(fname) as hf:
             data[subject] = dict()
-            for k in tqdm(
+            for i, k in enumerate(tqdm(
                 hf.keys(), desc=f"Loading responses for {subject}", leave=False
-            ):
-                data[subject][k] = hf[k][()]
+            )):
+                if stories is not None:
+                    story_key = stories[i]
+                else:
+                    story_key = k
+                data[subject][story_key] = hf[k][()]
 
     return data
 

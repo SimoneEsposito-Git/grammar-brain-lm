@@ -9,9 +9,11 @@ from pathlib import Path
 import sys
 from typing import List
 import os
+import re
 
 import numpy as np
 from tqdm import tqdm
+from typing import Dict, Tuple
 
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -104,9 +106,11 @@ def create_data_sequences(
             print(f"    TRs: {len(ds.split_inds) + 1}")
             print(f"    Bad words removed: {len(bad_words_indices)}")
             print(f"    First 10 words: {ds.data[:10]}")
+        dataseqs[story] = ds
+    return dataseqs
 
 
-def load_trfiles(stories, tr_dir):
+def _load_trfiles(stories, tr_dir):
     """Loads a dictionary of generic TRFiles (i.e. not specifically from the session
     in which the data was collected.. this should be fine) for the given stories.
 
@@ -132,8 +136,74 @@ def load_trfiles(stories, tr_dir):
             print(e)
     return trdict
 
+def _load_textgrids(stories: List[str], tg_dir: str) -> Dict[str, List[Tuple[float, float, str]]]:
+    """
+    Load word-level transcripts from TextGrid files.
+    
+    Args:
+        stories: List of story names (without extension)
+        tg_dir: Directory containing the TextGrid files
+    
+    Returns:
+        Dictionary mapping story names to lists of (xmin, xmax, word) tuples
+    """
+    result = {}
+    
+    for story in stories:
+        filepath = f"{tg_dir}/{story}.TextGrid"
+        transcripts = []
+        
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            if content.startswith("LEGACY_TEXTGRID"):
+                result[story] = _load_textgrids_legacy([story], tg_dir)[story]
+                continue
+            
+            # Find item [2] section (words tier)
+            item2_match = re.search(r'item \[2\]:(.*?)(?=item \[|$)', content, re.DOTALL)
+            
+            if not item2_match:
+                result[story] = []
+                continue
+            
+            item2_content = item2_match.group(1)
+            # print(item2_content)
+            # Extract all intervals with xmin, xmax, and text
+            interval_pattern = r'intervals \[\d+\]:(.*?)(?=intervals \[|\s+item \[|$)'
+            intervals = re.finditer(interval_pattern, item2_content, re.DOTALL)
+            
+            for interval_match in intervals:
+                interval_text = interval_match.group(1)
+                
+                # Extract xmin
+                xmin_match = re.search(r'xmin\s*=\s*([\d.]+)', interval_text)
+                xmin = float(xmin_match.group(1)) if xmin_match else None
+                
+                # Extract xmax
+                xmax_match = re.search(r'xmax\s*=\s*([\d.]+)', interval_text)
+                xmax = float(xmax_match.group(1)) if xmax_match else None
+                
+                # Extract text (word)
+                text_match = re.search(r'text\s*=\s*"([^"]*)"', interval_text)
+                word = text_match.group(1) if text_match else ""
+                
+                if xmin is not None and xmax is not None:
+                    transcripts.append((xmin, xmax, word))
+            
+            result[story] = transcripts
+            
+        except FileNotFoundError:
+            print(f"Warning: File not found: {filepath}")
+            result[story] = []
+        except Exception as e:
+            print(f"Error processing {filepath}: {e}")
+            result[story] = []
+    
+    return result
 
-def load_textgrids(stories, tg_dir):
+def _load_textgrids_legacy(stories, tg_dir):
     """Loads TextGrid files and extracts word timing information.
 
     Parameters:

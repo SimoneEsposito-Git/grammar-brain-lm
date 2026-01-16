@@ -79,7 +79,7 @@ class ContextGenerator:
             context_words = text[start_idx:i].tolist()
 
             if not context_words:
-                all_contexts.append("")
+                all_contexts.append(MaskedContext(context="", mask_indices=[]))
                 continue
 
             word_surprisals = self._calculate_surprisals(text, start_idx, context_words)

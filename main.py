@@ -6,6 +6,7 @@ from himalaya.kernel_ridge import MultipleKernelRidgeCV, linear_kernel
 from himalaya.kernel_ridge import (
     solve_multiple_kernel_ridge_random_search,
     predict_and_score_weighted_kernel_ridge,
+    predict_weighted_kernel_ridge
 )
 from himalaya.scoring import r2_score_split, correlation_score_split
 from himalaya.backend import set_backend
@@ -96,7 +97,7 @@ def pipeline(
         Y_trn,
         groups,
         story_ids,
-        alphas=np.logspace(5, 15, 11),
+        alphas=np.logspace(-10, 10, 21),
         use_keys=use_keys,
     )
     print(" ✓")
@@ -123,19 +124,64 @@ def pipeline(
     r, r2 = get_correlation(Ks_val, dual_weights, deltas, Y_val)
     print(" ✓")
 
-    T = X_val.shape[0]
-    z = r[0] * np.sqrt(T - 3)
-    pvals = 1 - norm.cdf(z)
-
-    print("Applying FDR correction...", end="")
-    sig_mask, _ = fdrcorrection(pvals, alpha=0.05)
+    print("Performing permutation tests...", end="")
+    predictions = predict_weighted_kernel_ridge(
+        Ks_val, dual_weights, deltas, split=False
+    )
+    predictions = backend.to_numpy(predictions)
+    Y_val = backend.to_numpy(Y_val)
+    
+    score_names = ["r", "r2"]
+    score_funcs = [correlation_score_split, r2_score_split]
+    pvalues = {}
+    for score_name, score_func in zip(score_names, score_funcs):
+        pvalues[score_name] = permutation_test(Y_val, predictions, score_func, 5000)
+        
+    # T = X_val.shape[0]
+    # # Fisher z-transformation: z_score = 0.5 * ln((1+r)/(1-r)) * sqrt(T-3)
+    # z = 0.5 * np.log((1 + r[0]) / (1 - r[0])) * np.sqrt(T - 3)
+    # pvals = 1 - norm.cdf(z)  
     print(" ✓")
+    
+    print("Applying FDR correction...", end="")
+    fdr = {}
+    for i in pvalues:
+        rejected, corrected_p_values = fdrcorrection(
+            np.array(pvalues[i])[0], alpha=0.05, method="indep", is_sorted=False
+        )
+        fdr[i] = {
+            "corrected_p_values": corrected_p_values,
+            "included_voxels_indices": get_bh_included_voxels(
+                np.array(pvalues[i])[0], 0.05
+            )[0],
+            "excluded_voxels_indices": get_bh_excluded_voxels(
+                np.array(pvalues[i])[0], 0.05
+            )[0],
+        }
+        
+    # sig_mask, _ = fdrcorrection(pvals, alpha=0.05)
+    print(" ✓")
+    return r[0], r2[0], fdr
+    # r_sig = r[0] * 
+    # r_score = np.nansum(r_sig)
+    # print("Pipeline execution complete.")
+    # return r[0], r2[0], r_sig, r_score
 
-    r_sig = r[0] * sig_mask
-    r_score = np.nansum(r_sig)
-    print("Pipeline execution complete.")
-    return r[0], r2[0], r_sig, r_score
+def get_bh_excluded_voxels(pvalues: np.ndarray,
+        alpha: float):
+    num_values = len(pvalues)
+    pvalues_sorted = np.sort(pvalues)
+    max_p = pvalues_sorted[np.argmax(np.where(pvalues_sorted <= ((np.arange(1, num_values + 1) / num_values) * alpha)))]
+    voxels_excluded = np.where(pvalues > max_p)
+    return voxels_excluded
 
+def get_bh_included_voxels(pvalues: np.ndarray,
+        alpha: float):
+    num_values = len(pvalues)
+    pvalues_sorted = np.sort(pvalues)
+    max_p = pvalues_sorted[np.argmax(np.where(pvalues_sorted <= ((np.arange(1, num_values + 1) / num_values) * alpha)))]
+    voxels_included = np.where(pvalues <= max_p)
+    return voxels_included
 
 def get_correlation(Ks_val, dual_weights, deltas, Y_val):
     r2 = backend.to_numpy(
@@ -164,6 +210,24 @@ def get_correlation(Ks_val, dual_weights, deltas, Y_val):
 
     return r, r2
 
+def permutation_test(responses_test, predictions, score_func, num_permutations=1000, permutation_block_size=10):
+    true_scores = score_func(responses_test, predictions)
+    if torch.cuda.is_available():
+        predictions = torch.clone(predictions)
+        num_get_true_score = torch.zeros(true_scores.shape)
+    else:
+        predictions = np.copy(predictions)
+        num_get_true_score = np.zeros(true_scores.shape)
+    num_TRs = predictions.shape[0]
+    blocks = np.array_split(np.arange(num_TRs), int(num_TRs / permutation_block_size))
+    for permutation_num in tqdm(range(num_permutations)):
+        _ = np.random.shuffle(blocks)
+        permutation_order = np.concatenate(blocks)
+        predictions = predictions[permutation_order]
+        shuffled_scores = score_func(responses_test, predictions)
+        num_get_true_score[shuffled_scores >= true_scores] += 1
+    pvalues = num_get_true_score / num_permutations
+    return pvalues, true_scores
 
 def perform_group_ridge_cv(
     X_train, Y_train, groups_delayed, story_ids, alphas, use_keys

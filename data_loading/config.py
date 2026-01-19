@@ -1,6 +1,18 @@
 from pathlib import Path
 
 # Experiment configurations
+SUBJECTS = [
+    "subject01",
+    "subject02",
+    "subject03",
+    "subject04",
+    "subject05",
+    "subject06",
+    "subject07",
+    "subject08",
+    "subject09",
+]
+
 STORIES_OLD = [
     "story_01",
     "story_02",
@@ -26,7 +38,7 @@ STORIES = [
     "odetostepfather_en",
     "souls_en",
     "undertheinfluence_en",
-    "wheretheressmoke_en"
+    "wheretheressmoke_en",
 ]
 
 BAD_WORDS = [
@@ -45,22 +57,22 @@ NUIS_READING = ["letters", "numletters", "word_length_std", "numwords", "pauses"
 NUIS_LISTENING = ["phonemes", "numphonemes", "numwords", "pauses"]
 
 # Default paths
-DEFAULT_OUTPUT_PATH = Path("outputs")
-DEFAULT_DATA_DIR = Path("data")
-DEFAULT_DATASEQ_PATH = DEFAULT_DATA_DIR / "stimuli" / "data_sequences"
-DEFAULT_TEXTGRID_PATH = DEFAULT_DATA_DIR / "stimuli" / "textgrids"
-DEFAULT_TRFILE_PATH = DEFAULT_DATA_DIR / "stimuli" / "trfiles"
-DEFAULT_FEATURE_PATH = DEFAULT_DATA_DIR / "features"
-DEFAULT_EMBEDDINGS_FILE = DEFAULT_FEATURE_PATH / "embeddings.npz"
-DEFAULT_CONTEXTS_FILE = DEFAULT_FEATURE_PATH / "contexts.npz"
-DEFAULT_RESPONSE_PATH = DEFAULT_DATA_DIR / "responses"
-DEFAULT_MAPPER_PATH = DEFAULT_DATA_DIR / "mappers"
+OUTPUT_DIR = Path("outputs")
+DATA_DIR = Path("data")
+DATASEQ_PATH = DATA_DIR / "stimuli" / "data_sequences"
+TEXTGRID_PATH = DATA_DIR / "stimuli" / "textgrids"
+TRFILE_PATH = DATA_DIR / "stimuli" / "trfiles"
+FEATURE_PATH = DATA_DIR / "features"
+EMBEDDINGS_FILE = FEATURE_PATH / "embeddings.npz"
+CONTEXTS_FILE = FEATURE_PATH / "contexts.npz"
+RESPONSE_PATH = DATA_DIR / "responses"
+MAPPER_PATH = DATA_DIR / "mappers"
 
 # Model configurations
-DEFAULT_MODEL = "openai-community/gpt2-large"
-DEFAULT_LAYER = 8
-DEFAULT_INTERP = "lanczos"
+MODEL = "openai-community/gpt2-large"
+LAYER = 8
+INTERP = "lanczos"
 
 # Processing parameters
-DEFAULT_BATCH_SIZE = 32
-DEFAULT_VERBOSE = False
+BATCH_SIZE = 32
+VERBOSE = False

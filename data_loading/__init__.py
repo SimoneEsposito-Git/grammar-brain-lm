@@ -162,12 +162,14 @@ def prepare_data(
     print(" ✓")
 
     print("Stacking responses...", end="")
+    Y_trn = {}
+    lens = {}
     Y_trn, lens = stack_responses(R_trn, stories_trn, 5, standardize=True)
     # ───────────────────────────────────────────────────────────────────
     # Output: Y_trn = (total_n_tr × n_voxels)
     # ───────────────────────────────────────────────────────────────────
 
-    Y_val = zscore(R_val[stories_val[0]].mean(0)[5:])
+    Y_val = {subject: zscore(R_val[subject][stories_val[0]].mean(0)[5:]) for subject in R_val.keys()}
     # ───────────────────────────────────────────────────────────────────
     # Output: Y_val = (n_tr × n_voxels)
     # ───────────────────────────────────────────────────────────────────
@@ -175,7 +177,7 @@ def prepare_data(
 
     print("Building feature groups...", end="")
     groups = build_feature_groups(F_trn[stories_trn[0]], use_keys, n_delays=len(delays))
-    story_ids = np.concatenate([np.full(Ld, i, dtype=int) for i, Ld in enumerate(lens)])
+    story_ids = {subject: np.concatenate([np.full(Ld, i, dtype=int) for i, Ld in enumerate(lens[subject])]) for subject in lens}
     print(" ✓")
 
     return X_trn, Y_trn, X_val, Y_val, groups, story_ids

@@ -17,11 +17,11 @@ def _run_mode_for_story(mode: str, story: str):
         MODALITY,
         mode,
         [story, config.STORIES[-1]],
-        config.DEFAULT_FEATURE_PATH,
-        config.DEFAULT_RESPONSE_PATH,
-        config.DEFAULT_DATASEQ_PATH,
-        config.DEFAULT_CONTEXTS_FILE,
-        config.DEFAULT_EMBEDDINGS_FILE,
+        config.FEATURE_PATH,
+        config.RESPONSE_PATH,
+        config.DATASEQ_PATH,
+        config.CONTEXTS_FILE,
+        config.EMBEDDINGS_FILE,
         overwrite_embeddings=False,
         overwrite_contexts=False,
         verbose=True,
@@ -44,7 +44,7 @@ def _run_mode_for_story(mode: str, story: str):
 
 
 def _write_results_csv(results, stories):
-    out_dir = config.DEFAULT_OUTPUT_PATH / "results"
+    out_dir = config.OUTPUT_DIR / "results"
     os.makedirs(out_dir, exist_ok=True)
     csv_path = out_dir / f"{SUBJECT}_{MODALITY}_english1000_vs_baseline.csv"
 
@@ -84,7 +84,7 @@ def run_single_story(story: str):
             print(f"Mode: {mode}, Story: {story}, r_sig mean: {r_sig_mean}")
 
     # Load existing CSV if present to keep previous rows
-    out_dir = config.DEFAULT_OUTPUT_PATH / "results"
+    out_dir = config.OUTPUT_DIR / "results"
     os.makedirs(out_dir, exist_ok=True)
     csv_path = out_dir / f"{SUBJECT}_{MODALITY}_english1000_vs_baseline.csv"
     existing = {}

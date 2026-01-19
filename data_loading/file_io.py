@@ -44,17 +44,22 @@ def load_responses(split: str, path: str, subjects: List[str], modality: str, st
     """Load fMRI response data for specified subjects."""
     data = dict()
     for subject in subjects:
-        fname = os.path.join(path, f"{subject}_{modality}_fmri_data_{split}.hdf")
-        with h5py.File(fname) as hf:
-            data[subject] = dict()
-            for i, k in enumerate(tqdm(
-                hf.keys(), desc=f"Loading responses for {subject}", leave=False
-            )):
-                if stories is not None:
-                    story_key = stories[i]
-                else:
-                    story_key = k
-                data[subject][story_key] = hf[k][()]
+        try:
+            fname = os.path.join(path, f"{subject}_{modality}_fmri_data_{split}.hdf")
+            with h5py.File(fname) as hf:
+                data[subject] = dict()
+                for i, k in enumerate(tqdm(
+                    hf.keys(), desc=f"Loading responses for {subject}", leave=False
+                )):
+                    if stories is not None:
+                        story_key = stories[i]
+                    else:
+                        story_key = k
+                    data[subject][story_key] = hf[k][()]
+                    if data[subject][story_key].ndim == 3:
+                        data[subject][story_key] = data[subject][story_key][0]
+        except OSError as e:
+            print(f"Error loading data for subject {subject}: {e}")
 
     return data
 

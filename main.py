@@ -208,16 +208,14 @@ def perform_group_ridge(X_train, Y_train, groups_delayed, story_ids, alphas, use
     print("Model fitting complete.")
     return results
 
-def main(
-    subject,
+def pipeline(
+    subjects,
     modality,
     mode,
     stories,
     nuis_listening,
     nuis_reading,
-    fdir,
-    trfile_dir,
-    transcript_dir,
+    root_dir,
     verbose=False,
     **kwargs,
 ):
@@ -231,9 +229,7 @@ def main(
         mode (str): Feature extraction mode to use for analysis.
         nuis_listening (list): List of nuisance regressor keys to use for listening modality.
         nuis_reading (list): List of nuisance regressor keys to use for reading modality.
-        fdir (str): Base directory path for loading/saving files.
-        trfile_dir (str): Directory path containing TR (repetition time) files.
-        transcript_dir (str): Directory path containing transcript files.
+        root_dir (str): Root directory path for data and outputs.
     Returns:
         None: Results are saved to disk as .npz files and correlation plots.
     Side Effects:
@@ -252,17 +248,17 @@ def main(
     # ===============================================================
     
     R_trn, R_val, F_trn, F_val, stories_trn, stories_val = load_data(
-        [subject],
+        subjects,
         modality,
         mode,
         stories,
-        config.DEFAULT_FEATURE_PATH,
-        config.DEFAULT_RESPONSE_PATH,
-        config.DEFAULT_DATASEQ_PATH,
-        config.DEFAULT_CONTEXTS_FILE,
-        config.DEFAULT_EMBEDDINGS_FILE,
+        root_dir / config.FEATURE_PATH,
+        root_dir / config.RESPONSE_PATH,
+        root_dir / config.DATASEQ_PATH,
+        root_dir / config.CONTEXTS_FILE,
+        root_dir / config.EMBEDDINGS_FILE,
         verbose=verbose,
-        surprisals_file = config.DEFAULT_FEATURE_PATH / f"surprisals.npy",
+        surprisals_file = root_dir / config.FEATURE_PATH / f"surprisals.npy",
         **kwargs,
     )
 
@@ -271,8 +267,8 @@ def main(
     # ===============================================================
     use_keys = [mode] + (nuis_listening if modality == "listening" else nuis_reading)
     X_trn, Y_trn, X_val, Y_val, groups, story_ids = prepare_data(
-        R_trn[subject],
-        R_val[subject],
+        R_trn,
+        R_val,
         F_trn,
         F_val,
         stories_trn,
@@ -285,58 +281,59 @@ def main(
     # Perform Ridge Regression with Cross-Validation
     # ===============================================================
 
-    results_grr = {}
-    try:
-        results_grr = np.load(config.DEFAULT_OUTPUT_PATH / "debug"/"grr_results.npy", allow_pickle=True).item()
-    except (FileNotFoundError, EOFError):
-        results_grr = {}
+    results = {}
     
-    if mode not in results_grr.keys():
-        print("Performing Group Ridge CV...", end="")
-        results_grr[mode] = perform_group_ridge(
-            X_trn,
-            Y_trn,
-            groups,
-            story_ids,
-            alphas=np.logspace(-10, 10, 21),
-            use_keys=use_keys,
-        )
-        np.save(config.DEFAULT_OUTPUT_PATH / "debug"/"grr_results.npy", results_grr)
-        print(" ✓")
+    for subject in subjects:
+        print(f"Performing Group Ridge CV for {subject}...", end="")
+        try:
+            results_grr = perform_group_ridge(
+                X_trn,
+                Y_trn[subject],
+                groups,
+                story_ids[subject],
+                alphas=np.logspace(-10, 10, 21),
+                use_keys=use_keys,
+            )
+            print(" ✓")
+        except Exception as e:
+            print(f" ✗ Failed: {e}")
+            print("Skipping to next subject.")
+            continue
         
-    r, r2, predictions = get_scores_and_prediction(results_grr[mode], X_val, X_trn, Y_val, groups, use_keys)
+        r, r2, predictions = get_scores_and_prediction(results_grr, X_val, X_trn, Y_val[subject], groups, use_keys)
     
-    # ===============================================================
-    # Permutation Tests and FDR Correction
-    # ===============================================================
-    
-    print("Performing permutation tests...", end="")
-    score_names = ["r"]
-    score_funcs = [correlation_score_split]
-    pvalues = {}
-    for score_name, score_func in zip(score_names, score_funcs):
-        pvalues[score_name] = permutation_test(Y_val, predictions, score_func, 2500)
-    print(" ✓")
-    
-    fdr = apply_fdr_correction(pvalues)
+        # ===============================================================
+        # Permutation Tests and FDR Correction
+        # ===============================================================
 
-    results = {
-        "r": r,
-        "r2": r2,
-        "pvalues": pvalues,
-        "fdr": fdr,
-    }
-    
+        print("Performing permutation tests...", end="")
+        score_names = ["r"]
+        score_funcs = [correlation_score_split]
+        pvalues = {}
+        for score_name, score_func in zip(score_names, score_funcs):
+            pvalues[score_name] = permutation_test(Y_val[subject], predictions, score_func, 2500)
+        print(" ✓")
+
+        fdr = apply_fdr_correction(pvalues)
+
+        results[subject] = {
+            "r": r,
+            "r2": r2,
+            "pvalues": pvalues,
+            "fdr": fdr,
+        }
+
     # ===============================================================
     # Save and Visualize Results
     # ===============================================================
+    example_subject = subjects[0]
     
-    averaged_r = np.nanmean(results["r"][results["fdr"]["r"]["included_voxels_indices"]], axis=0)
+    averaged_r = np.nanmean(results[example_subject]["r"][results[example_subject]["fdr"]["r"]["included_voxels_indices"]], axis=0)
     print(f"Averaged correlation (r) across voxels: {np.nanmean(averaged_r)}")
 
     # Save results to npz file
     results_file = (
-        f"{config.DEFAULT_OUTPUT_PATH}/results/{subject}_{modality}_{mode}"
+        f"{root_dir}/{config.OUTPUT_DIR}/results/{example_subject}_{modality}_{mode}"
     )
     print(f"Saving results to {results_file}")
     try:
@@ -346,7 +343,7 @@ def main(
         return
     
     pu.plot_correlation_on_flatmap(
-        subject, modality, mode, results, config.DEFAULT_MAPPER_PATH
+        example_subject, modality, mode, results, root_dir / config.MAPPER_PATH
     )
 
     print("Script execution finished.")
@@ -405,7 +402,7 @@ if __name__ == "__main__":
 
         args = parser.parse_args()
 
-        main(
+        pipeline(
             args.subject,
             args.modality,
             args.mode,
@@ -413,8 +410,6 @@ if __name__ == "__main__":
             config.NUIS_LISTENING,
             config.NUIS_READING,
             args.fdir,
-            args.trfile_dir,
-            args.transcript_dir,
             args.verbose,
             **eval(args.kwargs),
         )

@@ -4,6 +4,7 @@ import numpy as np
 from tqdm import tqdm
 import random
 from typing import Dict, List
+from english_words import get_english_words_set
 
 class ContextGenerator:
     def __init__(self):
@@ -31,11 +32,11 @@ class ContextGenerator:
         **kwargs,
     ) -> List[str]:  # Change return type to List[str]
         """Generate contexts based on the specified mode."""
-        if mode == "random":
-            return self._generate_random_context(ds, window_size, seed, story)
+        if mode == "shuffle":
+            return self._generate_shuffle_context(ds, window_size, seed, story)
         elif mode == "baseline":
             return self._generate_baseline_context(ds, window_size, story)
-        elif mode in ["peak", "valley"]:
+        elif mode in ["remove-peaks", "remove-valleys", "peaks-only", "valleys-only"]:
             surprisals_file = kwargs.get('surprisals_file', None)
             try:
                 word_surprisals = np.load(surprisals_file, allow_pickle=True).item()
@@ -47,7 +48,9 @@ class ContextGenerator:
             np.save(surprisals_file, word_surprisals)
             return self._generate_entropy_masks(ds, word_surprisals[story], window_size, amount, mode, story)
         elif mode == "zero":
-            return ["XXXX" for _ in range(len(ds.data))]  # Return <MASK> for zero mode
+            return ["XXXX" for _ in range(len(ds.data))]  
+        elif mode == "random":
+            return self._generate_random_context(ds, window_size, seed, story)
         else:
             raise ValueError(f"Unknown mode: {mode}")
 
@@ -71,7 +74,7 @@ class ContextGenerator:
         word_surprisals: np.ndarray,
         window_size: int = 10,
         amount: int = 3,
-        mode: str = "peak",
+        mode: str = "remove-peaks",
         story: str = "",
     ) -> List[str]:  # Change return type to List[str]
         """Generate contexts with entropy-based masking."""
@@ -88,9 +91,9 @@ class ContextGenerator:
                 all_contexts.append('') 
                 continue
             
-            if mode == "peak":
+            if mode == "remove-peaks" or mode == "valleys-only":
                 word_surprisals[0] = 0  # Ensure first word is not masked
-            if mode == "valley":
+            if mode == "remove-valleys" or mode == "peaks-only":
                 word_surprisals[0] = float('inf')  # Ensure first word is not masked
             
             amount_ = min(amount, len(context_words)-1)
@@ -171,12 +174,16 @@ class ContextGenerator:
         """Get indices to mask based on surprisal values."""
         if amount == 0:
             return np.array([], dtype=int)
-        if mode == "peak":
+        if mode == "remove-peaks":
             return word_surprisals.argsort()[-amount:]
-        else:
+        elif mode == "remove-valleys":
             return word_surprisals.argsort()[:amount]
+        elif mode == "peaks-only":
+            return word_surprisals.argsort()[:-amount]
+        elif mode == "valleys-only":
+            return word_surprisals.argsort()[amount:]
 
-    def _generate_random_context(
+    def _generate_shuffle_context(
         self, ds, window_size: int = 10, seed: int = 42, story: str = ""
     ) -> List[str]:
         """Generate randomized contexts for null hypothesis testing."""
@@ -188,7 +195,7 @@ class ContextGenerator:
 
         for i in tqdm(
             range(len(text)),
-            desc=f"Generating Random Context (Null Hypothesis) for: {story}",
+            desc=f"Generating Random Context for: {story}",
         ):
             start_idx = max(0, i - window_size)
             context_words = text[start_idx:i].tolist()
@@ -200,4 +207,21 @@ class ContextGenerator:
             random.shuffle(context_words)
             all_contexts.append(" ".join(context_words))
 
+        return all_contexts
+
+    def _generate_random_context(
+        self, ds, context_size: int = 10, seed: int = 42, story: str = ""
+    ):
+        random.seed(seed)
+        np.random.seed(seed)
+        dict_set = get_english_words_set(['gcide'], lower=True)
+
+        text = np.array(ds.data)
+        all_contexts = []
+        
+        for i in tqdm(
+            range(len(text)),
+            desc=f"Generating Random Context for: {story}",
+        ):
+            all_contexts.append(" ".join(random.sample(list(dict_set), context_size)))
         return all_contexts

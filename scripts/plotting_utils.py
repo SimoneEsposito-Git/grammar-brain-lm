@@ -73,6 +73,7 @@ def plot_correlation_on_flatmap(
     mode: str,
     results: dict,
     mapper_path: str,
+    output_dir: str = "outputs/images",
     show_nonsig: bool = True,
     save_fig: bool = True,
     contrast=False,
@@ -99,7 +100,7 @@ def plot_correlation_on_flatmap(
         cmap_.set_under(color="#555555")
 
     r = results["r"]
-    r_sig = r 
+    r_sig = r.copy()
     r_sig[results['fdr']['r']['excluded_voxels_indices']] = 0
     
     map_file = os.path.join(mapper_path, f"{subject}_mappers.hdf")
@@ -135,13 +136,13 @@ def plot_correlation_on_flatmap(
         cbar.set_ticks([vmin_, vmax_])
     
     if show_nonsig:
-        axes[1].imshow(flatmap, cmap=cmap_, vmin=vmin_, vmax=vmax_)
+        axes[1].imshow(flatmap, cmap="berlin", vmin=-0.4, vmax=0.4)
         axes[1].axis("off")
         axes[1].set_title(f"All r values: subject {subject}, {modality}")
 
     plt.tight_layout()
     if save_fig:
-        output_path = f"outputs/images/{subject}_{modality}_{mode}.png"
+        output_path = os.path.join(output_dir, f"{subject}_{modality}_{mode}.png")
         print(f"Saving flatmap figure to {output_path}")
         plt.savefig(output_path, bbox_inches="tight", dpi=150)
     plt.show()

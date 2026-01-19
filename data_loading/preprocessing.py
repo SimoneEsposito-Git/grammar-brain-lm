@@ -47,14 +47,18 @@ def stack_responses(R, stories, trim, standardize=True):
     Returns:
         Tuple of (stacked responses array, array of story lengths).
     """
-    Ys, lens = [], []
-    for s in stories:
-        Y = np.asarray(R[s][trim:])
-        if standardize:
-            Y = (Y - Y.mean(0)) / (Y.std(0) + 1e-8)
-        Ys.append(np.nan_to_num(Y))
-        lens.append(Y.shape[0])
-    return np.vstack(Ys), np.array(lens)
+    Ys, lens = {}, {}
+    for subject in R.keys():
+        Ys[subject] = []
+        lens[subject] = []
+        for s in stories:
+            Y = np.asarray(R[subject][s][trim:])
+            if standardize:
+                Y = (Y - Y.mean(0)) / (Y.std(0) + 1e-8)
+            Ys[subject].append(np.nan_to_num(Y))
+            lens[subject].append(Y.shape[0])
+        
+    return {subject: np.vstack(Ys[subject]) for subject in Ys}, {subject: np.array(lens[subject]) for subject in lens}
 
 
 def delay_features(X, stories, delays, circpad=False):

@@ -1,6 +1,9 @@
 import os
 import numpy as np
 import argparse
+import torch
+from tqdm import tqdm 
+import time
 
 from himalaya.kernel_ridge import MultipleKernelRidgeCV, linear_kernel
 from himalaya.kernel_ridge import (
@@ -25,87 +28,11 @@ try:
 except Exception as e:
     print(f"Warning: Failed to set CUDA backend: {e}. Falling back to numpy backend.")
     backend = set_backend("numpy")
-
-
-def pipeline(
-    R_trn,
-    R_val,
-    F_trn,
-    F_val,
-    stories_trn,
-    stories_val,
-    use_keys,
-    delays=np.arange(0, 5),
-):
-    """
-    Execute a complete encoding model pipeline for fMRI/neural data analysis.
-
-    This function performs feature preparation, ridge regression with cross-validation,
-    and validation set evaluation to predict neural responses from stimulus features.
-
-    Args:
-        R_trn: Training responses (dict or array-like).
-            Neural responses for training stories.
-        R_val: Validation responses (dict or array-like).
-            Neural responses for validation story.
-        F_trn: Training features (dict).
-            Feature matrices for training stories, keyed by story identifier.
-        F_val: Validation features (dict).
-            Feature matrices for validation story, keyed by story identifier.
-        stories_trn: List of story identifiers for training set.
-        stories_val: List of story identifiers for validation set.
-        use_keys: List of feature group keys to use in the model.
-            Specifies which feature types to include.
-        delays: Array-like, default=np.arange(0, 5).
-            Time delays (in TRs) to apply to features for hemodynamic lag modeling.
-
-    Returns:
-        tuple: A 4-tuple containing:
-            - r (ndarray): Pearson correlation coefficients between predicted and actual
-              responses for each voxel/channel.
-            - r2 (ndarray): Coefficient of determination (R²) for each voxel/channel.
-            - r_sig (ndarray): Correlation coefficients masked by FDR-corrected significance
-              (alpha=0.05). Non-significant values set to 0.
-            - r_score (float): Sum of significant correlations, used as an overall
-              performance metric.
-
-    Notes:
-        - Features are standardized and delayed before model fitting.
-        - Responses are z-scored and trimmed (first 5 TRs removed).
-        - Group Ridge regression with cross-validation is performed across training stories.
-        - Statistical significance is assessed using Fisher z-transformation and FDR correction.
-        - The function assumes specific data structures and compatible backend operations.
-    """
-
-    X_trn, Y_trn, X_val, Y_val, groups, story_ids = prepare_data(
-        R_trn,
-        R_val,
-        F_trn,
-        F_val,
-        stories_trn,
-        stories_val,
-        use_keys,
-        delays=delays,
-    )
-
-    # Delegate validation to validation module
-    # validate_prepared_data(X_trn, Y_trn, groups, story_ids, use_keys)
-
-    print("Performing Group Ridge CV...", end="")
-    results = perform_group_ridge_cv(
-        X_trn,
-        Y_trn,
-        groups,
-        story_ids,
-        alphas=np.logspace(-10, 10, 21),
-        use_keys=use_keys,
-    )
-    print(" ✓")
-
+    
+def get_scores_and_prediction(results_grr, X_val, X_trn, Y_val, groups, use_keys):
     print("Processing results...", end="")
-    deltas = backend.to_numpy(results[0])
-    dual_weights = backend.to_numpy(results[1])
-    cv_scores = backend.to_numpy(results[2])
+    deltas = backend.to_numpy(results_grr[0])
+    dual_weights = backend.to_numpy(results_grr[1])
     print(" ✓")
 
     print("Computing kernels for validation...", end="")
@@ -128,40 +55,32 @@ def pipeline(
     predictions = predict_weighted_kernel_ridge(
         Ks_val, dual_weights, deltas, split=False
     )
-    predictions = backend.to_numpy(predictions)
+    #predictions = backend.to_numpy(predictions)
     Y_val = backend.to_numpy(Y_val)
     
-    score_names = ["r", "r2"]
-    score_funcs = [correlation_score_split, r2_score_split]
-    pvalues = {}
-    for score_name, score_func in zip(score_names, score_funcs):
-        pvalues[score_name] = permutation_test(Y_val, predictions, score_func, 5000)
-        
-    # T = X_val.shape[0]
-    # # Fisher z-transformation: z_score = 0.5 * ln((1+r)/(1-r)) * sqrt(T-3)
-    # z = 0.5 * np.log((1 + r[0]) / (1 - r[0])) * np.sqrt(T - 3)
-    # pvals = 1 - norm.cdf(z)  
-    print(" ✓")
-    
+    return r[0], r2[0], predictions
+
+def apply_fdr_correction(pvalues):
     print("Applying FDR correction...", end="")
     fdr = {}
     for i in pvalues:
+        pvalue = backend.to_numpy(pvalues[i][0])
         rejected, corrected_p_values = fdrcorrection(
-            np.array(pvalues[i])[0], alpha=0.05, method="indep", is_sorted=False
+            pvalue, alpha=0.05, method="indep", is_sorted=False
         )
         fdr[i] = {
             "corrected_p_values": corrected_p_values,
             "included_voxels_indices": get_bh_included_voxels(
-                np.array(pvalues[i])[0], 0.05
+                pvalue, 0.05
             )[0],
             "excluded_voxels_indices": get_bh_excluded_voxels(
-                np.array(pvalues[i])[0], 0.05
+                pvalue, 0.05
             )[0],
         }
         
     # sig_mask, _ = fdrcorrection(pvals, alpha=0.05)
     print(" ✓")
-    return r[0], r2[0], fdr
+    return fdr
     # r_sig = r[0] * 
     # r_score = np.nansum(r_sig)
     # print("Pipeline execution complete.")
@@ -214,7 +133,7 @@ def permutation_test(responses_test, predictions, score_func, num_permutations=1
     true_scores = score_func(responses_test, predictions)
     if torch.cuda.is_available():
         predictions = torch.clone(predictions)
-        num_get_true_score = torch.zeros(true_scores.shape)
+        num_get_true_score = torch.zeros(true_scores.shape, device=predictions.device)
     else:
         predictions = np.copy(predictions)
         num_get_true_score = np.zeros(true_scores.shape)
@@ -229,9 +148,7 @@ def permutation_test(responses_test, predictions, score_func, num_permutations=1
     pvalues = num_get_true_score / num_permutations
     return pvalues, true_scores
 
-def perform_group_ridge_cv(
-    X_train, Y_train, groups_delayed, story_ids, alphas, use_keys
-):
+def perform_group_ridge(X_train, Y_train, groups_delayed, story_ids, alphas, use_keys):
     """
     Perform group ridge regression with cross-validation using multiple kernel ridge regression.
     This function splits the input data into groups based on delayed features, converts them into
@@ -277,12 +194,6 @@ def perform_group_ridge_cv(
     Ks_train = backend.asarray(Ks_train, dtype=backend.float32)
     Y_train = backend.asarray(Y_train, dtype=backend.float32)
 
-    # cv_splits = list(
-    #     LeaveOneGroupOut().split(np.zeros(Ks_train.shape[1]), groups=story_ids)
-    # )
-    # 
-    # print(f"Created {len(cv_splits)} CV splits.")
-
     results = solve_multiple_kernel_ridge_random_search(
         Ks=Ks_train,
         Y=Y_train,
@@ -296,7 +207,6 @@ def perform_group_ridge_cv(
 
     print("Model fitting complete.")
     return results
-
 
 def main(
     subject,
@@ -337,6 +247,10 @@ def main(
         - The score is calculated as the sum of significant correlations
     """
 
+    # ===============================================================
+    # Load Data
+    # ===============================================================
+    
     R_trn, R_val, F_trn, F_val, stories_trn, stories_val = load_data(
         [subject],
         modality,
@@ -348,12 +262,15 @@ def main(
         config.DEFAULT_CONTEXTS_FILE,
         config.DEFAULT_EMBEDDINGS_FILE,
         verbose=verbose,
+        surprisals_file = config.DEFAULT_FEATURE_PATH / f"surprisals.npy",
         **kwargs,
     )
 
+    # ===============================================================
+    # Prepare Data (Delays, Stacking, etc.)
+    # ===============================================================
     use_keys = [mode] + (nuis_listening if modality == "listening" else nuis_reading)
-
-    r, r2, r_sig, score = pipeline(
+    X_trn, Y_trn, X_val, Y_val, groups, story_ids = prepare_data(
         R_trn[subject],
         R_val[subject],
         F_trn,
@@ -361,24 +278,75 @@ def main(
         stories_trn,
         stories_val,
         use_keys,
+        delays=np.arange(0, 9, 2),
     )
 
-    print(
-        f"Total significant correlation score for subject {subject}, modality {modality}, mode {mode}: {score}"
-    )
+    # ===============================================================
+    # Perform Ridge Regression with Cross-Validation
+    # ===============================================================
+
+    results_grr = {}
+    try:
+        results_grr = np.load(config.DEFAULT_OUTPUT_PATH / "debug"/"grr_results.npy", allow_pickle=True).item()
+    except (FileNotFoundError, EOFError):
+        results_grr = {}
+    
+    if mode not in results_grr.keys():
+        print("Performing Group Ridge CV...", end="")
+        results_grr[mode] = perform_group_ridge(
+            X_trn,
+            Y_trn,
+            groups,
+            story_ids,
+            alphas=np.logspace(-10, 10, 21),
+            use_keys=use_keys,
+        )
+        np.save(config.DEFAULT_OUTPUT_PATH / "debug"/"grr_results.npy", results_grr)
+        print(" ✓")
+        
+    r, r2, predictions = get_scores_and_prediction(results_grr[mode], X_val, X_trn, Y_val, groups, use_keys)
+    
+    # ===============================================================
+    # Permutation Tests and FDR Correction
+    # ===============================================================
+    
+    print("Performing permutation tests...", end="")
+    score_names = ["r"]
+    score_funcs = [correlation_score_split]
+    pvalues = {}
+    for score_name, score_func in zip(score_names, score_funcs):
+        pvalues[score_name] = permutation_test(Y_val, predictions, score_func, 2500)
+    print(" ✓")
+    
+    fdr = apply_fdr_correction(pvalues)
+
+    results = {
+        "r": r,
+        "r2": r2,
+        "pvalues": pvalues,
+        "fdr": fdr,
+    }
+    
+    # ===============================================================
+    # Save and Visualize Results
+    # ===============================================================
+    
+    averaged_r = np.nanmean(results["r"][results["fdr"]["r"]["included_voxels_indices"]], axis=0)
+    print(f"Averaged correlation (r) across voxels: {np.nanmean(averaged_r)}")
 
     # Save results to npz file
     results_file = (
-        f"{config.DEFAULT_OUTPUT_PATH}/results/{subject}_{modality}_{mode}.npz"
+        f"{config.DEFAULT_OUTPUT_PATH}/results/{subject}_{modality}_{mode}"
     )
     print(f"Saving results to {results_file}")
     try:
-        np.savez(results_file, score=score, r=r, r_sig=r_sig, r2=r2)
+        np.save(results_file, results)
     except FileNotFoundError as e:
         print(f"Error saving results: {e}. Please ensure the directory exists.")
         return
+    
     pu.plot_correlation_on_flatmap(
-        subject, modality, mode, r, r_sig, config.DEFAULT_MAPPER_PATH
+        subject, modality, mode, results, config.DEFAULT_MAPPER_PATH
     )
 
     print("Script execution finished.")

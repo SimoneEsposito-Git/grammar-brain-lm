@@ -44,11 +44,11 @@ def load_data(
     stories_train = stories[:-1]
     stories_val = stories[-1:]
 
-    F_trn = load_features("trn", feature_path)
-    F_val = load_features("val", feature_path)
+    F_trn = load_features("trn", feature_path, stories=stories_train)
+    F_val = load_features("val", feature_path, stories=stories_val)
 
-    R_trn = load_responses("trn", response_path, subjects, modality)
-    R_val = load_responses("val", response_path, subjects, modality)
+    R_trn = load_responses("trn", response_path, subjects, modality, stories=stories_train)
+    R_val = load_responses("val", response_path, subjects, modality, stories=stories_val)
     
     if mode == "english1000":
         return R_trn, R_val, F_trn, F_val, stories_train, stories_val

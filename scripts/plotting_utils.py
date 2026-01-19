@@ -71,9 +71,9 @@ def plot_correlation_on_flatmap(
     subject: str,
     modality: str,
     mode: str,
-    r: np.ndarray,
-    r_sig: np.ndarray,
+    results: dict,
     mapper_path: str,
+    show_nonsig: bool = True,
     save_fig: bool = True,
     contrast=False,
 ):
@@ -98,28 +98,46 @@ def plot_correlation_on_flatmap(
         cmap_.set_bad(color="white")
         cmap_.set_under(color="#555555")
 
+    r = results["r"]
+    r_sig = r 
+    r_sig[results['fdr']['r']['excluded_voxels_indices']] = 0
+    
     map_file = os.path.join(mapper_path, f"{subject}_mappers.hdf")
     flatmap_sig = map_to_flat(r_sig, map_file)
     flatmap = map_to_flat(r, map_file)
 
     os.makedirs("outputs", exist_ok=True)
 
-    fig, axes = plt.subplots(2, 1, figsize=(10, 12))
+    if show_nonsig:
+        fig, axes = plt.subplots(2, 1, figsize=(10, 12))
+    else:
+        fig, axes = plt.subplots(1, 1, figsize=(8, 6))
+        axes = [axes]
 
     if contrast:
-        vmin_ = -0.4
-        vmax_ = 0.4
+        vmin_ = -0.2
+        vmax_ = 0.2
     else:
         vmin_ = 0
         vmax_ = 0.4
 
     axes[0].imshow(flatmap_sig, cmap=cmap_, vmin=vmin_, vmax=vmax_)
     axes[0].axis("off")
-    axes[0].set_title(f"Significant r values: subject {subject}, {modality}")
-
-    axes[1].imshow(flatmap, cmap=cmap_, vmin=vmin_, vmax=vmax_)
-    axes[1].axis("off")
-    axes[1].set_title(f"All r values: subject {subject}, {modality}")
+    axes[0].set_title(f"Significant r values: subject {subject}, {modality}. mode: {mode} (FDR corrected, permutation test)")
+    
+    if contrast:
+        im = axes[0].imshow(flatmap_sig, cmap=cmap_, vmin=vmin_, vmax=vmax_)
+        cbar = plt.colorbar(im, ax=axes[0], label='Correlation Difference(r1 - r2)', orientation='horizontal', pad=0.05, shrink=0.6)
+        cbar.set_ticks([vmin_, vmax_])
+    else:
+        im = axes[0].imshow(flatmap_sig, cmap=cmap_, vmin=vmin_, vmax=vmax_)
+        cbar = plt.colorbar(im, ax=axes[0], label='Correlation Coefficient (r)', orientation='horizontal', pad=0.05, shrink=0.6)
+        cbar.set_ticks([vmin_, vmax_])
+    
+    if show_nonsig:
+        axes[1].imshow(flatmap, cmap=cmap_, vmin=vmin_, vmax=vmax_)
+        axes[1].axis("off")
+        axes[1].set_title(f"All r values: subject {subject}, {modality}")
 
     plt.tight_layout()
     if save_fig:

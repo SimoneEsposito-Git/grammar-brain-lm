@@ -51,7 +51,6 @@ def get_scores_and_prediction(results_grr, X_val, X_trn, Y_val, groups, use_keys
     r, r2 = get_correlation(Ks_val, dual_weights, deltas, Y_val)
     print(" ✓")
 
-    print("Performing permutation tests...", end="")
     predictions = predict_weighted_kernel_ridge(
         Ks_val, dual_weights, deltas, split=False
     )
@@ -282,9 +281,15 @@ def pipeline(
     # ===============================================================
 
     results = {}
-    
+    results_file = os.path.join(
+        str(root_dir), config.OUTPUT_DIR, "results", f"{modality}-{mode}.npy"
+    )
+    os.makedirs(os.path.dirname(results_file), exist_ok=True)
+
     for subject in subjects:
-        print(f"Performing Group Ridge CV for {subject}...", end="")
+        print("="*60)
+        print(f"Performing Group Ridge CV for {subject}")
+        print("="*60)
         try:
             results_grr = perform_group_ridge(
                 X_trn,
@@ -294,9 +299,8 @@ def pipeline(
                 alphas=np.logspace(-10, 10, 21),
                 use_keys=use_keys,
             )
-            print(" ✓")
         except Exception as e:
-            print(f" ✗ Failed: {e}")
+            print(f"Failed: {e}")
             print("Skipping to next subject.")
             continue
         
@@ -323,6 +327,23 @@ def pipeline(
             "fdr": fdr,
         }
 
+        # ===============================================================
+        # Incremental save per subject with merging
+        # ===============================================================
+        try:
+            existing_results = {}
+            if os.path.exists(results_file):
+                try:
+                    loaded = np.load(results_file, allow_pickle=True)
+                    existing_results = loaded.item() if hasattr(loaded, "item") else {}
+                except Exception as e:
+                    print(f"Warning: Could not load existing results file {results_file}: {e}")
+            existing_results[subject] = results[subject]
+            np.save(results_file, existing_results)
+            print(f"Saved merged results to {results_file}")
+        except Exception as e:
+            print(f"Error saving results for {subject}: {e}")
+
     # ===============================================================
     # Save and Visualize Results
     # ===============================================================
@@ -332,21 +353,12 @@ def pipeline(
     print(f"Averaged correlation (r) across voxels: {np.nanmean(averaged_r)}")
 
     # Save results to npz file
-    results_file = (
-        f"{root_dir}/{config.OUTPUT_DIR}/results/{example_subject}_{modality}_{mode}"
-    )
-    print(f"Saving results to {results_file}")
-    try:
-        np.save(results_file, results)
-    except FileNotFoundError as e:
-        print(f"Error saving results: {e}. Please ensure the directory exists.")
-        return
-    
     pu.plot_correlation_on_flatmap(
         example_subject, modality, mode, results, root_dir / config.MAPPER_PATH
     )
 
     print("Script execution finished.")
+    print(f"Results saved incrementally to {results_file}")
 
 
 if __name__ == "__main__":

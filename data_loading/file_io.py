@@ -56,7 +56,7 @@ def load_responses(split: str, path: str, subjects: List[str], modality: str, st
                     else:
                         story_key = k
                     data[subject][story_key] = hf[k][()]
-                    if data[subject][story_key].ndim == 3:
+                    if data[subject][story_key].ndim == 3 and data[subject][story_key].shape[0] == 1:
                         data[subject][story_key] = data[subject][story_key][0]
         except OSError as e:
             print(f"Error loading data for subject {subject}: {e}")

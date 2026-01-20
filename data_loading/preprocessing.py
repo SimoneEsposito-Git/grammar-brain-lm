@@ -52,7 +52,7 @@ def stack_responses(R, stories, trim, standardize=True):
         Ys[subject] = []
         lens[subject] = []
         for s in stories:
-            Y = np.asarray(R[subject][s][trim:])
+            Y = np.asarray(R[subject][s][:-trim])
             if standardize:
                 Y = (Y - Y.mean(0)) / (Y.std(0) + 1e-8)
             Ys[subject].append(np.nan_to_num(Y))

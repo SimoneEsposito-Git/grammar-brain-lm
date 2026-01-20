@@ -169,7 +169,7 @@ def prepare_data(
     # Output: Y_trn = (total_n_tr × n_voxels)
     # ───────────────────────────────────────────────────────────────────
 
-    Y_val = {subject: zscore(R_val[subject][stories_val[0]].mean(0)[5:]) for subject in R_val.keys()}
+    Y_val = {subject: zscore(R_val[subject][stories_val[0]].mean(0)[:-5]) for subject in R_val.keys()}
     # ───────────────────────────────────────────────────────────────────
     # Output: Y_val = (n_tr × n_voxels)
     # ───────────────────────────────────────────────────────────────────

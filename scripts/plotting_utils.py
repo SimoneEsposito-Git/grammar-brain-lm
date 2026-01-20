@@ -139,6 +139,9 @@ def plot_correlation_on_flatmap(
         axes[1].imshow(flatmap, cmap="berlin", vmin=-0.4, vmax=0.4)
         axes[1].axis("off")
         axes[1].set_title(f"All r values: subject {subject}, {modality}")
+        im = axes[1].imshow(flatmap, cmap="berlin", vmin=-1*vmax_, vmax=vmax_)
+        cbar = plt.colorbar(im, ax=axes[1], label='Correlation Coefficient (r)', orientation='horizontal', pad=0.05, shrink=0.6)
+        cbar.set_ticks([-1*vmax_, vmax_])
 
     plt.tight_layout()
     if save_fig:

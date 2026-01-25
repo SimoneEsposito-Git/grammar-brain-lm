@@ -74,6 +74,7 @@ def plot_correlation_on_flatmap(
     results: dict,
     mapper_path: str,
     output_dir: str = "outputs/images",
+    show_plot: str = True,
     show_nonsig: bool = True,
     save_fig: bool = True,
     contrast=False,
@@ -120,7 +121,8 @@ def plot_correlation_on_flatmap(
         vmax_ = 0.2
     else:
         vmin_ = 0
-        vmax_ = 0.4
+        vmin_ns = -0.5
+        vmax_ = 0.5
 
     axes[0].imshow(flatmap_sig, cmap=cmap_, vmin=vmin_, vmax=vmax_)
     axes[0].axis("off")
@@ -136,16 +138,18 @@ def plot_correlation_on_flatmap(
         cbar.set_ticks([vmin_, vmax_])
     
     if show_nonsig:
-        axes[1].imshow(flatmap, cmap="berlin", vmin=-0.4, vmax=0.4)
+        axes[1].imshow(flatmap, cmap="berlin", vmin=vmin_ns, vmax=vmax_)
         axes[1].axis("off")
         axes[1].set_title(f"All r values: subject {subject}, {modality}")
-        im = axes[1].imshow(flatmap, cmap="berlin", vmin=-1*vmax_, vmax=vmax_)
+        im = axes[1].imshow(flatmap, cmap="berlin", vmin=vmin_ns, vmax=vmax_)
         cbar = plt.colorbar(im, ax=axes[1], label='Correlation Coefficient (r)', orientation='horizontal', pad=0.05, shrink=0.6)
-        cbar.set_ticks([-1*vmax_, vmax_])
+        cbar.set_ticks([vmin_ns, vmax_])
 
     plt.tight_layout()
     if save_fig:
         output_path = os.path.join(output_dir, f"{subject}_{modality}_{mode}.png")
         print(f"Saving flatmap figure to {output_path}")
         plt.savefig(output_path, bbox_inches="tight", dpi=150)
-    plt.show()
+        
+    if show_plot:
+        plt.show()

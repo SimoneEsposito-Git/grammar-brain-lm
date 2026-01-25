@@ -5,6 +5,7 @@ from tqdm import tqdm
 import random
 from typing import Dict, List
 from english_words import get_english_words_set
+import spacy
 
 class ContextGenerator:
     def __init__(self):
@@ -47,6 +48,9 @@ class ContextGenerator:
                 word_surprisals[story] = self._calculate_surprisals(ds.data, story)
             np.save(surprisals_file, word_surprisals)
             return self._generate_entropy_masks(ds, word_surprisals[story], window_size, amount, mode, story)
+        elif "remove-pos" in mode:
+            pos_tags = kwargs.get('pos', [])
+            return self._generate_pos_masks(ds, pos_tags, window_size, story)
         elif mode == "zero":
             return ["XXXX" for _ in range(len(ds.data))]  
         elif mode == "random":
@@ -56,7 +60,7 @@ class ContextGenerator:
 
     def _generate_baseline_context(
         self, ds, window_size: int = 10, story: str = ""
-    ) -> List[str]:  # Change return type to List[str]
+    ) -> List[str]:
         """Generate baseline contexts with preceding words."""
         text = np.array(ds.data)
         all_contexts = []
@@ -76,7 +80,7 @@ class ContextGenerator:
         amount: int = 3,
         mode: str = "remove-peaks",
         story: str = "",
-    ) -> List[str]:  # Change return type to List[str]
+    ) -> List[str]:
         """Generate contexts with entropy-based masking."""
         self._load_model()
 
@@ -106,6 +110,93 @@ class ContextGenerator:
 
         return all_contexts
 
+    def _generate_pos_masks(
+        self,
+        ds,
+        pos_tags: List[str],
+        window_size: int = 10,
+        story: str = "",
+    ) -> List[str]:
+        """Generate contexts with POS-based masking."""
+        nlp = spacy.load("en_core_web_sm")
+        text = np.array(ds.data)
+        
+        # First pass: identify POS tags for the entire text
+        full_text = " ".join(text.tolist())
+        doc = nlp(full_text)
+        
+        # Map original word indices to their POS tags by matching tokens to words
+        word_pos_tags = []
+        word_idx = 0
+        for token in doc:
+            if word_idx < len(text):
+                word_pos_tags.append(token.pos_.lower())
+                word_idx += 1
+        
+        all_contexts = []
+        stop_idx = 0
+        for i in tqdm(
+            range(len(text)),
+            desc=f"Generating POS-based masks for story: {story}",
+        ):
+            start_idx = max(0, stop_idx - window_size)
+            context_tokens = doc[start_idx:stop_idx]
+            context_words = []
+            stop_idx += nlp(str(text[i])).__len__() # Update stop_idx based on token count of current word
+            
+            # Mask words in context window that match the specified POS tags
+            for token in context_tokens:
+                if token.pos_.lower() in pos_tags:
+                    token_idx = token.i - start_idx
+                    context_words.append("XXXX")
+                else:
+                    context_words.append(token.text)
+            all_contexts.append(" ".join(context_words))
+        return all_contexts
+    
+    def _generate_shuffle_context(
+        self, ds, window_size: int = 10, seed: int = 42, story: str = ""
+    ) -> List[str]:
+        """Generate randomized contexts for null hypothesis testing."""
+        random.seed(seed)
+        np.random.seed(seed)
+
+        text = np.array(ds.data)
+        all_contexts = []
+
+        for i in tqdm(
+            range(len(text)),
+            desc=f"Generating Random Context for: {story}",
+        ):
+            start_idx = max(0, i - window_size)
+            context_words = text[start_idx:i].tolist()
+
+            if not context_words:
+                all_contexts.append("")
+                continue
+
+            random.shuffle(context_words)
+            all_contexts.append(" ".join(context_words))
+
+        return all_contexts
+
+    def _generate_random_context(
+        self, ds, context_size: int = 10, seed: int = 42, story: str = ""
+    ) -> List[str]:
+        random.seed(seed)
+        np.random.seed(seed)
+        dict_set = get_english_words_set(['gcide'], lower=True)
+
+        text = np.array(ds.data)
+        all_contexts = []
+        
+        for i in tqdm(
+            range(len(text)),
+            desc=f"Generating Random Context for: {story}",
+        ):
+            all_contexts.append(" ".join(random.sample(list(dict_set), context_size)))
+        return all_contexts
+    
     def _calculate_surprisals(
         self, text: np.ndarray, story: str = ""
     ) -> np.ndarray:
@@ -182,46 +273,3 @@ class ContextGenerator:
             return word_surprisals.argsort()[:-amount]
         elif mode == "valleys-only":
             return word_surprisals.argsort()[amount:]
-
-    def _generate_shuffle_context(
-        self, ds, window_size: int = 10, seed: int = 42, story: str = ""
-    ) -> List[str]:
-        """Generate randomized contexts for null hypothesis testing."""
-        random.seed(seed)
-        np.random.seed(seed)
-
-        text = np.array(ds.data)
-        all_contexts = []
-
-        for i in tqdm(
-            range(len(text)),
-            desc=f"Generating Random Context for: {story}",
-        ):
-            start_idx = max(0, i - window_size)
-            context_words = text[start_idx:i].tolist()
-
-            if not context_words:
-                all_contexts.append("")
-                continue
-
-            random.shuffle(context_words)
-            all_contexts.append(" ".join(context_words))
-
-        return all_contexts
-
-    def _generate_random_context(
-        self, ds, context_size: int = 10, seed: int = 42, story: str = ""
-    ):
-        random.seed(seed)
-        np.random.seed(seed)
-        dict_set = get_english_words_set(['gcide'], lower=True)
-
-        text = np.array(ds.data)
-        all_contexts = []
-        
-        for i in tqdm(
-            range(len(text)),
-            desc=f"Generating Random Context for: {story}",
-        ):
-            all_contexts.append(" ".join(random.sample(list(dict_set), context_size)))
-        return all_contexts

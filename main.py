@@ -216,6 +216,7 @@ def pipeline(
     nuis_reading,
     root_dir,
     verbose=False,
+    override=False,
     **kwargs,
 ):
     """
@@ -280,16 +281,29 @@ def pipeline(
     # Perform Ridge Regression with Cross-Validation
     # ===============================================================
 
-    results = {}
-    results_file = os.path.join(
-        str(root_dir), config.OUTPUT_DIR, "results", f"{modality}-{mode}.npy"
-    )
-    os.makedirs(os.path.dirname(results_file), exist_ok=True)
-
     for subject in subjects:
+        # Initialize or load existing results
+        results = {}
+        existing_results = {}
+        
+        results_file = os.path.join(
+            str(root_dir), config.OUTPUT_DIR, "results", modality, f"{subject}.npy"
+        )
+        os.makedirs(os.path.dirname(results_file), exist_ok=True)
+        if os.path.exists(results_file):
+            try:
+                loaded = np.load(results_file, allow_pickle=True)
+                existing_results = loaded.item() if hasattr(loaded, "item") else {}
+            except Exception as e:
+                print(f"Warning: Could not load existing results file {results_file}: {e}")
+        
+        if mode in existing_results and not override:
+            print(f"Results for mode '{mode}' already exist for subject '{subject}'. Skipping...")
+            continue
+        
         print("="*60)
         print(f"Performing Group Ridge CV for {subject}")
-        print("="*60)
+        print("-"*60)
         try:
             results_grr = perform_group_ridge(
                 X_trn,
@@ -320,7 +334,7 @@ def pipeline(
 
         fdr = apply_fdr_correction(pvalues)
 
-        results[subject] = {
+        results = {
             "r": r,
             "r2": r2,
             "pvalues": pvalues,
@@ -331,14 +345,7 @@ def pipeline(
         # Incremental save per subject with merging
         # ===============================================================
         try:
-            existing_results = {}
-            if os.path.exists(results_file):
-                try:
-                    loaded = np.load(results_file, allow_pickle=True)
-                    existing_results = loaded.item() if hasattr(loaded, "item") else {}
-                except Exception as e:
-                    print(f"Warning: Could not load existing results file {results_file}: {e}")
-            existing_results[subject] = results[subject]
+            existing_results[mode] = results
             np.save(results_file, existing_results)
             print(f"Saved merged results to {results_file}")
         except Exception as e:
@@ -347,15 +354,17 @@ def pipeline(
     # ===============================================================
     # Save and Visualize Results
     # ===============================================================
-    example_subject = subjects[0]
+    if results == {}:
+        print("No results to process for visualization.")
+        return
     
-    averaged_r = np.nanmean(results[example_subject]["r"][results[example_subject]["fdr"]["r"]["included_voxels_indices"]], axis=0)
+    averaged_r = np.nanmean(results["r"][results["fdr"]["r"]["included_voxels_indices"]], axis=0)
     print(f"Averaged correlation (r) across voxels: {np.nanmean(averaged_r)}")
 
     # Save results to npz file
-    pu.plot_correlation_on_flatmap(
-        example_subject, modality, mode, results, root_dir / config.MAPPER_PATH
-    )
+    # pu.plot_correlation_on_flatmap(
+    #     example_subject, modality, mode, results, root_dir / config.MAPPER_PATH
+    # )
 
     print("Script execution finished.")
     print(f"Results saved incrementally to {results_file}")

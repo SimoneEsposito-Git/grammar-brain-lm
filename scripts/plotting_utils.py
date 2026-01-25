@@ -111,7 +111,7 @@ def plot_correlation_on_flatmap(
     os.makedirs("outputs", exist_ok=True)
 
     if show_nonsig:
-        fig, axes = plt.subplots(2, 1, figsize=(10, 12))
+        fig, axes = plt.subplots(1, 2, figsize=(16, 6))
     else:
         fig, axes = plt.subplots(1, 1, figsize=(8, 6))
         axes = [axes]
@@ -126,7 +126,7 @@ def plot_correlation_on_flatmap(
 
     axes[0].imshow(flatmap_sig, cmap=cmap_, vmin=vmin_, vmax=vmax_)
     axes[0].axis("off")
-    axes[0].set_title(f"Significant r values: subject {subject}, {modality}. mode: {mode} (FDR corrected, permutation test)")
+    axes[0].set_title(f"Significant r values: subject {subject}, {modality}. (FDR corrected, permutation test)")
     
     if contrast:
         im = axes[0].imshow(flatmap_sig, cmap=cmap_, vmin=vmin_, vmax=vmax_)

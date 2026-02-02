@@ -12,6 +12,7 @@ from .file_io import (
     load_contexts,
     load_features,
     load_responses,
+    load_results,
     save_results,
     ensure_directory_exists,
 )
@@ -186,6 +187,7 @@ def prepare_data(
 # Export main components
 __all__ = [
     "load_data",
+    "load_results",
     "prepare_data",
     "EmbeddingManager",
     "TRFile",

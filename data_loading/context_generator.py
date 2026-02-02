@@ -49,7 +49,7 @@ class ContextGenerator:
             np.save(surprisals_file, word_surprisals)
             return self._generate_entropy_masks(ds, word_surprisals[story], window_size, amount, mode, story)
         elif "remove-pos" in mode:
-            pos_tags = kwargs.get('pos', [])
+            pos_tags = mode.split("-")[2:]  # Extract POS tags from mode string
             return self._generate_pos_masks(ds, pos_tags, window_size, story)
         elif mode == "zero":
             return ["XXXX" for _ in range(len(ds.data))]  

@@ -20,7 +20,7 @@ from statsmodels.stats.multitest import fdrcorrection
 
 import scripts.plotting_utils as pu
 
-from data_loading import load_data, prepare_data, config
+from data_loading import load_data, prepare_data, config, load_results, save_results
 from data_loading.validation import validate_prepared_data
 
 try:
@@ -284,18 +284,12 @@ def pipeline(
     for subject in subjects:
         # Initialize or load existing results
         results = {}
-        existing_results = {}
         
-        results_file = os.path.join(
-            str(root_dir), config.OUTPUT_DIR, "results", modality, f"{subject}.npy"
+        existing_results = load_results(
+            root_dir / config.OUTPUT_DIR / "results",
+            modality,
+            subject
         )
-        os.makedirs(os.path.dirname(results_file), exist_ok=True)
-        if os.path.exists(results_file):
-            try:
-                loaded = np.load(results_file, allow_pickle=True)
-                existing_results = loaded.item() if hasattr(loaded, "item") else {}
-            except Exception as e:
-                print(f"Warning: Could not load existing results file {results_file}: {e}")
         
         if mode in existing_results and not override:
             print(f"Results for mode '{mode}' already exist for subject '{subject}'. Skipping...")
@@ -346,8 +340,17 @@ def pipeline(
         # ===============================================================
         try:
             existing_results[mode] = results
-            np.save(results_file, existing_results)
-            print(f"Saved merged results to {results_file}")
+            save_results(
+                root_dir / config.OUTPUT_DIR / "results",
+                modality,
+                subject,
+                existing_results
+            )
+            pu.plot_correlation_on_flatmap(
+                subject, modality, mode, results, 
+                root_dir / config.MAPPER_PATH, root_dir / config.OUTPUT_DIR / "images",
+                False, True, True, False
+            )
         except Exception as e:
             print(f"Error saving results for {subject}: {e}")
 
@@ -367,8 +370,7 @@ def pipeline(
     # )
 
     print("Script execution finished.")
-    print(f"Results saved incrementally to {results_file}")
-
+    return results
 
 if __name__ == "__main__":
     try:

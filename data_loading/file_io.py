@@ -63,10 +63,28 @@ def load_responses(split: str, path: str, subjects: List[str], modality: str, st
 
     return data
 
+def load_results(results_dir: str, modality: str, subject: str) -> Any:
+    """Load processed results from file."""
+    results_file = os.path.join(
+        str(results_dir), modality, f"{subject}.npy"
+    )
+    os.makedirs(os.path.dirname(results_file), exist_ok=True)
+    if os.path.exists(results_file):
+        try:
+            loaded = np.load(results_file, allow_pickle=True)
+            existing_results = loaded.item() if hasattr(loaded, "item") else {}
+        except Exception as e:
+            print(f"Warning: Could not load existing results file {results_file}: {e}")
+    return existing_results
 
-def save_results(output_file: str, data: Any):
+def save_results(results_dir: str, modality: str, subject: str, data: Any):
     """Save processed results to file."""
-    np.savez(output_file, data=data)
+    results_file = os.path.join(
+        str(results_dir), modality, f"{subject}.npy"
+    )
+    os.makedirs(os.path.dirname(results_file), exist_ok=True)
+    np.save(results_file, data)
+    print(f"Saved results to {results_file}")
 
 
 def ensure_directory_exists(filepath: str):

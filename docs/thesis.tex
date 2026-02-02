@@ -1,0 +1,66 @@
+%laden der Präambel mit Latexbefehlen/-klassen
+\input{00-preambel}
+
+\begin{document}
+%globale Einstellung für Quellcodedarstellung mit listings
+\lstset{basicstyle=\scriptsize\ttfamily,language={[LaTeX]TeX}}
+
+%Seitennummerierung römisch
+\pagenumbering{roman}
+
+%Titelseiten
+\input{00-titel}
+
+\cleardoubleemptypage
+
+%Inhaltsverzeichnis
+%Es werden nur Kapitel und Abschnitte angezeigt. Unterabschnitte (/subsection) nicht mehr. Sonst tocdepth höher einstellen.
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+\cleardoubleemptypage
+
+%Seitennummerierung zurücksetzen und arabisch
+\pagestyle{headings}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%Beginn der Kapitel
+\input{01-einleitung}
+	
+\cleardoublepage	
+\input{02-latex}
+
+%weitere Kapitel hier einfügen
+
+%\cleardoublepage
+%\input{03-neues-kapitel}
+
+%Literatur
+\cleardoublepage
+\printbibliography[heading=bibintoc]
+
+%Bildnachweise
+\cleardoublepage
+\input{97-bildnachweis}
+
+%Abkürzungs- und Symbolverzeichnis
+\cleardoublepage
+\input{98-nomenklatur}
+
+%Abbildungsverzeichnis
+\cleardoublepage
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+
+%Tabellenverzeichnis
+\cleardoublepage
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+
+%Anhang
+\cleardoublepage
+\appendix
+\input{99-anhang}
+
+\end{document}

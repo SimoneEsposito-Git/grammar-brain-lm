@@ -58,6 +58,7 @@ NUIS_LISTENING = ["phonemes", "numphonemes", "numwords", "pauses"]
 
 # Default paths
 OUTPUT_DIR = Path("outputs")
+IMAGES_DIR = OUTPUT_DIR / "images"
 DATA_DIR = Path("data")
 DATASEQ_PATH = DATA_DIR / "stimuli" / "data_sequences"
 TEXTGRID_PATH = DATA_DIR / "stimuli" / "textgrids"

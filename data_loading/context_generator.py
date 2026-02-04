@@ -47,12 +47,12 @@ class ContextGenerator:
             if story not in word_surprisals:
                 word_surprisals[story] = self._calculate_surprisals(ds.data, story)
             np.save(surprisals_file, word_surprisals)
-            return self._generate_entropy_masks(ds, word_surprisals[story], window_size, amount, mode, story)
+            return self._generate_surprise_masks(ds, word_surprisals[story], window_size, amount, mode, story)
         elif "remove-pos" in mode:
             pos_tags = mode.split("-")[2:]  # Extract POS tags from mode string
             return self._generate_pos_masks(ds, pos_tags, window_size, story)
         elif mode == "zero":
-            return ["XXXX" for _ in range(len(ds.data))]  
+            return ["" for _ in range(len(ds.data))]  
         elif mode == "random":
             return self._generate_random_context(ds, window_size, seed, story)
         else:
@@ -72,7 +72,7 @@ class ContextGenerator:
             all_contexts.append(context)  # Append the context string directly
         return all_contexts
 
-    def _generate_entropy_masks(
+    def _generate_surprise_masks(
         self,
         ds,
         word_surprisals: np.ndarray,

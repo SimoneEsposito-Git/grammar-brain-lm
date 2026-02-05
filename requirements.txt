@@ -1,0 +1,8 @@
+torch
+statsmodels
+matplotlib
+h5py
+transformers
+spacy
+english-words
+himalaya

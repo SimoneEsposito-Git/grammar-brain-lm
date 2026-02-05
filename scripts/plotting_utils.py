@@ -226,6 +226,8 @@ def plot_loser_takes_it_all(
     mapper_dir: str,
     output_dir: str,
     title: str = "Loser Takes It All Map",
+    mask = None,
+    regions: bool = False,
     show: bool = True,
     save: bool = True,
 ):
@@ -241,13 +243,11 @@ def plot_loser_takes_it_all(
     for corr in correlations:
         flatmaps.append(map_to_flat(corr, map_file))
     
-    # Stack them: (num_models, height, width)
     stacked = np.stack(flatmaps, axis=0)
     
-    # 3. Logic: Find the index of the MINIMUM value for each voxel
-    # We use nanargmin to ignore NaNs, but we'll mask them later
+    # 3. Logic: Find the index of the SECOND MINIMUM value for each voxel
     with np.errstate(invalid='ignore'):
-        loser_indices = np.argmin(stacked, axis=0)
+        loser_indices = np.argsort(stacked, axis=0)[1]  # Second-lowest index
     
     # 4. Create the RGB Image
     h, w = flatmaps[0].shape
@@ -257,16 +257,23 @@ def plot_loser_takes_it_all(
     brain_mask = ~np.all(np.isnan(stacked), axis=0)
     background_mask = map_to_flat(np.ones_like(correlations[0]), map_file) == 1 
     
+    rgb_map[background_mask] = [0, 0, 0]
     for i, hex_color in enumerate(colors):
         rgb = mcolors.to_rgb(hex_color)
         # Apply color where this index is the loser AND it's part of the brain
         mask = (loser_indices == i) & brain_mask
-        rgb_map[mask] = rgb
+        # Scale color by correlation (0 = black, 0.4 = full color)
+        correlation_strength = np.nan_to_num(np.clip(flatmaps[i][mask] / 0.4, 0, 1))
+        rgb_map[mask] = np.array(rgb) * correlation_strength[:, np.newaxis]
 
     # Set background (non-brain) to a very dark grey for contrast
-    
+    # rgb_map[background_mask] = [0, 0, 0, 1]  # Opaque black background
     rgb_map[~brain_mask] = [1,1,1]
     rgb_map[background_mask & ~brain_mask] = [0, 0, 0]
+    
+    if mask is not None:
+        flat_mask = map_to_flat(mask, map_file)
+        rgb_map[~flat_mask.astype(bool)] = [0,0,0]  # Set masked-out areas to white
 
     # 5. Plotting
     fig, ax = plt.subplots(figsize=(12, 8))
@@ -275,7 +282,8 @@ def plot_loser_takes_it_all(
     ax.set_title(f"{title}\nSubject: {subject} | Modality: {modality}", 
                  color='white', fontsize=14, pad=20)
 
-    _overlay_flatmap_rois(ax, map_file)
+    if regions:
+        _overlay_flatmap_rois(ax, map_file)
     # 6. Create Categorical Legend
     legend_elements = [
         Line2D([0], [0], marker='s', color='none', label=f'{names[i]}',

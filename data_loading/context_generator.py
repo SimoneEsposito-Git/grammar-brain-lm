@@ -48,6 +48,9 @@ class ContextGenerator:
                 word_surprisals[story] = self._calculate_surprisals(ds.data, story)
             np.save(surprisals_file, word_surprisals)
             return self._generate_surprise_masks(ds, word_surprisals[story], window_size, amount, mode, story)
+        elif "remove-pos-pct" in mode:
+            pos_tags = mode.split("-")[3:]  # Extract POS tags from mode string like "remove-pos-pct-VERB"
+            return self._generate_pos_pct_masks(ds, pos_tags, window_size, story)
         elif "remove-pos" in mode:
             pos_tags = mode.split("-")[2:]  # Extract POS tags from mode string
             return self._generate_pos_masks(ds, pos_tags, window_size, story)
@@ -152,6 +155,51 @@ class ContextGenerator:
                 else:
                     context_words.append(token.text)
             all_contexts.append(" ".join(context_words))
+        return all_contexts
+    
+    def _generate_pos_pct_masks(
+        self,
+        ds,
+        pos_tags: List[str],
+        window_size: int = 10,
+        story: str = "",
+    ) -> List[str]:
+        """Generate contexts with random masking based on POS tag count in each context window.
+        
+        For each word, calculates how many words in its context window have the specified POS tags,
+        then masks that same number of random words instead.
+        """
+        nlp = spacy.load("en_core_web_sm")
+        text = np.array(ds.data)
+        all_contexts = []
+
+        for i in tqdm(
+            range(len(text)),
+            desc=f"Generating POS-percentage-based masks for story: {story}",
+        ):
+            start_idx = max(0, i - window_size)
+            context_words = text[start_idx:i].tolist()
+
+            if not context_words:
+                all_contexts.append("")
+                continue
+
+            # Parse context to get POS tags
+            context_text = " ".join(context_words)
+            context_doc = nlp(context_text)
+
+            # Count how many words match the specified POS tags
+            matching_count = sum(1 for token in context_doc if token.pos_.lower() in pos_tags)
+
+            # Randomly select the same amount of indices to mask
+            if matching_count > 0:
+                mask_limit = min(matching_count, len(context_words))
+                mask_indices = random.sample(range(len(context_words)), mask_limit)
+                for idx in mask_indices:
+                    context_words[idx] = "XXXX"
+
+            all_contexts.append(" ".join(context_words))
+
         return all_contexts
     
     def _generate_shuffle_context(

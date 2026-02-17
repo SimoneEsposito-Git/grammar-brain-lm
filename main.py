@@ -215,8 +215,8 @@ def pipeline(
     nuis_listening,
     nuis_reading,
     root_dir,
+    output_dir = None,
     verbose=False,
-    override=False,
     **kwargs,
 ):
     """
@@ -230,6 +230,7 @@ def pipeline(
         nuis_listening (list): List of nuisance regressor keys to use for listening modality.
         nuis_reading (list): List of nuisance regressor keys to use for reading modality.
         root_dir (str): Root directory path for data and outputs.
+        output_dir (str): Output directory path for saving results.
     Returns:
         None: Results are saved to disk as .npz files and correlation plots.
     Side Effects:
@@ -242,7 +243,17 @@ def pipeline(
         - Training data uses first 10 stories, validation uses 11th story
         - The score is calculated as the sum of significant correlations
     """
+    # verify that kwargs contains the expected keys for overwrite flags
 
+    if "overwrite_contexts" in kwargs and "overwrite_embeddings" in kwargs:
+        overwrite_contexts = kwargs["overwrite_contexts"]
+        overwrite_embeddings = kwargs["overwrite_embeddings"]
+    else:
+        overwrite_contexts = False
+        overwrite_embeddings = False
+    
+    override = overwrite_contexts or overwrite_embeddings
+    output_dir = output_dir if output_dir is not None else root_dir / config.OUTPUT_DIR
     # ===============================================================
     # Load Data
     # ===============================================================
@@ -286,18 +297,18 @@ def pipeline(
         results = {}
         
         existing_results = load_results(
-            root_dir / config.OUTPUT_DIR / "results",
+            output_dir,
             modality,
             subject
         )
-        
         if mode in existing_results and not override:
             print(f"Results for mode '{mode}' already exist for subject '{subject}'. Skipping...")
             continue
         
-        print("="*60)
-        print(f"Performing Group Ridge CV for {subject}")
-        print("-"*60)
+        if verbose:
+            print("="*60)
+            print(f"Performing Group Ridge CV for {subject}")
+            print("-"*60)
         try:
             results_grr = perform_group_ridge(
                 X_trn,
@@ -331,7 +342,7 @@ def pipeline(
         results = {
             "r": r,
             "r2": r2,
-            "pvalues": pvalues,
+            # "pvalues": pvalues,
             "fdr": fdr,
         }
 
@@ -341,15 +352,10 @@ def pipeline(
         try:
             existing_results[mode] = results
             save_results(
-                root_dir / config.OUTPUT_DIR / "results",
+                output_dir,
                 modality,
                 subject,
                 existing_results
-            )
-            pu.plot_correlation_on_flatmap(
-                subject, modality, mode, results, 
-                root_dir / config.MAPPER_PATH, root_dir / config.OUTPUT_DIR / "images",
-                False, True, True, False
             )
         except Exception as e:
             print(f"Error saving results for {subject}: {e}")

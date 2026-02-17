@@ -75,7 +75,8 @@ def load_results(results_dir: str, modality: str, subject: str) -> Any:
             existing_results = loaded.item() if hasattr(loaded, "item") else {}
         except Exception as e:
             print(f"Warning: Could not load existing results file {results_file}: {e}")
-    return existing_results
+        return existing_results
+    return {}
 
 def save_results(results_dir: str, modality: str, subject: str, data: Any):
     """Save processed results to file."""

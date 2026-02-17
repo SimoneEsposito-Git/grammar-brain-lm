@@ -9,3 +9,4 @@ data/*
 outputs/old/*
 outputs/debug/*
 wget-log
+outputs/images/*

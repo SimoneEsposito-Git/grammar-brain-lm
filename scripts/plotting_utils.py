@@ -70,7 +70,7 @@ from typing import List, Optional, Dict, Tuple, Callable
 from functools import lru_cache
 
 # ============================================================================
-# UTILITY FUNCTIONS
+# region UTILITY FUNCTIONS
 # ============================================================================
 
 def smooth_flatmap(data, sigma=2.0):
@@ -107,22 +107,7 @@ def load_sparse_array(fname, varname):
             hf["%s_indptr" % varname],
         )
         sparsemat = scipy.sparse.csr_matrix(data, shape=hf["%s_shape" % varname])
-    return sparsemat
-
-def map_to_flat(voxels, mapper_file):
-    """Generate flatmap image for an individual subject from voxel array
-    
-    By Mark Lescroart
-    """
-    pixmap = load_sparse_array(mapper_file, "voxel_to_flatmap")
-    with h5py.File(mapper_file, mode="r") as hf:
-        pixmask = hf["flatmap_mask"][()]
-    badmask = np.array(pixmap.sum(1) > 0).ravel()
-    img = (np.nan * np.ones(pixmask.shape)).astype(voxels.dtype)
-    mimg = (np.nan * np.ones(badmask.shape)).astype(voxels.dtype)
-    mimg[badmask] = (pixmap * voxels.ravel())[badmask].astype(mimg.dtype)
-    img[pixmask] = mimg
-    return img.T[::-1]
+    return sparsemat 
 
 def _overlay_flatmap_rois(ax, map_file, roi_index=0):
     """Overlay flatmap ROIs on a given axis"""
@@ -131,13 +116,14 @@ def _overlay_flatmap_rois(ax, map_file, roi_index=0):
     overlay = np.rot90(overlay, k=1)
     ax.imshow(
         overlay,
-        cmap=mcolors.ListedColormap(["white"]),
+        cmap=mcolors.ListedColormap(["#CCCCCC"]),
         alpha=np.where(overlay > 0, 1.0, 0.0),
         interpolation="nearest",
     )
 
+# endregion
 # ============================================================================
-# MAPPER: Encapsulates mapper file logic with caching
+# region MAPPER: Encapsulates mapper file logic with caching
 # ============================================================================
 
 @dataclass
@@ -164,14 +150,30 @@ class FlatmapMapper:
     
     def to_flatmap(self, voxels: np.ndarray) -> np.ndarray:
         """Convert voxel data to flatmap space"""
-        return map_to_flat(voxels, self.map_file)
+        pixmap = load_sparse_array(self.map_file, "voxel_to_flatmap")
+        with h5py.File(self.map_file, mode="r") as hf:
+            pixmask = hf["flatmap_mask"][()]
+        badmask = np.array(pixmap.sum(1) > 0).ravel()
+        img = (np.nan * np.ones(pixmask.shape)).astype(voxels.dtype)
+        mimg = (np.nan * np.ones(badmask.shape)).astype(voxels.dtype)
+        mimg[badmask] = (pixmap * voxels.ravel())[badmask].astype(mimg.dtype)
+        img[pixmask] = mimg
+        return img.T[::-1]
     
     def get_brain_mask(self) -> np.ndarray:
         """Get binary brain mask"""
-        return ~np.all(np.isnan(self.to_flatmap(np.ones(1))), axis=0)
+        with h5py.File(self.map_file, mode="r") as hf:
+            return hf["flatmap_mask"][()].T[::-1]
+    
+    def get_brain_bkg(self) -> np.ndarray:
+        """Get flatmap curvature data"""
+        with h5py.File(self.map_file, mode="r") as hf:
+            curvature = hf["flatmap_curvature"][()].T[::-1]
+            return np.stack([curvature, curvature, curvature], axis=-1)
 
+# endregion
 # ============================================================================
-# COLOR STRATEGIES: Pluggable color generation
+# region COLOR STRATEGIES: Pluggable color generation
 # ============================================================================
 
 class ColorStrategy(ABC):
@@ -181,7 +183,7 @@ class ColorStrategy(ABC):
     """
     
     @abstractmethod
-    def __call__(self, flatmaps: List[np.ndarray], **kwargs) -> np.ndarray:
+    def __call__(self, flatmaps: List[np.ndarray], background: Optional[np.ndarray] = None, **kwargs) -> np.ndarray:
         """Generate RGB array. 
         
         Returns:
@@ -205,13 +207,14 @@ class SingleCorrelationStrategy(ColorStrategy):
         self.vmin = vmin
         self.vmax = vmax
     
-    def __call__(self, flatmaps: List[np.ndarray], **kwargs) -> np.ndarray:
+    def __call__(self, flatmaps: List[np.ndarray], background: Optional[np.ndarray] = None, **kwargs) -> np.ndarray:
         flatmap = flatmaps[0]
         cmap = plt.cm.hot
-        cmap.set_bad(color="white")
-        cmap.set_under(color="black")
-        norm = plt.Normalize(vmin=self.vmin, vmax=self.vmax)
-        return cmap(norm(flatmap))[..., :3]
+        norm = plt.Normalize(vmin=self.vmin, vmax=self.vmax, clip=True)
+        rgb = cmap(norm(flatmap))[..., :3]
+        if background is not None:
+            rgb[np.isnan(flatmap)] = background[np.isnan(flatmap)]
+        return rgb
     
     def get_legend_type(self) -> str:
         return 'colorbar'
@@ -228,13 +231,14 @@ class SingleCorrelationStrategy(ColorStrategy):
 class BivariateStrategy(ColorStrategy):
     """Bivariate color mapping: corr_1 (Blue) vs corr_2 (Orange)"""
     
-    def __init__(self, vmax: float = 0.5):
+    def __init__(self, vmax: float = 0.5, labels: Tuple[str, str] = ("Model 1", "Model 2")):
         self.vmax = vmax
+        self.labels = labels    
     
-    def __call__(self, flatmaps: List[np.ndarray], **kwargs) -> np.ndarray:
+    def __call__(self, flatmaps: List[np.ndarray], background: Optional[np.ndarray] = None, **kwargs) -> np.ndarray:
         rgb_map = get_bivariate_color(flatmaps[0], flatmaps[1], vmin=0, vmax=self.vmax)
         mask = np.isnan(flatmaps[0]) | np.isnan(flatmaps[1])
-        rgb_map[mask] = [1, 1, 1]
+        rgb_map[mask] = background[mask] if background is not None else [1, 1, 1]
         return rgb_map
     
     def get_legend_type(self) -> str:
@@ -243,34 +247,37 @@ class BivariateStrategy(ColorStrategy):
     def get_legend_data(self) -> Dict:
         return {
             'vmax': self.vmax,
-            'labels': ['Blue Model', 'Orange Model']
+            'labels': self.labels
         }
 
 
 class LoserTakesItAllStrategy(ColorStrategy):
     """Winner (best) is shown, colored by model"""
     
-    def __init__(self, names: List[str], palette: Optional[List[str]] = None):
+    def __init__(self, names: List[str], palette: Optional[List[str]] = None, rank: int = 0):
         self.names = names
+        self.rank = rank
         if palette is None:
             palette = ["#E6194B", "#3CB44B", "#FFE119", "#4363D8", "#F58231", "#911EB4"]
         self.colors = [mcolors.to_rgb(c) for c in palette[:len(names)]]
     
-    def __call__(self, flatmaps: List[np.ndarray], **kwargs) -> np.ndarray:
-        stacked = np.stack(flatmaps, axis=0)
+    def __call__(self, flatmaps: List[np.ndarray], background: Optional[np.ndarray] = None, **kwargs) -> np.ndarray:
+        baseline = flatmaps[-1]
+        stacked = np.stack(flatmaps[:-1], axis=0)-baseline
         with np.errstate(invalid='ignore'):
-            winner_indices = np.argsort(stacked, axis=0)[-1]
-        
+            winner_indices = np.argsort(stacked, axis=0)[self.rank]
+    
         h, w = flatmaps[0].shape
         rgb_map = np.zeros((h, w, 3))
         brain_mask = ~np.all(np.isnan(stacked), axis=0)
         
         for i, rgb in enumerate(self.colors):
             mask = (winner_indices == i) & brain_mask
-            strength = np.nan_to_num(np.clip(flatmaps[i][mask] / 0.1, 0, 1))
-            rgb_map[mask] = np.array(rgb) * strength[:, np.newaxis]
+            strength = flatmaps[i][mask]/np.nanpercentile(flatmaps[i][mask], 95)
+            strength = np.nan_to_num(np.clip(strength, 0, 1))
+            rgb_map[mask] = np.array(rgb) * strength[:, np.newaxis] + (1 - strength[:, np.newaxis]) * (background[mask] if background is not None else [1, 1, 1])
         
-        rgb_map[~brain_mask] = [1, 1, 1]
+        rgb_map[~brain_mask] = background[~brain_mask] if background is not None else [1, 1, 1]
         return rgb_map
     
     def get_legend_type(self) -> str:
@@ -290,14 +297,16 @@ class LoserTakesItAllStrategy(ColorStrategy):
 class LoserTakesItAllMarginStrategy(ColorStrategy):
     """Loser shown with margin as saturation"""
     
-    def __init__(self, names: List[str], palette: Optional[List[str]] = None):
+    def __init__(self, names: List[str], palette: Optional[List[str]] = None, vmax: float = 0.5):
         self.names = names
+        self.vmax = vmax
         if palette is None:
             palette = ["#E6194B", "#3CB44B", "#FFE119", "#4363D8", "#F58231", "#911EB4"]
         self.colors = [mcolors.to_rgb(c) for c in palette[:len(names)]]
     
-    def __call__(self, flatmaps: List[np.ndarray], **kwargs) -> np.ndarray:
-        stacked = np.stack(flatmaps, axis=0)
+    def __call__(self, flatmaps: List[np.ndarray], background: Optional[np.ndarray] = None, **kwargs) -> np.ndarray:
+        baseline = flatmaps[-1]
+        stacked = np.stack(flatmaps[:-1], axis=0)-baseline
         
         with np.errstate(invalid='ignore'):
             loser_indices = np.argsort(stacked, axis=0)[0]
@@ -306,21 +315,19 @@ class LoserTakesItAllMarginStrategy(ColorStrategy):
             margins = stacked[second_loser_indices, rows, cols] - stacked[loser_indices, rows, cols]
         
         h, w = flatmaps[0].shape
-        hsv_map = np.zeros((h, w, 3))
-        model_hues = [mcolors.rgb_to_hsv(c)[0] for c in self.colors]
+        rgb_map = np.zeros((h, w, 3))
         
         brain_mask = ~np.all(np.isnan(stacked), axis=0)
-        
-        for i in range(len(self.colors)):
+        for i, rgb in enumerate(self.colors):
             mask = (loser_indices == i) & brain_mask
-            strength = np.nan_to_num(np.clip(flatmaps[i][mask] / 0.2, 0, 1))
-            margin_vals = np.nan_to_num(np.clip(margins[mask] / 0.1, 0, 1))
-            hsv_map[mask, 0] = model_hues[i]
-            hsv_map[mask, 1] = margin_vals
-            hsv_map[mask, 2] = strength
+            strength = flatmaps[i][mask]/np.percentile(flatmaps[i][mask], 95)
+            strength = np.nan_to_num(np.clip(strength, 0, 1))
+            # use sqrt of margin for better visual separation
+            margin_vals = np.nan_to_num(np.clip(np.sqrt(margins[mask]) / np.percentile(np.sqrt(margins[mask]), 65), 0, 1))
+            rgb_map[mask] = np.array(rgb) * margin_vals[:, np.newaxis] + (1*(1-margin_vals[:, np.newaxis])) 
+            rgb_map[mask] = rgb_map[mask] * strength[:, np.newaxis] + (1 - strength[:, np.newaxis]) * (background[mask] if background is not None else [1, 1, 1])
         
-        rgb_map = mcolors.hsv_to_rgb(hsv_map)
-        rgb_map[~brain_mask] = [1, 1, 1]
+        rgb_map[~brain_mask] = background[~brain_mask] if background is not None else [1, 1, 1]
         return rgb_map
     
     def get_legend_type(self) -> str:
@@ -353,7 +360,8 @@ class LoserTakesItAllBlobsStrategy(ColorStrategy):
             palette = ["#E6194B", "#3CB44B", "#FFE119", "#4363D8", "#F58231", "#911EB4"]
         self.colors = [mcolors.to_rgb(c) for c in palette[:len(names)]]
     
-    def __call__(self, flatmaps: List[np.ndarray], **kwargs) -> np.ndarray:
+    def __call__(self, flatmaps: List[np.ndarray], background: Optional[np.ndarray] = None, **kwargs) -> np.ndarray:
+        baseline = flatmaps[-1]
         stacked = np.stack(flatmaps, axis=0)
         
         with np.errstate(invalid='ignore'):
@@ -366,11 +374,11 @@ class LoserTakesItAllBlobsStrategy(ColorStrategy):
         h, w = flatmaps[0].shape
         rgb_map = np.ones((h, w, 3))
         brain_mask = ~np.all(np.isnan(stacked), axis=0)
-        rgb_map[brain_mask] = [0, 0, 0]
+        rgb_map[brain_mask] = [0, 0, 0] if background is None else background[brain_mask]
         
         for i, rgb in enumerate(self.colors):
             mask = (loser_indices == i) & brain_mask
-            corr_vals = np.nan_to_num(flatmaps[i][mask])
+            corr_vals = np.nan_to_num(baseline[mask])
             margin_vals = margins[mask]
             threshold_mask = (margin_vals > self.margin_threshold) & \
                            (corr_vals > self.correlation_threshold)
@@ -392,14 +400,15 @@ class LoserTakesItAllBlobsStrategy(ColorStrategy):
         ]
         return {'legend_elements': legend_elements}
 
+# endregion
 # ============================================================================
-# FIGURE BUILDERS: Layout and rendering
+# region FIGURE BUILDERS: Layout and rendering
 # ============================================================================
 
 @dataclass
 class FigureConfig:
     """Configuration for figure rendering"""
-    figsize: Tuple[int, int] = (10, 8)
+    figsize: Tuple[int, int] = (10, 10)
     dpi: int = 150
     smooth: bool = False
     sigma: float = 2.0
@@ -407,6 +416,12 @@ class FigureConfig:
     show: bool = True
     save: bool = True
     output_dir: str = "."
+    # Fixed layout parameters for consistent sizing
+    title_height: float = 0.08  # 8% of figure for title
+    legend_height: float = 0.12  # 12% of figure for legend
+    image_left: float = 0.05
+    image_right: float = 0.95
+    image_bottom_padding: float = 0.02  # Small padding above legend
 
 
 class FigureBuilder(ABC):
@@ -449,7 +464,22 @@ class SinglePanelBuilder(FigureBuilder):
         self.mapper = mapper
     
     def build(self) -> Tuple[plt.Figure, List[plt.Axes]]:
-        fig, ax = plt.subplots(1, 1, figsize=self.config.figsize, dpi=self.config.dpi)
+        fig = plt.figure(figsize=self.config.figsize, dpi=self.config.dpi)
+        
+        # Calculate image area position
+        image_bottom = self.config.legend_height + self.config.image_bottom_padding
+        image_top = 1.0 - self.config.title_height
+        image_height = image_top - image_bottom
+        image_width = self.config.image_right - self.config.image_left
+        
+        # Create main axis with fixed position and size
+        ax = fig.add_axes([
+            self.config.image_left,
+            image_bottom,
+            image_width,
+            image_height
+        ])
+        
         return fig, [ax]
     
     def render(
@@ -466,10 +496,12 @@ class SinglePanelBuilder(FigureBuilder):
         ax = axes[0]
         ax.imshow(rgb_map, interpolation='none')
         ax.axis("off")
-        if title:
-            ax.set_title(title, fontsize=14, pad=20)
         
-        # Auto-generate colorbar for single correlation
+        # Use suptitle for consistent positioning
+        if title:
+            fig.suptitle(title, fontsize=14, y=0.98)
+        
+        # Auto-generate colorbar for single correlation in fixed legend area
         if strategy is not None and strategy.get_legend_type() == 'colorbar':
             legend_data = strategy.get_legend_data()
             vmin = legend_data.get('vmin', 0)
@@ -481,14 +513,18 @@ class SinglePanelBuilder(FigureBuilder):
             norm = plt.Normalize(vmin=vmin, vmax=vmax)
             sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
             sm.set_array([])
-            cbar = plt.colorbar(sm, ax=ax, label=label, orientation='horizontal', pad=0.05)
+            
+            # Create colorbar axis in fixed legend area
+            cbar_ax = fig.add_axes([0.25, 0.04, 0.5, 0.03])
+            cbar = fig.colorbar(sm, cax=cbar_ax, label=label, orientation='horizontal')
         
         # Fallback for explicit colorbar_data
         elif colorbar_data is not None:
             flatmap, norm, cmap = colorbar_data
             sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
             sm.set_array([])
-            cbar = plt.colorbar(sm, ax=ax, label=colorbar_label, orientation='horizontal', pad=0.05)
+            cbar_ax = fig.add_axes([0.25, 0.04, 0.5, 0.03])
+            cbar = fig.colorbar(sm, cax=cbar_ax, label=colorbar_label, orientation='horizontal')
     
     def finalize(
         self,
@@ -505,24 +541,27 @@ class SinglePanelBuilder(FigureBuilder):
             legend_elements = legend_data.get('legend_elements')
         
         if legend_elements:
-            axes[0].legend(
+            # Position legend in fixed legend area at bottom
+            legend = fig.legend(
                 handles=legend_elements,
                 loc='lower center',
-                ncol=len(legend_elements),
-                bbox_to_anchor=(0.5, -0.05),
+                ncol=min(len(legend_elements), 6),
+                bbox_to_anchor=(0.5, 0.03),
+                frameon=True,
+                fontsize=10
             )
         
         if self.config.show_regions and self.mapper:
             _overlay_flatmap_rois(axes[0], self.mapper.map_file)
         
-        plt.tight_layout()
+        # Don't use tight_layout since we're using manual positioning
         
         if self.config.save:
             os.makedirs(self.config.output_dir, exist_ok=True)
             if not output_filename:
                 output_filename = "flatmap.png"
             output_path = os.path.join(self.config.output_dir, output_filename)
-            plt.savefig(output_path, bbox_inches="tight", dpi=self.config.dpi)
+            plt.savefig(output_path, dpi=self.config.dpi)
             print(f"Saved to {output_path}")
         
         if self.config.show:
@@ -551,23 +590,36 @@ class BivariateLegendBuilder(SinglePanelBuilder):
             legend_vmax = legend_data.get('vmax', 0.5)
             legend_labels = tuple(legend_data.get('labels', ["X", "Y"]))
         
-        super().render(fig, axes, rgb_map, title=title, strategy=strategy, **kwargs)
+        # Call parent render but skip strategy processing (we handle it manually)
+        ax = axes[0]
+        ax.imshow(rgb_map, interpolation='none')
+        ax.axis("off")
         
-        # Add 2D legend
-        ax_inset = fig.add_axes([0.7, 0.1, 0.15, 0.15])
+        if title:
+            fig.suptitle(title, fontsize=14, y=0.98)
+        
+        # Add 2D legend in fixed position within legend area
+        # Center it horizontally, position in legend area
+        legend_size = 0.18  # Size relative to figure
+        legend_x = 0.5 - legend_size / 2  # Center horizontally
+        legend_y = 0.02  # Bottom of legend area
+        
+        ax_inset = fig.add_axes([legend_x, legend_y, legend_size, legend_size])
         x_grid, y_grid = np.meshgrid(
             np.linspace(0, legend_vmax, 50),
             np.linspace(0, legend_vmax, 50)
         )
         legend_rgb = get_bivariate_color(x_grid, y_grid, vmin=0, vmax=legend_vmax)
         ax_inset.imshow(legend_rgb, origin='lower', extent=[0, legend_vmax, 0, legend_vmax])
-        ax_inset.set_xlabel(legend_labels[0], fontsize=8)
-        ax_inset.set_ylabel(legend_labels[1], fontsize=8)
+        ax_inset.set_xlabel(legend_labels[0], fontsize=9)
+        ax_inset.set_ylabel(legend_labels[1], fontsize=9)
         ax_inset.set_xticks([0, legend_vmax])
         ax_inset.set_yticks([0, legend_vmax])
+        ax_inset.tick_params(labelsize=8)
 
+# endregion
 # ============================================================================
-# UNIFIED PLOTTER: One class for all visualizations
+# region UNIFIED PLOTTER: One class for all visualizations
 # ============================================================================
 
 @dataclass
@@ -621,7 +673,11 @@ class FlatmapPlotter:
             flatmaps = [smooth_flatmap(fm, sigma=self.config.sigma) for fm in flatmaps]
         
         # Generate colors
-        rgb_map = strategy(flatmaps, **kwargs)
+        
+        background = self.mapper.get_brain_bkg()
+        rgb_map = strategy(flatmaps, background=background, **kwargs)
+        rgb_map[~self.mapper.get_brain_mask()] = [1, 1, 1]
+        
         
         # Auto-select builder based on strategy type
         if self.builder is None:
@@ -643,9 +699,9 @@ class FlatmapPlotter:
         
         return fig, rgb_map
 
+# endregion
 # ============================================================================
-# CONVENIENCE WRAPPERS: For backward compatibility / ease of use
-# ============================================================================
+# region CONVENIENCE WRAPPERS: For backward compatibility / ease of use
 
 def plot_correlation_on_flatmap(
     subject: str,
@@ -837,3 +893,5 @@ def plot_loser_takes_it_all_blobs(
         title=full_title,
         output_filename=output_file,
     )
+# endregion
+# ============================================================================

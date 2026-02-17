@@ -10,3 +10,4 @@ outputs/old/*
 outputs/debug/*
 wget-log
 scripts/explorer.ipynb
+outputs/images/*

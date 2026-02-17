@@ -69,6 +69,7 @@ def load_results(results_dir: str, modality: str, subject: str) -> Any:
         str(results_dir), modality, f"{subject}.npy"
     )
     os.makedirs(os.path.dirname(results_file), exist_ok=True)
+    existing_results = {}
     if os.path.exists(results_file):
         try:
             loaded = np.load(results_file, allow_pickle=True)

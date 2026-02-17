@@ -6,3 +6,5 @@ transformers
 spacy
 english-words
 himalaya
+seaborn
+PyQT5

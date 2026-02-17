@@ -77,3 +77,20 @@ INTERP = "lanczos"
 # Processing parameters
 BATCH_SIZE = 32
 VERBOSE = False
+
+# Analysis configurations
+MODES = [
+    'baseline',
+    'english1000',
+    'zero',
+    'random',
+    'shuffle',
+    'remove-pos-noun',
+    'remove-pos-verb',
+    'remove-pos-adj',
+    'remove-pos-adv',
+    'remove-pos-pron',
+    'remove-pos-intj',
+    'remove-peaks',
+    'remove-valleys',
+]

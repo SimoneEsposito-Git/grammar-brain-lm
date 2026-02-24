@@ -303,6 +303,7 @@ def pipeline(
         )
         if mode in existing_results and not override:
             print(f"Results for mode '{mode}' already exist for subject '{subject}'. Skipping...")
+            results = existing_results[mode]
             continue
         
         if verbose:
@@ -361,12 +362,8 @@ def pipeline(
             print(f"Error saving results for {subject}: {e}")
 
     # ===============================================================
-    # Save and Visualize Results
+    # Save Results
     # ===============================================================
-    if results == {}:
-        print("No results to process for visualization.")
-        return
-    
     averaged_r = np.nanmean(results["r"][results["fdr"]["r"]["included_voxels_indices"]], axis=0)
     print(f"Averaged correlation (r) across voxels: {np.nanmean(averaged_r)}")
 

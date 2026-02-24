@@ -3,8 +3,11 @@ from typing import Dict, List
 
 import numpy as np
 import torch
+import nltk
+import spacy
 from transformers import AutoModel, AutoTokenizer, AutoConfig
 from tqdm import tqdm
+
 
 from .data_sequence import DataSequence
 
@@ -25,6 +28,112 @@ def downsample(dsdict: Dict, interp: str = "mean"):
     else:
         return mapdict(dsdict, lambda h: h.chunksums(interp))
     
+def lexical_embeddings(
+    dataseqs: dict,
+    embedding_path: str,
+    downsamp: bool = True,
+    pos_tag: list = None
+):
+    '''Returns lexical embeddings.
+    args:
+        embedding_path: Path to the embedding file.
+        downsample: If True, downsamples responses before returning.
+        no_stop_words: bool
+            When True, return default embedding for stop words
+        pos_tag: str
+            When set, return default embedding if tag of the word is not pos_tag
+    '''
+    english1000_dict = np.load(embedding_path, allow_pickle=True)
+    english1000_keys = english1000_dict['keys']
+    english1000_values = english1000_dict['values']
+    embedding = {k: v for k, v in zip(english1000_keys, english1000_values)}
+    default_embedding = np.zeros(english1000_values[0].shape)
+
+    embedding_stimulus = dict()
+    for stimulus_name, ds in list(dataseqs.items()):
+        print(f'extracting english1000 features for {stimulus_name}')
+        embedding_stimulus[stimulus_name] = get_lexical_embeddings(ds=ds, embedding=embedding, default_embedding=default_embedding, pos_tag=pos_tag)
+    if downsamp:
+        return downsample(embedding_stimulus)
+    else:
+        return mapdict(embedding_stimulus, lambda h: np.asarray(h.data))
+  
+def get_lexical_embeddings(
+    ds: DataSequence,
+    embedding: int,
+    default_embedding: np.ndarray,
+    pos_tag: list = None
+):  
+    new_data = []
+    text = np.array(ds.data)
+
+    if pos_tag:
+        nlp = spacy.load("en_core_web_sm")
+        joined = " ".join(text)
+        doc = nlp(joined)
+
+        # Build char offsets for each original "word"
+        offsets = []
+        cursor = 0
+        for w in text:
+            start = cursor
+            end = start + len(str(w))
+            offsets.append((start, end))
+            cursor = end + 1  # +1 for the space we inserted in join
+
+    for idx, word in enumerate(text):
+        tagged = False
+        if pos_tag:
+            start, end = offsets[idx]
+            span = doc.char_span(start, end, alignment_mode="expand")
+            if span is not None:
+                tagged = any(tok.pos_ in pos_tag for tok in span)
+            else:
+                tagged = False  # fallback if alignment failed
+        print(f'{word} ==> {word if not tagged else "XXXX"}')
+        new_data.append(get_word_embedding(word, embedding, default_embedding, tagged))
+
+    embedding_ds = DataSequence(np.array(new_data), ds.split_inds, ds.data_times, ds.tr_times)
+    return embedding_ds
+
+def get_word_embedding(
+    word: str,
+    embedding: Dict,
+    default_embedding: np.ndarray,
+    pos_tag: bool = False
+):
+    '''Return the lexical embedding of a given word.
+
+    Parameters:
+    ----------
+    word : str
+        The word for which to get an embedding.
+    embedding : dict
+        A word:embedding dictionary of word embeddings.
+    default_embedding : array_like
+        The embedding to use if the word is not in the embedding dictionary.
+    no_stop_words: bool
+        When True, return default embedding for stop words
+    pos_tag: str
+        When set, return default embedding if tag of the word is not pos_tag
+    '''
+    if pos_tag:
+        return default_embedding
+    try:
+        return embedding[word]
+    except Exception:
+        try:
+            lemmatizer = nltk.wordnet.WordNetLemmatizer()
+            lemma = lemmatizer.lemmatize(word)
+            if pos_tag:
+                tag = nltk.pos_tag([lemma], tagset='universal')[0][1]
+                if tag != pos_tag:
+                    return default_embedding
+            return embedding[lemma]
+        except:
+            print(f'{word} missing from embedding dict.')
+            return default_embedding
+   
 def contextual_embeddings(
     dataseqs: dict,
     model_name: str,
@@ -59,7 +168,6 @@ def contextual_embeddings(
         return downsample(stimulus, interp=interp)
     else:
         return stimulus
-
 
 def get_contextual_embeddings(
     ds: DataSequence,

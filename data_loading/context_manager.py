@@ -49,7 +49,17 @@ class ContextManager:
 
         return self.contexts[mode]
 
-    def _generate_and_cache(self, stories: List, mode: str, dataseqs: Dict, **kwargs):
+    def _generate_and_cache(
+        self, stories: List, mode: str, dataseqs: Dict, **kwargs
+    ) -> None:
+        """Generate contexts for missing stories and save to disk."""
+        for story in stories:
+            self.contexts[mode][story] = self.generator.generate_mask(
+                dataseqs[story], mode, story=story, **kwargs
+            )
+        self._save_contexts()
+        
+    def _generate_and_cache_(self, stories: List, mode: str, dataseqs: Dict, **kwargs):
         """Generate contexts for missing stories and save to disk."""
         for story in stories:
             self.contexts[mode][story] = self.generator.generate_context(

@@ -109,7 +109,7 @@ class DataSequence(object):
         grid_transcript should be the product of the 'make_simple_transcript' method of TextGrid.
         """
         # data = map(str.lower, zip(*grid_transcript)[2])
-        data = list(map(str.lower, list(zip(*grid_transcript))[2]))
+        data = list(map(lambda x: x.lower().strip(), list(zip(*grid_transcript))[2]))
         word_starts = np.array(list(map(float, list(zip(*grid_transcript))[0])))
         word_ends = np.array(list(map(float, list(zip(*grid_transcript))[1])))
         # Fixme for TextGrid times that cause rounding error

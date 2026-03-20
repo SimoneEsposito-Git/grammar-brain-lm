@@ -289,3 +289,183 @@ def get_contextual_embeddings(
         print("-----------------------------\n")
 
     return embedding_ds
+
+
+def masked_embeddings(
+    dataseqs: dict,
+    model_name: str,
+    layer_num: int,
+    mask: dict,
+    window_size: int = 20,
+    downsamp: bool = True,
+    verbose: bool = False,
+    interp: str = "lanczos",
+):
+    """Returns embeddings extracted from contextual models.
+
+    args:
+        layer_num: The layer from which to extract embeddings.
+        model_name: Name of model to use (e.g. 'bert-base-multilingual-cased', 'xlm-mlm-xnli15-1024')
+        avg_tokens: Take the average of the tokens over the window, instead of just the last one.
+        downsample: If True, downsamples responses before returning.
+    """
+    # Get stimulus for stories.
+    stimulus = dict()
+    for story, ds in list(dataseqs.items()):
+        stimulus[story] = get_masked_embeddings(
+            ds=ds,
+            model_name=model_name,
+            layer_num=layer_num,
+            mask=mask[story],
+            window_size=window_size,
+            verbose=verbose,
+            story_name=story,
+            model_abbr=model_name.split("/")[-1],
+        )
+    if downsamp:
+        return downsample(stimulus, interp=interp)
+    else:
+        return stimulus
+    
+def get_masked_embeddings(
+    ds: DataSequence,
+    model_name: str,
+    layer_num: int,
+    mask: List[bool],
+    window_size: int = 20,
+    verbose: bool = False,
+    story_name: str = "",
+    model_abbr: str = "",
+):
+    """Returns the embeddings from transformer models corresponding to the values in ds.
+input_sequence
+    args:
+        ds: A DataSequence containing stimuli for which to retrieve embeddings.
+        layer_num: The layer from which to extract embeddings.
+        verbose: Print detailed logging information.
+    """
+    torch.manual_seed(0)
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if verbose:
+        print(f"\n--- Model Setup ---")
+        print(f"Device: {device}")
+        print(f"Model: {model_name}")
+        print(f"Layer: {layer_num}")
+        print("-------------------")
+
+    config = AutoConfig.from_pretrained(model_name)
+    config.output_hidden_states = True
+    config.output_attentions = False
+
+    model = AutoModel.from_pretrained(model_name, config=config)
+
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = model.to(device)
+
+    text = np.array(ds.data)
+    if verbose:
+        print(f"Total input words: {len(text)}")
+
+    new_data = []
+
+    # Build input sequences for all words
+    input_sequences = []
+    for word_index, word in enumerate(text):
+        if mask is None:
+            raise ValueError("Mask must be provided.")
+        input_sequences.append(text[max(0, word_index - window_size) : word_index + 1])
+
+    for word_index, input_sequence in enumerate(
+        tqdm(input_sequences, desc=f"Generating {model_abbr} embeddings for {story_name}")
+    ):
+        input_sequence_joined = " ".join(input_sequence)
+        encoded = tokenizer.encode_plus(
+            add_special_tokens=False,
+            text=input_sequence_joined,
+            return_tensors="pt",
+        )
+        tokens_tensor = encoded["input_ids"].to(device)
+        mask_tensor = words_to_token_mask(
+            input_sequence_joined, 
+            tokenizer, 
+            mask[max(0, word_index - window_size) : word_index + 1]
+        )
+
+        try:
+            assert tokens_tensor.shape == mask_tensor.shape, "Token tensor and mask tensor must have the same shape."
+        except AssertionError as e:
+            print(f"Error at word index {word_index} for story {story_name}: {e}")
+            print(f"Input sequence: {input_sequence_joined}")
+            print(f"Tokens: {tokenizer.convert_ids_to_tokens(tokens_tensor[0])}")
+            print(f"Mask: {mask[max(0, word_index - window_size) : word_index + 1]}")
+            raise
+        if word_index > 50:
+            verbose = False  # Only print verbose for first 50 words
+        if verbose:
+            print(f"\nProcessing word: {input_sequence[-1]} (index {word_index})")
+            print(f"Context: {input_sequence_joined}")
+            print(f"Mask: {mask[max(0, word_index - window_size) : word_index + 1]}")
+            
+        with torch.no_grad():
+            outputs = model(tokens_tensor, attention_mask=mask_tensor.to(device))
+
+            try:
+                layer_embedding = outputs.hidden_states[layer_num][0].to("cpu")
+            except (AttributeError, IndexError) as e:
+                print(
+                    f"WARNING: Could not use outputs.hidden_states. Falling back to outputs[-1]. Error: {e}"
+                )
+                layer_embedding = outputs[-1][layer_num][0].to("cpu")
+
+        
+        # average the tokens of the target word that are not masked (mask is False for tokens to keep, True for tokens to mask out)
+        masked_embedding = layer_embedding[~mask_tensor[0].bool()]
+        if masked_embedding.shape[0] == 0:
+            # Fallback if all tokens were masked
+            word_embedding = layer_embedding[-1].numpy()
+            if verbose:
+                print("Fallback: Using the last token's embedding.")
+        else:
+            word_embedding = torch.mean(masked_embedding, dim=0).numpy()
+            if verbose:
+                print(f"Selected word embedding shape: {word_embedding.shape}")
+        new_data.append(word_embedding)
+
+    if verbose:
+        print(f"\n--- Final Data Assembly ---")
+        print(f"Total embeddings collected: {len(new_data)}")
+
+    embedding_ds = DataSequence(
+        np.array(new_data), ds.split_inds, ds.data_times, ds.tr_times
+    )
+
+    if verbose:
+        print(f"Final Embedding Data Shape: {embedding_ds.data.shape}")
+        print(f"Final Split Indices Length: {len(embedding_ds.split_inds)}")
+        print("-----------------------------\n")
+
+    return embedding_ds
+
+def words_to_token_mask(input_sequence: str, tokenizer: AutoTokenizer, mask: List[bool]) -> torch.Tensor:
+    """Given a list of words and a corresponding mask indicating which words to keep, 
+    return a token-level mask that can be applied to the tokenized input."""
+    import re
+    token_mask = []
+    words = re.split(r'(?=\s)', input_sequence)
+    for word, mask in zip(words, mask):
+        tokens = tokenizer.tokenize(word)
+        if type(mask) is list:
+            if len(mask) != len(tokens):
+                try:
+                    mask = [mask[0]] * len(tokens)  # If mask is shorter than tokens, repeat the first value
+                except:
+                    print(f"Error processing mask for word '{word}' with tokens {tokens}. Mask: {mask}")
+                    print(f"Sentence: {input_sequence}")
+                    raise 
+            token_mask.extend(mask)
+        elif type(mask) is bool:
+            token_mask.extend([~mask] * len(tokens))
+        else:
+            raise ValueError("Mask must be a list of booleans or a single boolean.")
+    token_mask[-1] = True  # Ensure the last token (current word) is always included
+    return torch.tensor([token_mask]).long()

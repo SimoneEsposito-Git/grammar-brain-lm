@@ -165,10 +165,15 @@ class FlatmapMapper:
         with h5py.File(self.map_file, mode="r") as hf:
             return hf["flatmap_mask"][()].T[::-1]
     
-    def get_brain_bkg(self) -> np.ndarray:
+    def get_brain_bkg(self, color: Tuple[float, float, float]) -> np.ndarray:
         """Get flatmap curvature data"""
+        if color is not None:
+            return np.tile(color, (*self.get_brain_mask().shape, 1))
         with h5py.File(self.map_file, mode="r") as hf:
-            curvature = hf["flatmap_curvature"][()].T[::-1]
+            try:
+                curvature = hf["flatmap_curvature"][()].T[::-1]
+            except:
+                curvature = np.zeros(self.get_brain_mask().shape)
             return np.stack([curvature, curvature, curvature], axis=-1)
 
 # endregion
@@ -258,7 +263,8 @@ class LoserTakesItAllStrategy(ColorStrategy):
         self.names = names
         self.rank = rank
         if palette is None:
-            palette = ["#E6194B", "#3CB44B", "#FFE119", "#4363D8", "#F58231", "#911EB4"]
+            palette = ["#007ABF", "#FF7A00", "#3CB44B", "#E6194B", "#FFE119", "#911EB4"]
+            #palette = ["#015FDA","#F6931D", "#03FF24", "#FF102F", "#E1DF01", "#8D09FE"]
         self.colors = [mcolors.to_rgb(c) for c in palette[:len(names)]]
     
     def __call__(self, flatmaps: List[np.ndarray], background: Optional[np.ndarray] = None, **kwargs) -> np.ndarray:
@@ -277,7 +283,7 @@ class LoserTakesItAllStrategy(ColorStrategy):
             strength = np.nan_to_num(np.clip(strength, 0, 1))
             rgb_map[mask] = np.array(rgb) * strength[:, np.newaxis] + (1 - strength[:, np.newaxis]) * (background[mask] if background is not None else [1, 1, 1])
         
-        rgb_map[~brain_mask] = background[~brain_mask] if background is not None else [1, 1, 1]
+        rgb_map[~brain_mask] = background[~brain_mask]*0.7 if background is not None else [1, 1, 1]
         return rgb_map
     
     def get_legend_type(self) -> str:
@@ -285,113 +291,6 @@ class LoserTakesItAllStrategy(ColorStrategy):
     
     def get_legend_data(self) -> Dict:
         # Create Line2D objects for legend
-        from matplotlib.lines import Line2D
-        legend_elements = [
-            Line2D([0], [0], marker='s', color='w', markerfacecolor=mcolors.to_hex(c),
-                   markersize=8, label=name)
-            for name, c in zip(self.names, self.colors)
-        ]
-        return {'legend_elements': legend_elements}
-
-
-class LoserTakesItAllMarginStrategy(ColorStrategy):
-    """Loser shown with margin as saturation"""
-    
-    def __init__(self, names: List[str], palette: Optional[List[str]] = None, vmax: float = 0.5):
-        self.names = names
-        self.vmax = vmax
-        if palette is None:
-            palette = ["#E6194B", "#3CB44B", "#FFE119", "#4363D8", "#F58231", "#911EB4"]
-        self.colors = [mcolors.to_rgb(c) for c in palette[:len(names)]]
-    
-    def __call__(self, flatmaps: List[np.ndarray], background: Optional[np.ndarray] = None, **kwargs) -> np.ndarray:
-        baseline = flatmaps[-1]
-        stacked = np.stack(flatmaps[:-1], axis=0)-baseline
-        
-        with np.errstate(invalid='ignore'):
-            loser_indices = np.argsort(stacked, axis=0)[0]
-            second_loser_indices = np.argsort(stacked, axis=0)[1]
-            rows, cols = np.indices(stacked.shape[1:])
-            margins = stacked[second_loser_indices, rows, cols] - stacked[loser_indices, rows, cols]
-        
-        h, w = flatmaps[0].shape
-        rgb_map = np.zeros((h, w, 3))
-        
-        brain_mask = ~np.all(np.isnan(stacked), axis=0)
-        for i, rgb in enumerate(self.colors):
-            mask = (loser_indices == i) & brain_mask
-            strength = flatmaps[i][mask]/np.percentile(flatmaps[i][mask], 95)
-            strength = np.nan_to_num(np.clip(strength, 0, 1))
-            # use sqrt of margin for better visual separation
-            margin_vals = np.nan_to_num(np.clip(np.sqrt(margins[mask]) / np.percentile(np.sqrt(margins[mask]), 65), 0, 1))
-            rgb_map[mask] = np.array(rgb) * margin_vals[:, np.newaxis] + (1*(1-margin_vals[:, np.newaxis])) 
-            rgb_map[mask] = rgb_map[mask] * strength[:, np.newaxis] + (1 - strength[:, np.newaxis]) * (background[mask] if background is not None else [1, 1, 1])
-        
-        rgb_map[~brain_mask] = background[~brain_mask] if background is not None else [1, 1, 1]
-        return rgb_map
-    
-    def get_legend_type(self) -> str:
-        return 'categorical'
-    
-    def get_legend_data(self) -> Dict:
-        from matplotlib.lines import Line2D
-        legend_elements = [
-            Line2D([0], [0], marker='s', color='w', markerfacecolor=mcolors.to_hex(c),
-                   markersize=8, label=name)
-            for name, c in zip(self.names, self.colors)
-        ]
-        return {'legend_elements': legend_elements}
-
-
-class LoserTakesItAllBlobsStrategy(ColorStrategy):
-    """Loser with thresholding"""
-    
-    def __init__(
-        self,
-        names: List[str],
-        margin_threshold: float = 0.0,
-        correlation_threshold: float = 0.0,
-        palette: Optional[List[str]] = None,
-    ):
-        self.names = names
-        self.margin_threshold = margin_threshold
-        self.correlation_threshold = correlation_threshold
-        if palette is None:
-            palette = ["#E6194B", "#3CB44B", "#FFE119", "#4363D8", "#F58231", "#911EB4"]
-        self.colors = [mcolors.to_rgb(c) for c in palette[:len(names)]]
-    
-    def __call__(self, flatmaps: List[np.ndarray], background: Optional[np.ndarray] = None, **kwargs) -> np.ndarray:
-        baseline = flatmaps[-1]
-        stacked = np.stack(flatmaps, axis=0)
-        
-        with np.errstate(invalid='ignore'):
-            loser_indices = np.argsort(stacked, axis=0)[0]
-            second_loser_indices = np.argsort(stacked, axis=0)[1]
-            rows, cols = np.indices(stacked.shape[1:])
-            margins = stacked[second_loser_indices, rows, cols] - stacked[loser_indices, rows, cols]
-            margins = np.nan_to_num(np.clip(margins / 0.1, 0, 1))
-        
-        h, w = flatmaps[0].shape
-        rgb_map = np.ones((h, w, 3))
-        brain_mask = ~np.all(np.isnan(stacked), axis=0)
-        rgb_map[brain_mask] = [0, 0, 0] if background is None else background[brain_mask]
-        
-        for i, rgb in enumerate(self.colors):
-            mask = (loser_indices == i) & brain_mask
-            corr_vals = np.nan_to_num(baseline[mask])
-            margin_vals = margins[mask]
-            threshold_mask = (margin_vals > self.margin_threshold) & \
-                           (corr_vals > self.correlation_threshold)
-            full_mask = np.zeros_like(brain_mask, dtype=bool)
-            full_mask[mask] = threshold_mask
-            rgb_map[full_mask] = rgb
-        
-        return rgb_map
-    
-    def get_legend_type(self) -> str:
-        return 'categorical'
-    
-    def get_legend_data(self) -> Dict:
         from matplotlib.lines import Line2D
         legend_elements = [
             Line2D([0], [0], marker='s', color='w', markerfacecolor=mcolors.to_hex(c),
@@ -408,7 +307,7 @@ class LoserTakesItAllBlobsStrategy(ColorStrategy):
 @dataclass
 class FigureConfig:
     """Configuration for figure rendering"""
-    figsize: Tuple[int, int] = (10, 10)
+    figsize: Tuple[int, int] = (12, 9)
     dpi: int = 150
     smooth: bool = False
     sigma: float = 2.0
@@ -418,10 +317,11 @@ class FigureConfig:
     output_dir: str = "."
     # Fixed layout parameters for consistent sizing
     title_height: float = 0.08  # 8% of figure for title
-    legend_height: float = 0.12  # 12% of figure for legend
+    legend_height: float = 0.08  # 8% of figure for legend
+    legend_padding: float = 0.0  # padding inside legend band
     image_left: float = 0.05
     image_right: float = 0.95
-    image_bottom_padding: float = 0.02  # Small padding above legend
+    image_bottom_padding: float = 0.0  # Small padding above legend
 
 
 class FigureBuilder(ABC):
@@ -439,6 +339,7 @@ class FigureBuilder(ABC):
         axes: List[plt.Axes],
         rgb_map: np.ndarray,
         title: str = "",
+        subject: str = "",
         **kwargs,
     ):
         """Render the rgb_map onto axes"""
@@ -488,6 +389,7 @@ class SinglePanelBuilder(FigureBuilder):
         axes: List[plt.Axes],
         rgb_map: np.ndarray,
         title: str = "",
+        subject: str = "",
         colorbar_label: str = "",
         colorbar_data: Optional[Tuple] = None,
         strategy: Optional['ColorStrategy'] = None,
@@ -499,7 +401,9 @@ class SinglePanelBuilder(FigureBuilder):
         
         # Use suptitle for consistent positioning
         if title:
-            fig.suptitle(title, fontsize=14, y=0.98)
+            fig.suptitle(title, fontsize=12, y=0.95)
+        if subject:
+            fig.text(0.5, 0.75, subject, ha='center', fontsize=12)
         
         # Auto-generate colorbar for single correlation in fixed legend area
         if strategy is not None and strategy.get_legend_type() == 'colorbar':
@@ -514,8 +418,13 @@ class SinglePanelBuilder(FigureBuilder):
             sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
             sm.set_array([])
             
-            # Create colorbar axis in fixed legend area
-            cbar_ax = fig.add_axes([0.25, 0.04, 0.5, 0.03])
+            # Create colorbar axis centered in the legend band
+            legend_inner_bottom = self.config.legend_padding
+            legend_inner_top = self.config.legend_height - self.config.legend_padding
+            legend_inner_height = legend_inner_top - legend_inner_bottom
+            cbar_height = min(0.03, legend_inner_height * 0.4)
+            cbar_y = legend_inner_bottom + (legend_inner_height - cbar_height) / 2
+            cbar_ax = fig.add_axes([0.25, cbar_y, 0.5, cbar_height])
             cbar = fig.colorbar(sm, cax=cbar_ax, label=label, orientation='horizontal')
         
         # Fallback for explicit colorbar_data
@@ -523,7 +432,12 @@ class SinglePanelBuilder(FigureBuilder):
             flatmap, norm, cmap = colorbar_data
             sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
             sm.set_array([])
-            cbar_ax = fig.add_axes([0.25, 0.04, 0.5, 0.03])
+            legend_inner_bottom = self.config.legend_padding
+            legend_inner_top = self.config.legend_height - self.config.legend_padding
+            legend_inner_height = legend_inner_top - legend_inner_bottom
+            cbar_height = min(0.03, legend_inner_height * 0.4)
+            cbar_y = legend_inner_bottom + (legend_inner_height - cbar_height) / 2
+            cbar_ax = fig.add_axes([0.25, cbar_y, 0.5, cbar_height])
             cbar = fig.colorbar(sm, cax=cbar_ax, label=colorbar_label, orientation='horizontal')
     
     def finalize(
@@ -540,15 +454,21 @@ class SinglePanelBuilder(FigureBuilder):
             legend_data = strategy.get_legend_data()
             legend_elements = legend_data.get('legend_elements')
         
-        if legend_elements:
-            # Position legend in fixed legend area at bottom
-            legend = fig.legend(
+        if legend_elements and kwargs.get('show_legend', True):
+            print("Adding legend with elements:", legend_elements)
+            # Position legend centered in the padded legend band
+            legend_inner_bottom = self.config.legend_padding
+            legend_inner_top = self.config.legend_height - self.config.legend_padding
+            legend_center_y = (legend_inner_bottom + legend_inner_top) / 2
+            fig.legend(
                 handles=legend_elements,
-                loc='lower center',
-                ncol=min(len(legend_elements), 6),
-                bbox_to_anchor=(0.5, 0.03),
-                frameon=True,
-                fontsize=10
+                loc='center',
+                ncol=min(len(legend_elements), 3),
+                bbox_to_anchor=(0.5, legend_center_y),
+                fontsize=8,
+                handletextpad=0,
+                columnspacing=0.1,
+                frameon=False
             )
         
         if self.config.show_regions and self.mapper:
@@ -559,9 +479,9 @@ class SinglePanelBuilder(FigureBuilder):
         if self.config.save:
             os.makedirs(self.config.output_dir, exist_ok=True)
             if not output_filename:
-                output_filename = "flatmap.png"
+                output_filename = "flatmap.pdf"
             output_path = os.path.join(self.config.output_dir, output_filename)
-            plt.savefig(output_path, dpi=self.config.dpi)
+            plt.savefig(output_path, format='pdf', bbox_inches='tight')
             print(f"Saved to {output_path}")
         
         if self.config.show:
@@ -579,6 +499,7 @@ class BivariateLegendBuilder(SinglePanelBuilder):
         axes: List[plt.Axes],
         rgb_map: np.ndarray,
         title: str = "",
+        subject: str = "",
         legend_vmax: float = 0.5,
         legend_labels: Tuple[str, str] = ("X", "Y"),
         strategy: Optional['ColorStrategy'] = None,
@@ -596,13 +517,19 @@ class BivariateLegendBuilder(SinglePanelBuilder):
         ax.axis("off")
         
         if title:
-            fig.suptitle(title, fontsize=14, y=0.98)
-        
-        # Add 2D legend in fixed position within legend area
-        # Center it horizontally, position in legend area
-        legend_size = 0.18  # Size relative to figure
-        legend_x = 0.5 - legend_size / 2  # Center horizontally
-        legend_y = 0.02  # Bottom of legend area
+            fig.suptitle(title, fontsize=12, y=0.9)
+        if subject:
+            fig.text(0.5, 0.75, subject, ha='center', fontsize=12)
+            
+        if not kwargs.get('show_legend', True):
+            return 
+        # Add 2D legend inside the fixed legend area to avoid clipping
+        legend_inner_bottom = self.config.legend_padding
+        legend_inner_top = self.config.legend_height - self.config.legend_padding
+        legend_inner_height = legend_inner_top - legend_inner_bottom
+        legend_size = 0.15
+        legend_x = 0.5 - legend_size / 2
+        legend_y = 0.05
         
         ax_inset = fig.add_axes([legend_x, legend_y, legend_size, legend_size])
         x_grid, y_grid = np.meshgrid(
@@ -611,11 +538,27 @@ class BivariateLegendBuilder(SinglePanelBuilder):
         )
         legend_rgb = get_bivariate_color(x_grid, y_grid, vmin=0, vmax=legend_vmax)
         ax_inset.imshow(legend_rgb, origin='lower', extent=[0, legend_vmax, 0, legend_vmax])
-        ax_inset.set_xlabel(legend_labels[0], fontsize=9)
-        ax_inset.set_ylabel(legend_labels[1], fontsize=9)
         ax_inset.set_xticks([0, legend_vmax])
         ax_inset.set_yticks([0, legend_vmax])
         ax_inset.tick_params(labelsize=8)
+        # Place labels inside the legend band to prevent clipping
+        fig.text(
+            0.5,
+            legend_y + legend_size + 0.004,
+            legend_labels[0],
+            ha="center",
+            va="bottom",
+            fontsize=8,
+        )
+        fig.text(
+            legend_x - 0.01,
+            legend_y + legend_size / 2,
+            legend_labels[1],
+            ha="right",
+            va="center",
+            rotation=90,
+            fontsize=8,
+        )
 
 # endregion
 # ============================================================================
@@ -638,8 +581,10 @@ class FlatmapPlotter:
         data: List[np.ndarray],
         strategy: ColorStrategy,
         title: str = "",
+        subject: str = "",
         output_filename: str = "",
         builder_kwargs: Optional[Dict] = None,
+        background_color: Optional[Tuple[float, float, float]] = None,
         **kwargs,
     ) -> Tuple[plt.Figure, np.ndarray]:
         """
@@ -653,6 +598,8 @@ class FlatmapPlotter:
             Color generation strategy
         title : str
             Plot title
+        subject : str
+            Subject identifier
         output_filename : str
             Output filename (if save=True)
         builder_kwargs : dict
@@ -674,7 +621,9 @@ class FlatmapPlotter:
         
         # Generate colors
         
-        background = self.mapper.get_brain_bkg()
+        background = self.mapper.get_brain_bkg(background_color)
+        # black background
+        # background = np.zeros_like(self.mapper.get_brain_bkg())
         rgb_map = strategy(flatmaps, background=background, **kwargs)
         rgb_map[~self.mapper.get_brain_mask()] = [1, 1, 1]
         
@@ -692,206 +641,12 @@ class FlatmapPlotter:
         fig, axes = builder.build()
         
         # Render with strategy passed for auto-legend generation
-        builder.render(fig, axes, rgb_map, title=title, strategy=strategy, **builder_kwargs)
+        builder.render(fig, axes, rgb_map, title=title, subject=subject, strategy=strategy, **builder_kwargs)
         
         # Finalize with strategy passed for auto-legend generation
         builder.finalize(fig, axes, output_filename=output_filename, strategy=strategy, **builder_kwargs)
         
         return fig, rgb_map
 
-# endregion
-# ============================================================================
-# region CONVENIENCE WRAPPERS: For backward compatibility / ease of use
-
-def plot_correlation_on_flatmap(
-    subject: str,
-    modality: str,
-    mode: str,
-    correlation: np.ndarray,
-    mapper_dir: str,
-    output_dir: str,
-    title: str = "correlation flatmap",
-    regions: bool = False,
-    show: bool = True,
-    save: bool = True,
-    smooth: bool = False,
-    sigma: float = 2.0,
-    vmin: float = 0,
-    vmax: float = 0.5,
-):
-    """Plot single correlation map with hot colormap."""
-    mapper = FlatmapMapper(subject, mapper_dir)
-    config = FigureConfig(
-        figsize=(8, 6),
-        dpi=150,
-        show_regions=regions,
-        show=show,
-        save=save,
-        smooth=smooth,
-        sigma=sigma,
-        output_dir=output_dir,
-    )
-    plotter = FlatmapPlotter(mapper, config)
-    strategy = SingleCorrelationStrategy(vmin=vmin, vmax=vmax)
-    output_file = f"{subject}_{modality}_{mode}.png"
-    plotter.plot([correlation], strategy, title=title, output_filename=output_file)
-
-def plot_bivariate_flatmap(
-    subject: str,
-    modality: str,
-    corr_1: np.ndarray,
-    corr_2: np.ndarray,
-    mode_1: str,
-    mode_2: str,
-    mapper_dir: str,
-    output_dir: str,
-    title: str = "Bivariate Correlation Map",
-    show: bool = True,
-    save: bool = True,
-    vmax: float = 0.5,
-):
-    """Plot bivariate correlation map with 2D legend."""
-    mapper = FlatmapMapper(subject, mapper_dir)
-    config = FigureConfig(
-        figsize=(10, 8),
-        dpi=150,
-        show=show,
-        save=save,
-        output_dir=output_dir,
-    )
-    plotter = FlatmapPlotter(mapper, config)
-    strategy = BivariateStrategy(vmax=vmax)
-    output_file = f"{subject}_{modality}_{mode_1}_vs_{mode_2}.png"
-    plotter.plot(
-        [corr_1, corr_2],
-        strategy,
-        title=title,
-        output_filename=output_file,
-    )
-
-def plot_loser_takes_it_all(
-    subject: str,
-    modality: str,
-    correlations: List[np.ndarray],
-    names: List[str],
-    mapper_dir: str,
-    output_dir: str,
-    rank: int = 0,
-    title: str = "Loser Takes It All Map",
-    masks: Optional[np.ndarray] = None,
-    regions: bool = False,
-    show: bool = True,
-    save: bool = True,
-    smooth: bool = False,
-):
-    """Plot loser-takes-it-all map showing which model is best in each region."""
-    mapper = FlatmapMapper(subject, mapper_dir)
-    config = FigureConfig(
-        figsize=(12, 8),
-        dpi=200,
-        show_regions=regions,
-        show=show,
-        save=save,
-        smooth=smooth,
-        output_dir=output_dir,
-    )
-    plotter = FlatmapPlotter(mapper, config)
-    strategy = LoserTakesItAllStrategy(names)
-    
-    # Prepare data with optional mask
-    data = correlations if masks is None else [np.where(masks > 0, c, np.nan) for c in correlations]
-    
-    full_title = f"{title}\nSubject: {subject} | Modality: {modality}"
-    output_file = f"{subject}_{modality}_loser_map.png"
-    
-    plotter.plot(
-        data,
-        strategy,
-        title=full_title,
-        output_filename=output_file,
-    )
-
-def plot_loser_takes_it_all_margin(
-    subject: str,
-    modality: str,
-    correlations: List[np.ndarray],
-    names: List[str],
-    mapper_dir: str,
-    output_dir: str,
-    title: str = "Loser Takes It All Map",
-    masks: Optional[np.ndarray] = None,
-    regions: bool = False,
-    show: bool = True,
-    save: bool = True,
-):
-    """Plot loser-takes-it-all with margin visualization."""
-    mapper = FlatmapMapper(subject, mapper_dir)
-    config = FigureConfig(
-        figsize=(12, 8),
-        dpi=200,
-        show_regions=regions,
-        show=show,
-        save=save,
-        output_dir=output_dir,
-    )
-    plotter = FlatmapPlotter(mapper, config)
-    strategy = LoserTakesItAllMarginStrategy(names)
-    
-    data = correlations if masks is None else [np.where(masks > 0, c, np.nan) for c in correlations]
-    
-    full_title = f"{title}\nSubject: {subject} | Modality: {modality}"
-    output_file = f"{subject}_{modality}_loser_margin.png"
-    
-    plotter.plot(
-        data,
-        strategy,
-        title=full_title,
-        output_filename=output_file,
-    )
-
-def plot_loser_takes_it_all_blobs(
-    subject: str,
-    modality: str,
-    correlations: List[np.ndarray],
-    names: List[str],
-    mapper_dir: str,
-    output_dir: str,
-    title: str = "Loser Takes It All Map",
-    masks: Optional[np.ndarray] = None,
-    regions: bool = False,
-    show: bool = True,
-    save: bool = True,
-    margin_threshold: float = 0.0,
-    correlation_threshold: float = 0.0,
-):
-    """Plot loser-takes-it-all with thresholding (only shows significant blobs)."""
-    mapper = FlatmapMapper(subject, mapper_dir)
-    config = FigureConfig(
-        figsize=(12, 8),
-        dpi=200,
-        show_regions=regions,
-        show=show,
-        save=save,
-        output_dir=output_dir,
-    )
-    plotter = FlatmapPlotter(mapper, config)
-    strategy = LoserTakesItAllBlobsStrategy(
-        names,
-        margin_threshold=margin_threshold,
-        correlation_threshold=correlation_threshold,
-    )
-    
-    data = correlations if masks is None else [np.where(masks > 0, c, np.nan) for c in correlations]
-    
-    full_title = f"{title}\nSubject: {subject} | Modality: {modality}\n" \
-                f"(margin > {margin_threshold}, corr > {correlation_threshold})"
-    output_file = f"{subject}_{modality}_loser_blobs.png"
-    
-    plotter.plot(
-        data,
-        strategy,
-        title=full_title,
-        output_filename=output_file,
-    )
 # endregion
 # ============================================================================

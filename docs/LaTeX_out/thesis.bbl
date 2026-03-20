@@ -1,0 +1,1057 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{crepaldi_clustering_2013}{article}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=6c0760312fa1f2f58aa538690d1afad2}{%
+           family={Crepaldi},
+           familyi={C\bibinitperiod},
+           given={Davide},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=177173e8b5f62478e6598d4db43e382e}{%
+           family={Berlingeri},
+           familyi={B\bibinitperiod},
+           given={Manuela},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5464acb528b61104351b10a97311ed92}{%
+           family={Cattinelli},
+           familyi={C\bibinitperiod},
+           given={Isabella},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=27126a1491f51c4a409d1b601e724e99}{%
+           family={Borghese},
+           familyi={B\bibinitperiod},
+           given={Nunzio\bibnamedelima Alberto},
+           giveni={N\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2f654d05edb7e5ae199afd77a1d7738e}{%
+           family={Luzzatti},
+           familyi={L\bibinitperiod},
+           given={Claudio},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4cb1ff5c37bd8eceef9685ef81a63cb5}{%
+           family={Paulesu},
+           familyi={P\bibinitperiod},
+           given={Eraldo},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Frontiers}%
+      }
+      \strng{namehash}{e37b3dc888eba79d9d9ae033478ccb56}
+      \strng{fullhash}{4b643b1e56e4b131c26067f66db0cfe1}
+      \strng{bibnamehash}{e37b3dc888eba79d9d9ae033478ccb56}
+      \strng{authorbibnamehash}{e37b3dc888eba79d9d9ae033478ccb56}
+      \strng{authornamehash}{e37b3dc888eba79d9d9ae033478ccb56}
+      \strng{authorfullhash}{4b643b1e56e4b131c26067f66db0cfe1}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Although it is widely accepted that nouns and verbs are functionally independent linguistic entities, it is less clear whether their processing recruits different brain areas. This issue is particularly relevant for those theories of lexical semantics (and, more in general, of cognition) that suggest the embodiment of abstract concepts, i.e., based strongly on perceptual and motoric representations. This paper presents a formal meta‑analysis of the neuroimaging evidence on noun and verb processing in order to address this dichotomy more effectively at the anatomical level. We used a hierarchical clustering algorithm that grouped {fMRI}/{PET} activation peaks solely on the basis of spatial proximity. Cluster specificity for grammatical class was then tested on the basis of the noun‑verb distribution of the activation peaks included in each cluster. 32 clusters were identified: three were associated with nouns across different tasks (in the right inferior temporal gyrus, the left angular gyrus, and the left inferior parietal gyrus); one with verbs across different tasks (in the posterior part of the right middle temporal gyrus); and three showed verb specificity in some tasks and noun specificity in others (in the left and right inferior frontal gyrus and the left insula). These results do not support the popular tenets that verb processing is predominantly based in the left frontal cortex and noun processing relies specifically on temporal regions; nor do they support the idea that verb lexical‑semantic representations are heavily based on embodied motoric information. Our findings suggest instead that the cerebral circuits deputed to noun and verb processing lie in close spatial proximity in a wide network including frontal, parietal, and temporal regions. The data also indicate a predominant – but not exclusive – left lateralization of the network.}
+      \field{day}{27}
+      \field{issn}{1662-5161}
+      \field{journaltitle}{Frontiers in Human Neuroscience}
+      \field{month}{6}
+      \field{shortjournal}{Front. Hum. Neurosci.}
+      \field{shorttitle}{Clustering the lexicon in the brain}
+      \field{title}{Clustering the lexicon in the brain: a meta-analysis of the neurofunctional evidence on noun and verb processing}
+      \field{urlday}{19}
+      \field{urlmonth}{2}
+      \field{urlyear}{2026}
+      \field{volume}{7}
+      \field{year}{2013}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.3389/fnhum.2013.00303
+      \endverb
+      \verb{file}
+      \verb Full Text PDF:/Users/simoneesposito/Zotero/storage/5X5KFSM2/Crepaldi et al. - 2013 - Clustering the lexicon in the brain a meta-analysis of the neurofunctional evidence on noun and ver.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2013.00303/full
+      \endverb
+      \verb{url}
+      \verb https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2013.00303/full
+      \endverb
+      \keyw{Neuroimaging,Clustering algorithm,grammatical class,Meta-analysis,nouns,Task demands,verbs}
+    \endentry
+    \entry{damasio_nouns_1993}{article}{}
+      \name{author}{2}{}{%
+        {{un=1,uniquepart=given,hash=2ea5e766a457c8f220657ad967b493b1}{%
+           family={Damasio},
+           familyi={D\bibinitperiod},
+           given={A\bibnamedelima R},
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=f7493b20d816dddfdd893b517a0033ae}{%
+           family={Tranel},
+           familyi={T\bibinitperiod},
+           given={D},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Proceedings of the National Academy of Sciences}%
+      }
+      \strng{namehash}{ac4fa8482826e1266be8ea1d5d6b0029}
+      \strng{fullhash}{ac4fa8482826e1266be8ea1d5d6b0029}
+      \strng{bibnamehash}{ac4fa8482826e1266be8ea1d5d6b0029}
+      \strng{authorbibnamehash}{ac4fa8482826e1266be8ea1d5d6b0029}
+      \strng{authornamehash}{ac4fa8482826e1266be8ea1d5d6b0029}
+      \strng{authorfullhash}{ac4fa8482826e1266be8ea1d5d6b0029}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In a task designed to elicit the production of verbs, the patients known as {AN}-1033 and Boswell consistently produced the correct target words, performing no differently from normal controls. However, in a similar task designed to elicit the production of nouns, both patients performed quite defectively, and their scores were many {SDs} below those of controls. Language processing was otherwise normal--i.e., there were no impairments in grammar, morphology, phonetic implementation, or prosody; reading and writing were normal. In a third patient ({KJ}-1360), we obtained the reverse outcome--i.e., retrieval of common and proper nouns was preserved, but verb retrieval was defective. Together, the findings in the three patients constitute a double dissociation between noun and verb retrieval. In {AN}-1033 and Boswell, the lesions are located outside the so-called language areas (left frontoparietal operculum, posterior temporal region, inferior parietal lobule), where damage is associated with aphasia. The region of damage shared by the two patients is in left anterior and middle temporal lobe. This sector of left hemisphere contains systems for the retrieval of nouns that denote concrete entities. We propose that those systems are not essential for the retrieval of verbs and not involved in the vocal implementation of word forms. Those systems perform a two-way lexical-mediation role for concrete nouns and promote the reconstruction of a word form after the processing of sensory-motor characteristics of the entity denoted by that word. The findings in patient {KJ}-1360, whose lesion is in left premotor cortex, suggest that equivalent mediation systems for verbs are located in the left frontal region.}
+      \field{journaltitle}{Proceedings of the National Academy of Sciences}
+      \field{month}{6}
+      \field{number}{11}
+      \field{title}{Nouns and verbs are retrieved with differently distributed neural systems.}
+      \field{urlday}{26}
+      \field{urlmonth}{2}
+      \field{urlyear}{2026}
+      \field{volume}{90}
+      \field{year}{1993}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{4957\bibrangedash 4960}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1073/pnas.90.11.4957
+      \endverb
+      \verb{file}
+      \verb Full Text PDF:/Users/simoneesposito/Zotero/storage/2QUJY23H/Damasio and Tranel - 1993 - Nouns and verbs are retrieved with differently distributed neural systems..pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.pnas.org/doi/abs/10.1073/pnas.90.11.4957
+      \endverb
+      \verb{url}
+      \verb https://www.pnas.org/doi/abs/10.1073/pnas.90.11.4957
+      \endverb
+    \endentry
+    \entry{damasio_neural_2001}{article}{}
+      \name{author}{6}{}{%
+        {{un=1,uniquepart=given,hash=90d18565624a545105cb1ab485254aae}{%
+           family={Damasio},
+           familyi={D\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=0024100aada99a099fd1fa9e42ee1207}{%
+           family={Grabowski},
+           familyi={G\bibinitperiod},
+           given={T.\bibnamedelimi J.},
+           giveni={T\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f7493b20d816dddfdd893b517a0033ae}{%
+           family={Tranel},
+           familyi={T\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5a336ba53b28695c7148a89966a72cb3}{%
+           family={Ponto},
+           familyi={P\bibinitperiod},
+           given={L.\bibnamedelimi L.},
+           giveni={L\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=80300da565c5b0fd90cb271148bf7169}{%
+           family={Hichwa},
+           familyi={H\bibinitperiod},
+           given={R.\bibnamedelimi D.},
+           giveni={R\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2ea5e766a457c8f220657ad967b493b1}{%
+           family={Damasio},
+           familyi={D\bibinitperiod},
+           given={A.\bibnamedelimi R.},
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{2321b3ef25570f76ce93325ad7636e33}
+      \strng{fullhash}{1ea1decad8a114eabfd74172d5452cf3}
+      \strng{bibnamehash}{2321b3ef25570f76ce93325ad7636e33}
+      \strng{authorbibnamehash}{2321b3ef25570f76ce93325ad7636e33}
+      \strng{authornamehash}{2321b3ef25570f76ce93325ad7636e33}
+      \strng{authorfullhash}{1ea1decad8a114eabfd74172d5452cf3}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Ina [(15)O] water {PET} experiment, 10 normal subjects retrieved words denoting actions (performed with or without an implement), and another 10 normal subjects retrieved words denoting the spatial relations between objects. Our objective was to test the following hypothesis: that the salient neural activity associated with naming actions and spatial relations occurs in left frontal operculum and left parietal association cortices, but not in the left inferotemporal cortices ({IT}) or in the right parietal association cortices. There were two control tasks, one requiring a decision on the orientation of unknown faces (a standard control task in our laboratory) and another requiring the retrieval of words denoting the concrete entities used in the action and spatial relations tasks. In accordance with the hypothesis, both naming actions and spatial relations (using the face orientation task as control activated the left frontal operculum; naming actions also activated the left parietal lobe. However, sectors of the left posterior {IT} were also engaged in both naming actions and spatial relations. When the naming of concrete entities was subtracted from the naming of actions performed with such entities, area {MT} in the posterior temporo-occipital region was activated bilaterally. On the other hand, when naming of the concrete entities was subtracted from the naming of spatial relations, left parietal activation was found, and when two tasks of naming spatial relations were contrasted to each other bilateral parietal activation was seen, right when abstract stimuli were used and left when concrete objects were used. The activity in posterior {IT} is thought to be related to object processing and possibly name retrieval at a subconscious level.}
+      \field{issn}{1053-8119}
+      \field{journaltitle}{{NeuroImage}}
+      \field{month}{6}
+      \field{number}{6}
+      \field{shortjournal}{Neuroimage}
+      \field{title}{Neural correlates of naming actions and of naming spatial relations}
+      \field{volume}{13}
+      \field{year}{2001}
+      \field{dateera}{ce}
+      \field{pages}{1053\bibrangedash 1064}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1006/nimg.2001.0775
+      \endverb
+      \keyw{Adult,Brain Mapping,Cerebral Cortex,Cohort Studies,Dominance,Cerebral,Female,Humans,Male,Mental Recall,Orientation,Pattern Recognition,Visual,Psycholinguistics,Reference Values,Semantics,Tomography,Emission-Computed,Verbal Behavior,Verbal Learning}
+    \endentry
+    \entry{de_renzi_sparing_1995}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=b1cfac5348ac5e29601395ffe0fecbfa}{%
+           family={De\bibnamedelima Renzi},
+           familyi={D\bibinitperiod\bibinitdelim R\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e2f564cf17808b00eca441924dd69fc5}{%
+           family={Pellegrino},
+           familyi={P\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod},
+           givenun=0,
+           prefix={di},
+           prefixi={d\bibinitperiod},
+           prefixun=0}}%
+      }
+      \strng{namehash}{005f509a789517858c35e697932c0784}
+      \strng{fullhash}{005f509a789517858c35e697932c0784}
+      \strng{bibnamehash}{005f509a789517858c35e697932c0784}
+      \strng{authorbibnamehash}{005f509a789517858c35e697932c0784}
+      \strng{authornamehash}{005f509a789517858c35e697932c0784}
+      \strng{authorfullhash}{005f509a789517858c35e697932c0784}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We report a patient who, following a left fronto-temporal lesion, showed a complete sparing of the semantic store and a deficit of word production characterized by two types of dissociations. First, oral and written output was severely disrupted in naming and partially impaired in repetition, writing to dictation and oral spelling, with the exception of verbs, which were normally produced in every modality and condition of stimulation. Second, reading was normal for all type of words as well as non-words. This pattern of deficits suggests two functional lesions, one affecting the connections between the semantic store and the phonological lexicon and the other damaging the sublexical route that converts sound to sound and sound to print. It also implies that words are independently organized in the phonological lexicon, based on their grammatical class and have discrete connections with the semantic store. However, {CT} scan evidence does not support the hypothesis that this functional dissociation finds its anatomical correlate in the specialization of the frontal premotor cortex for verbs and the antero-medial temporal cortex for nouns. In spite of his normal reading performance, both in terms of comprehension and of accuracy and speed in word production, the patient complained that he met with great difficulty in reading newspapers and books, to the point that he had to renounce to this previously favourite activity. It was found that it took him time and effort to grasp the meaning of complex sentences and passages and it was speculated that, contrary to single words and elementary sentences, comprehension of this type of material cannot be achieved by the mere access of orthographic stimuli to semantics, but requires the retrieval of word-forms. It would appear that a patient, whose lexical route is blocked, can only read passages, by first converting print to sound via the sublexical route and then re-entering the semantic store with oral input.}
+      \field{issn}{0010-9452}
+      \field{journaltitle}{Cortex; a Journal Devoted to the Study of the Nervous System and Behavior}
+      \field{month}{12}
+      \field{number}{4}
+      \field{shortjournal}{Cortex}
+      \field{title}{Sparing of verbs and preserved, but ineffectual reading in a patient with impaired word production}
+      \field{volume}{31}
+      \field{year}{1995}
+      \field{dateera}{ce}
+      \field{pages}{619\bibrangedash 636}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1016/s0010-9452(13)80016-0
+      \endverb
+      \keyw{Adult,Brain Damage,Chronic,Humans,Intracranial Aneurysm,Language Disorders,Language Tests,Male,Mental Recall,Reading,Semantics,Speech Disorders,Speech Production Measurement,Verbal Behavior}
+    \endentry
+    \entry{deniz_representation_2019}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=782dd8c41d40fc441446fb601cbd076a}{%
+           family={Deniz},
+           familyi={D\bibinitperiod},
+           given={Fatma},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9f6543b7881d1807423f2b6d9eb303ad}{%
+           family={Nunez-Elizalde},
+           familyi={N\bibinithyphendelim E\bibinitperiod},
+           given={Anwar\bibnamedelima O.},
+           giveni={A\bibinitperiod\bibinitdelim O\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=05d42f05e1c1b0db4e4636f235e44891}{%
+           family={Huth},
+           familyi={H\bibinitperiod},
+           given={Alexander\bibnamedelima G.},
+           giveni={A\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e0c5bfbfb8feea98ef16c23fb0f4297d}{%
+           family={Gallant},
+           familyi={G\bibinitperiod},
+           given={Jack\bibnamedelima L.},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Society for Neuroscience}%
+      }
+      \strng{namehash}{db5d82974775eb5aa99fbca87d64df13}
+      \strng{fullhash}{bb9fd817ea1096df95758de85ce65e2c}
+      \strng{bibnamehash}{db5d82974775eb5aa99fbca87d64df13}
+      \strng{authorbibnamehash}{db5d82974775eb5aa99fbca87d64df13}
+      \strng{authornamehash}{db5d82974775eb5aa99fbca87d64df13}
+      \strng{authorfullhash}{bb9fd817ea1096df95758de85ce65e2c}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{An integral part of human language is the capacity to extract meaning from spoken and written words, but the precise relationship between brain representations of information perceived by listening versus reading is unclear. Prior neuroimaging studies have shown that semantic information in spoken language is represented in multiple regions in the human cerebral cortex, while amodal semantic information appears to be represented in a few broad brain regions. However, previous studies were too insensitive to determine whether semantic representations were shared at a fine level of detail rather than merely at a coarse scale. We used {fMRI} to record brain activity in two separate experiments while participants listened to or read several hours of the same narrative stories, and then created voxelwise encoding models to characterize semantic selectivity in each voxel and in each individual participant. We find that semantic tuning during listening and reading are highly correlated in most semantically selective regions of cortex, and models estimated using one modality accurately predict voxel responses in the other modality. These results suggest that the representation of language semantics is independent of the sensory modality through which the semantic information is received. {SIGNIFICANCE} {STATEMENT} Humans can comprehend the meaning of words from both spoken and written language. It is therefore important to understand the relationship between the brain representations of spoken or written text. Here, we show that although the representation of semantic information in the human brain is quite complex, the semantic representations evoked by listening versus reading are almost identical. These results suggest that the representation of language semantics is independent of the sensory modality through which the semantic information is received.}
+      \field{day}{25}
+      \field{issn}{0270-6474, 1529-2401}
+      \field{journaltitle}{Journal of Neuroscience}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{number}{39}
+      \field{shortjournal}{J. Neurosci.}
+      \field{title}{The Representation of Semantic Information Across Human Cerebral Cortex During Listening Versus Reading Is Invariant to Stimulus Modality}
+      \field{urlday}{7}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{volume}{39}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{7722\bibrangedash 7736}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1523/JNEUROSCI.0675-19.2019
+      \endverb
+      \verb{file}
+      \verb Full Text PDF:/Users/simoneesposito/Zotero/storage/W5XE78EV/Deniz et al. - 2019 - The Representation of Semantic Information Across Human Cerebral Cortex During Listening Versus Read.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.jneurosci.org/content/39/39/7722
+      \endverb
+      \verb{url}
+      \verb https://www.jneurosci.org/content/39/39/7722
+      \endverb
+      \keyw{{BOLD},cross-modal representations,{fMRI},listening,reading,semantics}
+    \endentry
+    \entry{devlin_bert_2019}{misc}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=13202969e372bc82318f9629cbdd199b}{%
+           family={Devlin},
+           familyi={D\bibinitperiod},
+           given={Jacob},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a45784fe7163b45f11d166564f5d24b6}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Ming-Wei},
+           giveni={M\bibinithyphendelim W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8dde73b4194f5bc4230c4808f3fc1534}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Kenton},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b92aa283415413bb8d2a1548716d0c7d}{%
+           family={Toutanova},
+           familyi={T\bibinitperiod},
+           given={Kristina},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {arXiv}%
+      }
+      \strng{namehash}{ad8e2e2a80d28ade21e86852b804fc9b}
+      \strng{fullhash}{e8bccd48302a14eeba57d9dce2f49ef4}
+      \strng{bibnamehash}{ad8e2e2a80d28ade21e86852b804fc9b}
+      \strng{authorbibnamehash}{ad8e2e2a80d28ade21e86852b804fc9b}
+      \strng{authornamehash}{ad8e2e2a80d28ade21e86852b804fc9b}
+      \strng{authorfullhash}{e8bccd48302a14eeba57d9dce2f49ef4}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{We introduce a new language representation model called {BERT}, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models, {BERT} is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. As a result, the pre-trained {BERT} model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications. {BERT} is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the {GLUE} score to 80.5\% (7.7\% point absolute improvement), {MultiNLI} accuracy to 86.7\% (4.6\% absolute improvement), {SQuAD} v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and {SQuAD} v2.0 Test F1 to 83.1 (5.1 point absolute improvement).}
+      \field{day}{24}
+      \field{eprinttype}{arxiv}
+      \field{month}{5}
+      \field{number}{{arXiv}:1810.04805}
+      \field{shorttitle}{{BERT}}
+      \field{title}{{BERT}: Pre-training of Deep Bidirectional Transformers for Language Understanding}
+      \field{urlday}{7}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.1810.04805
+      \endverb
+      \verb{eprint}
+      \verb 1810.04805 [cs]
+      \endverb
+      \verb{file}
+      \verb Preprint PDF:/Users/simoneesposito/Zotero/storage/AEBJ93L9/Devlin et al. - 2019 - BERT Pre-training of Deep Bidirectional Transformers for Language Understanding.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/1810.04805
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/1810.04805
+      \endverb
+      \keyw{Computer Science - Computation and Language}
+    \endentry
+    \entry{huth_natural_2016}{article}{}
+      \name{author}{5}{}{%
+        {{un=1,uniquepart=given,hash=05d42f05e1c1b0db4e4636f235e44891}{%
+           family={Huth},
+           familyi={H\bibinitperiod},
+           given={Alexander\bibnamedelima G.},
+           giveni={A\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=81369b3c59fb638e692cbd95a51fbef2}{%
+           family={Heer},
+           familyi={H\bibinitperiod},
+           given={Wendy\bibnamedelima A.},
+           giveni={W\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0,
+           prefix={de},
+           prefixi={d\bibinitperiod},
+           prefixun=0}}%
+        {{un=0,uniquepart=base,hash=15f19cfb916ba0b8afb494f250ea80a2}{%
+           family={Griffiths},
+           familyi={G\bibinitperiod},
+           given={Thomas\bibnamedelima L.},
+           giveni={T\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4a4e520db998aa4b178046ef8ef631b4}{%
+           family={Theunissen},
+           familyi={T\bibinitperiod},
+           given={Frédéric\bibnamedelima E.},
+           giveni={F\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e0c5bfbfb8feea98ef16c23fb0f4297d}{%
+           family={Gallant},
+           familyi={G\bibinitperiod},
+           given={Jack\bibnamedelima L.},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{88b016d69c0b9172f85115e35d145c57}
+      \strng{fullhash}{92c1dcbe5daacba179a4dc081e41f3fc}
+      \strng{bibnamehash}{88b016d69c0b9172f85115e35d145c57}
+      \strng{authorbibnamehash}{88b016d69c0b9172f85115e35d145c57}
+      \strng{authornamehash}{88b016d69c0b9172f85115e35d145c57}
+      \strng{authorfullhash}{92c1dcbe5daacba179a4dc081e41f3fc}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The meaning of language is represented in regions of the cerebral cortex collectively known as the “semantic system”. However, little of the semantic system has been mapped comprehensively, and the semantic selectivity of most regions is unknown. Here we systematically map semantic selectivity across the cortex using voxel-wise modeling of {fMRI} data collected while subjects listened to hours of narrative stories. We show that the semantic system is organized into intricate patterns that appear consistent across individuals. We then use a novel generative model to create a detailed semantic atlas. Our results suggest that most areas within the semantic system represent information about specific semantic domains, or groups of related concepts, and our atlas shows which domains are represented in each area. This study demonstrates that data-driven methods—commonplace in studies of human neuroanatomy and functional connectivity—provide a powerful and efficient means for mapping functional representations in the brain.}
+      \field{day}{28}
+      \field{issn}{0028-0836}
+      \field{journaltitle}{Nature}
+      \field{month}{4}
+      \field{number}{7600}
+      \field{shortjournal}{Nature}
+      \field{title}{Natural speech reveals the semantic maps that tile human cerebral cortex}
+      \field{urlday}{7}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{volume}{532}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{453\bibrangedash 458}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1038/nature17637
+      \endverb
+      \verb{urlraw}
+      \verb https://pmc.ncbi.nlm.nih.gov/articles/PMC4852309/
+      \endverb
+      \verb{url}
+      \verb https://pmc.ncbi.nlm.nih.gov/articles/PMC4852309/
+      \endverb
+    \endentry
+    \entry{jain_incorporating_2018}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=346bb277e1aba1de1507800f162fec58}{%
+           family={Jain},
+           familyi={J\bibinitperiod},
+           given={Shailee},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=1,uniquepart=given,hash=4fd47c8b41439f5c75ec99cb6e0d2990}{%
+           family={Huth},
+           familyi={H\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod},
+           givenun=1}}%
+      }
+      \list{publisher}{1}{%
+        {Curran Associates, Inc.}%
+      }
+      \strng{namehash}{5cc27ac00a0b6fe256b243084806fc74}
+      \strng{fullhash}{5cc27ac00a0b6fe256b243084806fc74}
+      \strng{bibnamehash}{5cc27ac00a0b6fe256b243084806fc74}
+      \strng{authorbibnamehash}{5cc27ac00a0b6fe256b243084806fc74}
+      \strng{authornamehash}{5cc27ac00a0b6fe256b243084806fc74}
+      \strng{authorfullhash}{5cc27ac00a0b6fe256b243084806fc74}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Advances in Neural Information Processing Systems}
+      \field{title}{Incorporating Context into Language Encoding Models for {fMRI}}
+      \field{urlday}{7}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{volume}{31}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb Full Text PDF:/Users/simoneesposito/Zotero/storage/5UXUDBTQ/Jain and Huth - 2018 - Incorporating Context into Language Encoding Models for fMRI.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://papers.nips.cc/paper_files/paper/2018/hash/f471223d1a1614b58a7dc45c9d01df19-Abstract.html
+      \endverb
+      \verb{url}
+      \verb https://papers.nips.cc/paper_files/paper/2018/hash/f471223d1a1614b58a7dc45c9d01df19-Abstract.html
+      \endverb
+    \endentry
+    \entry{pasquiou_information-restricted_2023}{misc}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=39507b132de446637198ceab67f17110}{%
+           family={Pasquiou},
+           familyi={P\bibinitperiod},
+           given={Alexandre},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=14dcf5daa1f8aef2b120fd7e5ede0e0e}{%
+           family={Lakretz},
+           familyi={L\bibinitperiod},
+           given={Yair},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0f3fc06fb9fcbb01b9cc0985eaf0a71c}{%
+           family={Thirion},
+           familyi={T\bibinitperiod},
+           given={Bertrand},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=089b3b479c068e109f0d6f0ab2022dfa}{%
+           family={Pallier},
+           familyi={P\bibinitperiod},
+           given={Christophe},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {arXiv}%
+      }
+      \strng{namehash}{1bac7aaead4181fa0f5c249541f6712f}
+      \strng{fullhash}{9b5262c649c04adc8206ee7cbcd285ae}
+      \strng{bibnamehash}{1bac7aaead4181fa0f5c249541f6712f}
+      \strng{authorbibnamehash}{1bac7aaead4181fa0f5c249541f6712f}
+      \strng{authornamehash}{1bac7aaead4181fa0f5c249541f6712f}
+      \strng{authorfullhash}{9b5262c649c04adc8206ee7cbcd285ae}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{A fundamental question in neurolinguistics concerns the brain regions involved in syntactic and semantic processing during speech comprehension, both at the lexical (word processing) and supra-lexical levels (sentence and discourse processing). To what extent are these regions separated or intertwined? To address this question, we trained a lexical language model, Glove, and a supra-lexical language model, {GPT}-2, on a text corpus from which we selectively removed either syntactic or semantic information. We then assessed to what extent these information-restricted models were able to predict the time-courses of {fMRI} signal of humans listening to naturalistic text. We also manipulated the size of contextual information provided to {GPT}-2 in order to determine the windows of integration of brain regions involved in supra-lexical processing. Our analyses show that, while most brain regions involved in language are sensitive to both syntactic and semantic variables, the relative magnitudes of these effects vary a lot across these regions. Furthermore, we found an asymmetry between the left and right hemispheres, with semantic and syntactic processing being more dissociated in the left hemisphere than in the right, and the left and right hemispheres showing respectively greater sensitivity to short and long contexts. The use of information-restricted {NLP} models thus shed new light on the spatial organization of syntactic processing, semantic processing and compositionality.}
+      \field{day}{28}
+      \field{eprinttype}{arxiv}
+      \field{month}{2}
+      \field{number}{{arXiv}:2302.14389}
+      \field{title}{Information-Restricted Neural Language Models Reveal Different Brain Regions' Sensitivity to Semantics, Syntax and Context}
+      \field{urlday}{7}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.2302.14389
+      \endverb
+      \verb{eprint}
+      \verb 2302.14389 [cs]
+      \endverb
+      \verb{file}
+      \verb Preprint PDF:/Users/simoneesposito/Zotero/storage/BWAERZS4/Pasquiou et al. - 2023 - Information-Restricted Neural Language Models Reveal Different Brain Regions' Sensitivity to Semanti.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/2302.14389
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/2302.14389
+      \endverb
+      \keyw{Computer Science - Computation and Language}
+    \endentry
+    \entry{peters_deep_2018}{misc}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=711e37ce316a72d79bd008a205513ef0}{%
+           family={Peters},
+           familyi={P\bibinitperiod},
+           given={Matthew\bibnamedelima E.},
+           giveni={M\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=93f95e4f65833691b9a15cbe2791e2df}{%
+           family={Neumann},
+           familyi={N\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=48ea6f65be60970c81190df53e86239e}{%
+           family={Iyyer},
+           familyi={I\bibinitperiod},
+           given={Mohit},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6adacaf607ef85a7b55da44661636929}{%
+           family={Gardner},
+           familyi={G\bibinitperiod},
+           given={Matt},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9edd3110f9350150b9a22ef5b7d45d25}{%
+           family={Clark},
+           familyi={C\bibinitperiod},
+           given={Christopher},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8dde73b4194f5bc4230c4808f3fc1534}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Kenton},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1dbd3a5b42828fb2cebd7786488ba425}{%
+           family={Zettlemoyer},
+           familyi={Z\bibinitperiod},
+           given={Luke},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {arXiv}%
+      }
+      \strng{namehash}{d3eb58783a87d6c0565e02fda2ae5c07}
+      \strng{fullhash}{e4ae16c29e91a94c3ee954353fd212ab}
+      \strng{bibnamehash}{d3eb58783a87d6c0565e02fda2ae5c07}
+      \strng{authorbibnamehash}{d3eb58783a87d6c0565e02fda2ae5c07}
+      \strng{authornamehash}{d3eb58783a87d6c0565e02fda2ae5c07}
+      \strng{authorfullhash}{e4ae16c29e91a94c3ee954353fd212ab}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We introduce a new type of deep contextualized word representation that models both (1) complex characteristics of word use (e.g., syntax and semantics), and (2) how these uses vary across linguistic contexts (i.e., to model polysemy). Our word vectors are learned functions of the internal states of a deep bidirectional language model ({biLM}), which is pre-trained on a large text corpus. We show that these representations can be easily added to existing models and significantly improve the state of the art across six challenging {NLP} problems, including question answering, textual entailment and sentiment analysis. We also present an analysis showing that exposing the deep internals of the pre-trained network is crucial, allowing downstream models to mix different types of semi-supervision signals.}
+      \field{day}{22}
+      \field{eprinttype}{arxiv}
+      \field{month}{3}
+      \field{number}{{arXiv}:1802.05365}
+      \field{title}{Deep contextualized word representations}
+      \field{urlday}{6}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.1802.05365
+      \endverb
+      \verb{eprint}
+      \verb 1802.05365 [cs]
+      \endverb
+      \verb{file}
+      \verb Preprint PDF:/Users/simoneesposito/Zotero/storage/FWRSG3UG/Peters et al. - 2018 - Deep contextualized word representations.pdf:application/pdf;Snapshot:/Users/simoneesposito/Zotero/storage/HKS4GSQF/1802.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/1802.05365
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/1802.05365
+      \endverb
+      \keyw{Computer Science - Computation and Language}
+    \endentry
+    \entry{schrimpf_neural_2021}{article}{}
+      \name{author}{8}{}{%
+        {{un=0,uniquepart=base,hash=c656af2effce18b2a5255d0256734009}{%
+           family={Schrimpf},
+           familyi={S\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=978c58502f3d976a3577757e58fb6f4f}{%
+           family={Blank},
+           familyi={B\bibinitperiod},
+           given={Idan\bibnamedelima Asher},
+           giveni={I\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c100bb0b90e1c209addb45ded07de9fc}{%
+           family={Tuckute},
+           familyi={T\bibinitperiod},
+           given={Greta},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=840cc8c2f50a73f5600b075a8171577a}{%
+           family={Kauf},
+           familyi={K\bibinitperiod},
+           given={Carina},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=648a4b0fde11198e86c63e3afb773417}{%
+           family={Hosseini},
+           familyi={H\bibinitperiod},
+           given={Eghbal\bibnamedelima A.},
+           giveni={E\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c08fa15373eeeaf086260703015358d5}{%
+           family={Kanwisher},
+           familyi={K\bibinitperiod},
+           given={Nancy},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5c7ff02e1f8b4c4aa7bfddece14f23d2}{%
+           family={Tenenbaum},
+           familyi={T\bibinitperiod},
+           given={Joshua\bibnamedelima B.},
+           giveni={J\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2883dcbe4a01bec0eb4f678cf7a6098a}{%
+           family={Fedorenko},
+           familyi={F\bibinitperiod},
+           given={Evelina},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Proceedings of the National Academy of Sciences}%
+      }
+      \strng{namehash}{7ef674d487b26a3b1c3278edcf8cc4ff}
+      \strng{fullhash}{62d37cbe8f2627a7f05aee221dec1626}
+      \strng{bibnamehash}{7ef674d487b26a3b1c3278edcf8cc4ff}
+      \strng{authorbibnamehash}{7ef674d487b26a3b1c3278edcf8cc4ff}
+      \strng{authornamehash}{7ef674d487b26a3b1c3278edcf8cc4ff}
+      \strng{authorfullhash}{62d37cbe8f2627a7f05aee221dec1626}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{The neuroscience of perception has recently been revolutionized with an integrative modeling approach in which computation, brain function, and behavior are linked across many datasets and many computational models. By revealing trends across models, this approach yields novel insights into cognitive and neural mechanisms in the target domain. We here present a systematic study taking this approach to higher-level cognition: human language processing, our species’ signature cognitive skill. We find that the most powerful “transformer” models predict nearly 100\% of explainable variance in neural responses to sentences and generalize across different datasets and imaging modalities (functional {MRI} and electrocorticography). Models’ neural fits (“brain score”) and fits to behavioral responses are both strongly correlated with model accuracy on the next-word prediction task (but not other language tasks). Model architecture appears to substantially contribute to neural fit. These results provide computationally explicit evidence that predictive processing fundamentally shapes the language comprehension mechanisms in the human brain.}
+      \field{day}{9}
+      \field{journaltitle}{Proceedings of the National Academy of Sciences}
+      \field{month}{11}
+      \field{number}{45}
+      \field{shorttitle}{The neural architecture of language}
+      \field{title}{The neural architecture of language: Integrative modeling converges on predictive processing}
+      \field{urlday}{7}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{volume}{118}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{e2105646118}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1073/pnas.2105646118
+      \endverb
+      \verb{file}
+      \verb Full Text PDF:/Users/simoneesposito/Zotero/storage/DGKDHFPL/Schrimpf et al. - 2021 - The neural architecture of language Integrative modeling converges on predictive processing.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.pnas.org/doi/10.1073/pnas.2105646118
+      \endverb
+      \verb{url}
+      \verb https://www.pnas.org/doi/10.1073/pnas.2105646118
+      \endverb
+    \endentry
+    \entry{tuckute_driving_2024}{article}{}
+      \name{author}{8}{}{%
+        {{un=0,uniquepart=base,hash=c100bb0b90e1c209addb45ded07de9fc}{%
+           family={Tuckute},
+           familyi={T\bibinitperiod},
+           given={Greta},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a72a7be4d182637e6d3f69f5ce2f45c5}{%
+           family={Sathe},
+           familyi={S\bibinitperiod},
+           given={Aalok},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dec4df64408d3ebad3d7bc999a6ada96}{%
+           family={Srikant},
+           familyi={S\bibinitperiod},
+           given={Shashank},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=61822c39794eb1c4d24d33e3f33abad0}{%
+           family={Taliaferro},
+           familyi={T\bibinitperiod},
+           given={Maya},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0b79b835d8d8a3e7d76b7f18eff34498}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Mingye},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c656af2effce18b2a5255d0256734009}{%
+           family={Schrimpf},
+           familyi={S\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a99bd4462d80db9c8973939c72cc932c}{%
+           family={Kay},
+           familyi={K\bibinitperiod},
+           given={Kendrick},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2883dcbe4a01bec0eb4f678cf7a6098a}{%
+           family={Fedorenko},
+           familyi={F\bibinitperiod},
+           given={Evelina},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{cc3450e5b9366586e953ca651ecdd71c}
+      \strng{fullhash}{8ca70e1b5476af230187f8d2e35111fc}
+      \strng{bibnamehash}{cc3450e5b9366586e953ca651ecdd71c}
+      \strng{authorbibnamehash}{cc3450e5b9366586e953ca651ecdd71c}
+      \strng{authornamehash}{cc3450e5b9366586e953ca651ecdd71c}
+      \strng{authorfullhash}{8ca70e1b5476af230187f8d2e35111fc}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Transformer models such as {GPT} generate human-like language and are predictive of human brain responses to language. Here, using functional-{MRI}-measured brain responses to 1,000 diverse sentences, we first show that a {GPT}-based encoding model can predict the magnitude of the brain response associated with each sentence. We then use the model to identify new sentences that are predicted to drive or suppress responses in the human language network. We show that these model-selected novel sentences indeed strongly drive and suppress the activity of human language areas in new individuals. A systematic analysis of the model-selected sentences reveals that surprisal and well-formedness of linguistic input are key determinants of response strength in the language network. These results establish the ability of neural network models to not only mimic human language but also non-invasively control neural activity in higher-level cortical areas, such as the language network.}
+      \field{issn}{2397-3374}
+      \field{journaltitle}{Nature Human Behaviour}
+      \field{month}{3}
+      \field{number}{3}
+      \field{shortjournal}{Nat Hum Behav}
+      \field{title}{Driving and suppressing the human language network using large language models}
+      \field{volume}{8}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \field{pages}{544\bibrangedash 561}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1038/s41562-023-01783-7
+      \endverb
+      \keyw{Brain,Brain Mapping,Comprehension,Humans,Language,Linguistics}
+    \endentry
+    \entry{vaswani_attention_2023}{misc}{}
+      \name{author}{8}{}{%
+        {{un=0,uniquepart=base,hash=7f28e84700536646dd6620a0db07ad09}{%
+           family={Vaswani},
+           familyi={V\bibinitperiod},
+           given={Ashish},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=62efade83d70f0323fe248755e6c90c5}{%
+           family={Shazeer},
+           familyi={S\bibinitperiod},
+           given={Noam},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=06649ebab1ea5cac0250746a19764975}{%
+           family={Parmar},
+           familyi={P\bibinitperiod},
+           given={Niki},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=831027ee0ebf22375e2a86afc1881909}{%
+           family={Uszkoreit},
+           familyi={U\bibinitperiod},
+           given={Jakob},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2fd2982e30ebcec93ec1cf76e0d797fd}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Llion},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=27b07e4eacbf4ef7a1438e3badb7dd8d}{%
+           family={Gomez},
+           familyi={G\bibinitperiod},
+           given={Aidan\bibnamedelima N.},
+           giveni={A\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f2bc899b1160163417da7bf510f15d33}{%
+           family={Kaiser},
+           familyi={K\bibinitperiod},
+           given={Lukasz},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=95595a0fefb86187cbc36e551017d332}{%
+           family={Polosukhin},
+           familyi={P\bibinitperiod},
+           given={Illia},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {arXiv}%
+      }
+      \strng{namehash}{ee273ab30cfb889666f8c4d806eb9ce7}
+      \strng{fullhash}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \strng{bibnamehash}{ee273ab30cfb889666f8c4d806eb9ce7}
+      \strng{authorbibnamehash}{ee273ab30cfb889666f8c4d806eb9ce7}
+      \strng{authornamehash}{ee273ab30cfb889666f8c4d806eb9ce7}
+      \strng{authorfullhash}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 {BLEU} on the {WMT} 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 {BLEU}. On the {WMT} 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art {BLEU} score of 41.8 after training for 3.5 days on eight {GPUs}, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.}
+      \field{day}{2}
+      \field{eprinttype}{arxiv}
+      \field{month}{8}
+      \field{number}{{arXiv}:1706.03762}
+      \field{title}{Attention Is All You Need}
+      \field{urlday}{7}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.1706.03762
+      \endverb
+      \verb{eprint}
+      \verb 1706.03762 [cs]
+      \endverb
+      \verb{file}
+      \verb Preprint PDF:/Users/simoneesposito/Zotero/storage/89MWYQQD/Vaswani et al. - 2023 - Attention Is All You Need.pdf:application/pdf;Snapshot:/Users/simoneesposito/Zotero/storage/QQJPS3VL/1706.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/1706.03762
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/1706.03762
+      \endverb
+      \keyw{Computer Science - Computation and Language,Computer Science - Machine Learning}
+    \endentry
+    \entry{vigliocco_nouns_2011}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=5e27bdc24fbf7ddf49e47c6768f3883d}{%
+           family={Vigliocco},
+           familyi={V\bibinitperiod},
+           given={Gabriella},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c6f506c37207857aa142bf9da67869c9}{%
+           family={Vinson},
+           familyi={V\bibinitperiod},
+           given={David\bibnamedelima P.},
+           giveni={D\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c708ddfb2c00472a1e9c32fee8074531}{%
+           family={Druks},
+           familyi={D\bibinitperiod},
+           given={Judit},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f28a73adc341bed303279f2a99d9378a}{%
+           family={Barber},
+           familyi={B\bibinitperiod},
+           given={Horacio},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e0f121a1d1041f3f0fdcfc3912848357}{%
+           family={Cappa},
+           familyi={C\bibinitperiod},
+           given={Stefano\bibnamedelima F.},
+           giveni={S\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{cd835c25ad4271f0dcf4c96a7ec04e9c}
+      \strng{fullhash}{50f448d747c2d5b0ea564fe2acb32f13}
+      \strng{bibnamehash}{cd835c25ad4271f0dcf4c96a7ec04e9c}
+      \strng{authorbibnamehash}{cd835c25ad4271f0dcf4c96a7ec04e9c}
+      \strng{authornamehash}{cd835c25ad4271f0dcf4c96a7ec04e9c}
+      \strng{authorfullhash}{50f448d747c2d5b0ea564fe2acb32f13}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{In the past 30 years there has been a growing body of research using different methods (behavioural, electrophysiological, neuropsychological, {TMS} and imaging studies) asking whether processing words from different grammatical classes (especially nouns and verbs) engage different neural systems. To date, however, each line of investigation has provided conflicting results. Here we present a review of this literature, showing that once we take into account the confounding in most studies between semantic distinctions (objects vs. actions) and grammatical distinction (nouns vs. verbs), and the conflation between studies concerned with mechanisms of single word processing and those studies concerned with sentence integration, the emerging picture is relatively clear-cut: clear neural separability is observed between the processing of object words (nouns) and action words (typically verbs), grammatical class effects emerge or become stronger for tasks and languages imposing greater processing demands. These findings indicate that grammatical class per se is not an organisational principle of knowledge in the brain; rather, all the findings we review are compatible with two general principles described by typological linguistics as underlying grammatical class membership across languages: semantic/pragmatic, and distributional cues in language that distinguish nouns from verbs. These two general principles are incorporated within an emergentist view which takes these constraints into account.}
+      \field{day}{1}
+      \field{issn}{0149-7634}
+      \field{journaltitle}{Neuroscience \& Biobehavioral Reviews}
+      \field{month}{1}
+      \field{number}{3}
+      \field{shortjournal}{Neuroscience \& Biobehavioral Reviews}
+      \field{shorttitle}{Nouns and verbs in the brain}
+      \field{title}{Nouns and verbs in the brain: A review of behavioural, electrophysiological, neuropsychological and imaging studies}
+      \field{urlday}{27}
+      \field{urlmonth}{2}
+      \field{urlyear}{2026}
+      \field{volume}{35}
+      \field{year}{2011}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{407\bibrangedash 426}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.1016/j.neubiorev.2010.04.007
+      \endverb
+      \verb{file}
+      \verb ScienceDirect Snapshot:/Users/simoneesposito/Zotero/storage/FAQZ349Z/S0149763410000916.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S0149763410000916
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S0149763410000916
+      \endverb
+      \keyw{Aphasia,Cognitive neuroscience,Event related potentials,Grammatical class,Imaging,Language,Noun–verb,Transcranial magnetic stimulation}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

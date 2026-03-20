@@ -397,7 +397,8 @@ input_sequence
             print(f"Error at word index {word_index} for story {story_name}: {e}")
             print(f"Input sequence: {input_sequence_joined}")
             print(f"Tokens: {tokenizer.convert_ids_to_tokens(tokens_tensor[0])}")
-            print(f"Mask: {mask[max(0, word_index - window_size) : word_index + 1]}")
+            print(f"Token tensor shape: {tokens_tensor.shape}")
+            print(f"Mask: {mask_tensor.shape}")
             raise
         if word_index > 50:
             verbose = False  # Only print verbose for first 50 words
@@ -405,6 +406,15 @@ input_sequence
             print(f"\nProcessing word: {input_sequence[-1]} (index {word_index})")
             print(f"Context: {input_sequence_joined}")
             print(f"Mask: {mask[max(0, word_index - window_size) : word_index + 1]}")
+            masked_tokens = [tok if m else "[MASK]" for tok, m in zip(tokenizer.convert_ids_to_tokens(tokens_tensor[0]), mask_tensor[0])]
+            print(f"Masked tokens: {' '.join(masked_tokens)}")
+            #print(f"Tokenized context: {tokenizer.convert_ids_to_tokens(tokens_tensor[0])}")
+            #print(f"Token-level mask: {mask_tensor[0].tolist()}")
+            #for tok, m in zip(tokenizer.convert_ids_to_tokens(tokens_tensor[0]), mask_tensor[0]):
+            #    print(f"Token: {tok}, Masked: {m.item()}")
+                
+            
+        
             
         with torch.no_grad():
             outputs = model(tokens_tensor, attention_mask=mask_tensor.to(device))
@@ -419,7 +429,7 @@ input_sequence
 
         
         # average the tokens of the target word that are not masked (mask is False for tokens to keep, True for tokens to mask out)
-        masked_embedding = layer_embedding[~mask_tensor[0].bool()]
+        masked_embedding = layer_embedding[mask_tensor[0].bool()]
         if masked_embedding.shape[0] == 0:
             # Fallback if all tokens were masked
             word_embedding = layer_embedding[-1].numpy()
@@ -447,25 +457,30 @@ input_sequence
     return embedding_ds
 
 def words_to_token_mask(input_sequence: str, tokenizer: AutoTokenizer, mask: List[bool]) -> torch.Tensor:
+    import re
     """Given a list of words and a corresponding mask indicating which words to keep, 
     return a token-level mask that can be applied to the tokenized input."""
-    import re
     token_mask = []
     words = re.split(r'(?=\s)', input_sequence)
-    for word, mask in zip(words, mask):
+    
+    for word, word_mask in zip(words, mask):
         tokens = tokenizer.tokenize(word)
-        if type(mask) is list:
-            if len(mask) != len(tokens):
+        
+        if isinstance(word_mask, list):
+            if len(word_mask) != len(tokens):
                 try:
-                    mask = [mask[0]] * len(tokens)  # If mask is shorter than tokens, repeat the first value
-                except:
-                    print(f"Error processing mask for word '{word}' with tokens {tokens}. Mask: {mask}")
+                    word_mask = [word_mask[0]] * len(tokens)
+                except Exception as e:
+                    print(f"Error processing mask for word '{word}' with tokens {tokens}. Mask: {word_mask}")
                     print(f"Sentence: {input_sequence}")
-                    raise 
-            token_mask.extend(mask)
-        elif type(mask) is bool:
-            token_mask.extend([~mask] * len(tokens))
+                    raise
+            token_mask.extend(word_mask)
+        elif isinstance(word_mask, bool):
+            token_mask.extend([word_mask] * len(tokens))
         else:
             raise ValueError("Mask must be a list of booleans or a single boolean.")
-    token_mask[-1] = True  # Ensure the last token (current word) is always included
+    
+    token_mask[-1] = False
+    # flip mask so that True indicates tokens to keep and False indicates tokens to mask out
+    token_mask = [not m for m in token_mask]
     return torch.tensor([token_mask]).long()

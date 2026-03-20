@@ -26,16 +26,24 @@ class EmbeddingManager:
         verbose: bool = False,
     ) -> Dict:
         """Get cached embeddings or generate new ones for missing stories."""
+        
         if mode not in self.embeddings or self.embeddings[mode] is None or overwrite:
             self.embeddings[mode] = {}
 
         missing_stories = [s for s in stories if s not in self.embeddings[mode]]
+        print(f"Mode '{mode}': {len(missing_stories)} missing stories out of {len(stories)}.")
         if missing_stories:
-            self._generate_and_cache(missing_stories, mode, dataseqs, contexts, verbose)
+            self._generate_and_cache(
+                missing_stories,
+                mode,
+                dataseqs,
+                contexts,
+                verbose=verbose,
+            )
 
         return self.embeddings[mode]
 
-    def _generate_and_cache(self, stories, mode, dataseqs, contexts, verbose):
+    def _generate_and_cache_(self, stories, mode, dataseqs, contexts, verbose):
         """Generate embeddings for missing stories and save to disk."""
         from .embedding_generator import contextual_embeddings
 
@@ -47,12 +55,28 @@ class EmbeddingManager:
             contexts=contexts,
             verbose=verbose,
         )
-
         for story in stories:
             self.embeddings[mode][story] = new_emb[story]
 
         self._save_embeddings()
+        
+    def _generate_and_cache(self, stories, mode, dataseqs, mask, verbose=False, window_size=20):
+        """Generate embeddings for missing stories and save to disk."""
+        from .embedding_generator import masked_embeddings
+        new_emb = masked_embeddings(
+            dataseqs,
+            "openai-community/gpt2",
+            8,  
+            interp="lanczos",
+            mask=mask,
+            window_size=window_size,
+            verbose=verbose,
+        )
+        for story in stories:
+            print(f"Caching embeddings for story {story} in mode {mode}.")
+            self.embeddings[mode][story] = new_emb[story]
 
+        self._save_embeddings()
     def _save_embeddings(self):
         """Save embeddings to disk."""
         np.savez(

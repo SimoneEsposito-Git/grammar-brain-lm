@@ -74,6 +74,7 @@ def create_data_sequences(
 
         # Clean bad words
         text = np.array(ds.data)
+        print(bad_words)
         bad_words_indices = np.where(np.isin(text, bad_words))[0]
 
         if len(bad_words_indices) > 0:

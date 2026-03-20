@@ -7,6 +7,7 @@ from typing import Dict, List
 from english_words import get_english_words_set
 import spacy
 
+POS_TAGS = ["noun", "verb", "adj", "adv", "pron", "aux", "propn"]  # Common POS tags to consider for masking
 class ContextGenerator:
     def __init__(self):
         self.model = None
@@ -22,6 +23,27 @@ class ContextGenerator:
             if torch.cuda.is_available():
                 self.model.to("cuda")
 
+    def generate_mask(
+        self,
+        ds,
+        mode: str,
+        seed: int = 42,
+        story: str = "",
+        **kwargs,
+    ) -> List[bool]:  
+        """Generate contexts based on the specified mode."""
+        if mode == "baseline":
+            return [False] * len(ds.data)  # No masking, keep all words
+        elif mode in POS_TAGS:
+            pos_tags = [mode]
+            if 'verb' in pos_tags:
+                pos_tags.append('aux')  # Include auxiliary verbs as well
+            if 'noun' in pos_tags:
+                pos_tags.append('propn')  # Include proper nouns as well
+            return self._generate_pos_masks_bool(ds, pos_tags, story)
+        else:
+            raise ValueError(f"Unknown mode: {mode}")
+    
     def generate_context(
         self,
         ds,
@@ -31,7 +53,7 @@ class ContextGenerator:
         seed: int = 42,
         story: str = "",
         **kwargs,
-    ) -> List[str]:  # Change return type to List[str]
+    ) -> List[str]:  
         """Generate contexts based on the specified mode."""
         if mode == "shuffle":
             return self._generate_shuffle_context(ds, window_size, seed, story)
@@ -53,6 +75,10 @@ class ContextGenerator:
             return self._generate_pos_pct_masks(ds, pos_tags, window_size, story)
         elif "remove-pos" in mode:
             pos_tags = mode.split("-")[2:]  # Extract POS tags from mode string
+            if 'verb' in pos_tags:
+                pos_tags.append('aux')  # Include auxiliary verbs as well
+            if 'noun' in pos_tags:
+                pos_tags.append('propn')  # Include proper nouns as well
             return self._generate_pos_masks(ds, pos_tags, window_size, story)
         elif mode == "zero":
             return ["" for _ in range(len(ds.data))]  
@@ -113,6 +139,44 @@ class ContextGenerator:
 
         return all_contexts
 
+    def _generate_pos_masks_bool(
+        self,
+        ds,
+        pos_tags: List[str],
+        story: str = "",
+    ) -> List[bool | List[bool]]:
+        """Generate boolean mask for words matching specified POS tags."""
+        nlp = spacy.load("en_core_web_sm")
+        text = [t.strip() for t in ds.data]
+        full_text = " ".join(text)
+        doc = nlp(full_text)
+
+        # Group spaCy tokens back into original whitespace-separated words
+        words = full_text.split(" ")
+        mask = []
+        token_iter = iter(doc)
+
+        for word in words:
+            # Consume spaCy tokens until we've reconstructed the original word
+            accumulated = ""
+            token_masks = []
+            
+            while accumulated != word:
+                try:
+                    token = next(token_iter)
+                    accumulated += token.text
+                    token_masks.append(token.pos_.lower() in pos_tags)
+                except StopIteration:
+                    break
+
+            # If spaCy split the word into multiple tokens (e.g. contraction), return a list
+            if len(token_masks) == 1:
+                mask.append(token_masks[0])
+            else:
+                mask.append(token_masks)
+        assert len(mask) == len(text), "Mask mismatch: expected length {}, got {}".format(len(text), len(mask))
+        return mask
+        
     def _generate_pos_masks(
         self,
         ds,

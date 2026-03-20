@@ -217,6 +217,7 @@ def pipeline(
     root_dir,
     output_dir = None,
     verbose=False,
+    override=False,
     **kwargs,
 ):
     """
@@ -252,11 +253,14 @@ def pipeline(
         overwrite_contexts = False
         overwrite_embeddings = False
     
-    override = overwrite_contexts or overwrite_embeddings
+    override = overwrite_contexts or overwrite_embeddings or override
     output_dir = output_dir if output_dir is not None else root_dir / config.OUTPUT_DIR
     # ===============================================================
     # Load Data
     # ===============================================================
+    
+    context_file = kwargs.get("contexts_file", root_dir / config.CONTEXTS_FILE)
+    embedding_file = kwargs.get("embeddings_file", root_dir / config.EMBEDDINGS_FILE)
     
     R_trn, R_val, F_trn, F_val, stories_trn, stories_val = load_data(
         subjects,
@@ -266,11 +270,11 @@ def pipeline(
         root_dir / config.FEATURE_PATH,
         root_dir / config.RESPONSE_PATH,
         root_dir / config.DATASEQ_PATH,
-        root_dir / config.CONTEXTS_FILE,
-        root_dir / config.EMBEDDINGS_FILE,
+        root_dir / context_file,
+        root_dir / embedding_file,
         verbose=verbose,
         surprisals_file = root_dir / config.FEATURE_PATH / f"surprisals.npy",
-        **kwargs,
+        #**kwargs,
     )
 
     # ===============================================================

@@ -1,13 +1,13 @@
 # Fdb version 4
-["biber LaTeX_out/thesis"] 1773765622.69511 "LaTeX_out/thesis.bcf" "LaTeX_out/thesis.bbl" "LaTeX_out/thesis" 1773766598.43471 0
-  "LaTeX_out/thesis.bcf" 1773766598.29793 108974 fa4c0caeddfa5bf07672c622efe0aa92 "pdflatex"
+["biber LaTeX_out/thesis"] 1773765622.69511 "LaTeX_out/thesis.bcf" "LaTeX_out/thesis.bbl" "LaTeX_out/thesis" 1774094327.71873 0
+  "LaTeX_out/thesis.bcf" 1774094327.62327 108974 fa4c0caeddfa5bf07672c622efe0aa92 "pdflatex"
   "refs.bib" 1772964405.88891 54516 31092b01e934f73e09bc7282f9e7036c ""
   (generated)
   "LaTeX_out/thesis.bbl"
   "LaTeX_out/thesis.blg"
   (rewritten before read)
-["pdflatex"] 1773766596.53572 "/Users/simoneesposito/Desktop/Uni/WiSe 25_26 FINAL BOSS/nonsense/docs/thesis.tex" "LaTeX_out/thesis.pdf" "thesis" 1773766598.43514 0
-  "/Users/simoneesposito/Desktop/Uni/WiSe 25_26 FINAL BOSS/nonsense/docs/thesis.tex" 1773766593.83911 17692 534dc4b2a1fdb7459f5aac22aa1935e6 ""
+["pdflatex"] 1774094326.52835 "/Users/simoneesposito/Desktop/Uni/WiSe 25_26 FINAL BOSS/nonsense/docs/thesis.tex" "LaTeX_out/thesis.pdf" "thesis" 1774094327.71901 0
+  "/Users/simoneesposito/Desktop/Uni/WiSe 25_26 FINAL BOSS/nonsense/docs/thesis.tex" 1774093584.05228 20392 83de77b7754634e9666c394cada804da ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -149,15 +149,15 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1729862870.68926 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1729862716 8221430 c4792e46438310cb6499e796e60b68b9 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "LaTeX_out/thesis.aux" 1773766598.29438 8473 4b28d1f853c0ceab098059e7cb1975d0 "pdflatex"
+  "LaTeX_out/thesis.aux" 1774094327.62119 8614 99c7c7110aef49a6f735b8bcb54198b9 "pdflatex"
   "LaTeX_out/thesis.bbl" 1773765646.80836 60334 ff7c94e057d0b3de3c199a5ec0eaf322 "biber LaTeX_out/thesis"
-  "LaTeX_out/thesis.out" 1773766598.29626 3680 58f2f24ddc96690db69fbecbc3cd86bf "pdflatex"
-  "LaTeX_out/thesis.run.xml" 1773766598.29939 2319 33cfcadd9bcc28b77dbe294b254e0866 "pdflatex"
-  "figures/Fig1.pdf" 1773765496.12968 66494 78a79ce007f3f729e06e513298b308af ""
+  "LaTeX_out/thesis.out" 1774094327.62242 3917 61aa56b7eb73e104a8f12bca2e9c18bb "pdflatex"
+  "LaTeX_out/thesis.run.xml" 1774094327.62464 2319 33cfcadd9bcc28b77dbe294b254e0866 "pdflatex"
+  "figures/Fig1_alternative.pdf" 1774094326.04445 48880 cc71f9f1f286ac39d54574484d814a61 ""
   "figures/pos_distribution.pdf" 1773418191.99652 13056 edfacb0a0d2adc88f6d09b7e60c35c23 ""
   "figures/subject07-listening-all.pdf" 1773417799.22233 476192 dca3b1d1a1ca717060cd6ea6a2e787f5 ""
   "figures/subject07-reading-all.pdf" 1773417799.22772 449912 d08f720ff17f35da94d3c5b84677f825 ""
-  "thesis.tex" 1773766593.83911 17692 534dc4b2a1fdb7459f5aac22aa1935e6 ""
+  "thesis.tex" 1774093584.05228 20392 83de77b7754634e9666c394cada804da ""
   (generated)
   "LaTeX_out/thesis.aux"
   "LaTeX_out/thesis.bcf"

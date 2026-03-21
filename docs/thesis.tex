@@ -17,6 +17,7 @@
 ]{biblatex}
 \usepackage{etoolbox}
 %\AtBeginEnvironment{quote}{\par\singlespacing\small}
+\DeclareMathOperator*{\argmin}{arg\,min}
 \addbibresource{refs.bib}
 \captionsetup[subfigure]{justification=raggedright, singlelinecheck=off, labelfont=bf}
 \setstackgap{voffset}{5pt}
@@ -104,7 +105,50 @@ Each functional run was motion-corrected using the FMRIB Linear Image Registrati
 The responses were provided as HDF files. For each subject and each modality, there were two files: one for the training stories and one for the validation story, for a total of 36 files. Each training file contains a dictionary with the stories as keys and the BOLD responses as values. Each validation file contains a dictionary with \textit{story\_11} as the key and the responses from both repetitions as values. 
 
 The responses are represented as a 2D \lstinline{numpy} array with shape $(N_{TR} \times N_{voxels})$. The amount of TRs depends on the story, while the amount of voxels is unique to the subject. The response data also included the 10 seconds of silence before and after the story was played. 
-
+\subsection{Voxelwise Encoding Model Framework}
+Voxelwise encoding models (VEM) aim to predict the BOLD response for each individual voxel $v$ from the stimulus $S$.
+This is usually done by first extracting one or more sets of features (called feature spaces) from the stimulus,
+then modeling the brain response as a linear combination of those feature spaces.
+ 
+This corresponds to approximating the function $f(S) = g(S)\beta$ where $g$ transforms the $N$-length stimulus
+into an $N\times P$ feature space with $\beta$ as the $P\times V$ weights, $V$ being the number of voxels.
+This can be accomplished by fitting the feature spaces $g(S_{\text{train}})$ to the responses $R_{\text{train}}$
+of a training dataset, yielding a model $\hat{f}$.
+The hemodynamic delay is accounted for by including delays of 0, 4, 8, and 16 seconds for each feature,
+resulting in a finite impulse response (FIR) model.
+ 
+Finally, the model accuracy is calculated as the per-voxel Pearson's correlation $r_v$ between the model
+predictions on a validation dataset $\hat{R}_{\text{test}} = \hat{f}(S)$ and the actual responses $R_{\text{test}}$.
+ 
+The value of $r_v$ can then be interpreted as the extent to which voxel $v$'s response to the stimulus can be
+explained by the given feature space. Projecting $r_v$ onto the cortical surface then yields a sensitivity map
+to the specific feature space. This shifts the focus from experimental design to the choice of features,
+allowing researchers to test different hypotheses utilizing the same dataset by varying the feature space.
+ 
+\textit{Banded Ridge Regression}
+ 
+To fit the multiple feature spaces to the BOLD responses I used Banded Ridge Regression (BRR), which is based
+on Ridge Regression, a linear regression method that augments the least-squares objective with an $\ell_2$
+penalty to reduce overfitting to the training data. This corresponds to finding the weight vector
+ 
+\begin{equation}
+    \hat{\beta} = \argmin_{\beta} \lVert X\beta - y \rVert^2_2 + \alpha \lVert \beta \rVert^2_2
+\end{equation}
+ 
+with $\alpha > 0$ being the regularization parameter, which is typically selected through grid search or
+random search with cross-validation.
+ 
+BRR extends Ridge Regression by assigning a separate regularization parameter $\alpha_i$ to each feature
+space $X_i$ nunez2019.
+ 
+\begin{equation}
+    \hat{\beta} = \argmin_{\beta} \left\lVert \sum^{m}_{i=1} X_i \beta_i - y \right\rVert^2_2
+    + \sum^{m}_{i=1} \alpha_i \lVert \beta_i \rVert^2_2
+\end{equation}
+ 
+This is important since the feature spaces can vary greatly in size and signal-to-noise ratio and thus
+need different levels of regularization.
+ 
 \subsection{Features} 
 
 To reproduce the original study, the 985-dimensional Eng1000 features were provided. 
@@ -174,7 +218,7 @@ where $w_{i,0} = \epsilon$ represents the empty context for the first word of ea
 \textit{Contractions}
 
 \begin{figure}
-    \includegraphics{figures/Fig1.pdf}
+    \includegraphics{figures/Fig1_alternative.pdf}
     \centering
     \caption{Example of the masked context embeddings generation. The max 20 words context is masked before going through GPT-2. 
     Extracting the hidden state $H_8$ at layer 8 yields the contextual embeddings for the context 

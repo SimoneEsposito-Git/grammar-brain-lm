@@ -34,7 +34,8 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3}Materials}{3}{section.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Stimuli}{3}{subsection.3.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}fMRI Responses}{3}{subsection.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Features}{3}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Voxelwise Encoding Model Framework}{3}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Features}{4}{subsection.3.4}\protected@file@percent }
 \abx@aux@cite{0}{peters_deep_2018}
 \abx@aux@segm{0}{0}{peters_deep_2018}
 \abx@aux@cite{0}{devlin_bert_2019}
@@ -45,14 +46,15 @@
 \abx@aux@segm{0}{0}{tuckute_driving_2024}
 \abx@aux@cite{0}{pasquiou_information-restricted_2023}
 \abx@aux@segm{0}{0}{pasquiou_information-restricted_2023}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.1}Phonemes}{4}{subsubsection.3.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.2}Letters}{4}{subsubsection.3.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.3}Additional Features}{4}{subsubsection.3.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.4}Contextualized Embeddings}{4}{subsubsection.3.3.4}\protected@file@percent }
-\abx@aux@page{8}{4}
-\abx@aux@page{9}{4}
-\abx@aux@page{10}{4}
-\abx@aux@page{11}{4}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.1}Phonemes}{5}{subsubsection.3.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.2}Letters}{5}{subsubsection.3.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.3}Additional Features}{5}{subsubsection.3.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.4}Contextualized Embeddings}{5}{subsubsection.3.4.4}\protected@file@percent }
+\abx@aux@page{8}{5}
+\abx@aux@page{9}{5}
+\abx@aux@page{10}{5}
+\abx@aux@page{11}{5}
+\abx@aux@page{12}{5}
 \abx@aux@cite{0}{vaswani_attention_2023}
 \abx@aux@segm{0}{0}{vaswani_attention_2023}
 \abx@aux@cite{0}{schrimpf_neural_2021}
@@ -61,21 +63,20 @@
 \abx@aux@segm{0}{0}{jain_incorporating_2018}
 \abx@aux@cite{0}{deniz_representation_2019}
 \abx@aux@segm{0}{0}{deniz_representation_2019}
-\abx@aux@page{12}{5}
-\abx@aux@page{13}{5}
-\abx@aux@page{14}{5}
-\abx@aux@page{15}{5}
-\abx@aux@page{16}{5}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.5}Context Masking}{5}{subsubsection.3.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Methods}{6}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Contextual Embeddings Generation}{6}{subsection.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Context Masking}{6}{subsection.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Multiple Kernel Ridge Regression}{6}{subsection.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Permutation Testing}{6}{subsection.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}FDR Correction}{6}{subsection.4.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Visualization}{6}{subsection.4.6}\protected@file@percent }
-\newlabel{sec:vis}{{4.6}{6}{Visualization}{subsection.4.6}{}}
+\abx@aux@page{13}{6}
+\abx@aux@page{14}{6}
+\abx@aux@page{15}{6}
+\abx@aux@page{16}{6}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.5}Context Masking}{6}{subsubsection.3.4.5}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Example of the masked context embeddings generation. The max 20 words context is masked before going through GPT-2. Extracting the hidden state $H_8$ at layer 8 yields the contextual embeddings for the context and the target word. The latter get averaged to produce the final contextual embedding for the target word. This process is repeated for each word in the story, yielding a contextual $(N \times 768)$ embedding matrix. Finally, the embedding matrix is downsampled to match the fMRI sampling rate, yielding the final $(K \times 768)$ feature space. The same procedure was applied to verbs, adjectives, adverbs, pronouns and interjections.}}{7}{figure.caption.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Methods}{7}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Contextual Embeddings Generation}{7}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Context Masking}{7}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Multiple Kernel Ridge Regression}{7}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Permutation Testing}{7}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}FDR Correction}{7}{subsection.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Visualization}{7}{subsection.4.6}\protected@file@percent }
+\newlabel{sec:vis}{{4.6}{7}{Visualization}{subsection.4.6}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Results}{8}{section.5}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Part of Speech sensitivity across the brain using all POS: nouns, verbs, adjectives, adverbs, pronouns and interjections. \textbf  {a} Voxelwise model r values in the listening modality using POS-masked contextual embeddings were subtracted from the r values of the baseline contextual model to get the drop in accuracy. The drop in accuracy for each POS was then ranked for each voxel individually and the greatest drop was plotted on the flatmap in the respective color \textbf  {b} Voxels are colored using the same procedure as in \textbf  {a} but for the reading modality. \textbf  {c} Distribution of POS tags in the training stories and the validation story. The percentage of each POS tag was calculated by counting the number of words with that tag and dividing it by the total number of words in the story. The average percentage across the 10 training stories is plotted on the left, while the percentage for the validation story is plotted on the right.}}{9}{figure.caption.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{10}{section.6}\protected@file@percent }

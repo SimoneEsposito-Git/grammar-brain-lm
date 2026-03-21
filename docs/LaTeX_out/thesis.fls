@@ -240,11 +240,11 @@ INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5
 INPUT /usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
-INPUT ./figures/Fig1.pdf
-INPUT ./figures/Fig1.pdf
-INPUT ./figures/Fig1.pdf
-INPUT ./figures/Fig1.pdf
-INPUT ./figures/Fig1.pdf
+INPUT ./figures/Fig1_alternative.pdf
+INPUT ./figures/Fig1_alternative.pdf
+INPUT ./figures/Fig1_alternative.pdf
+INPUT ./figures/Fig1_alternative.pdf
+INPUT ./figures/Fig1_alternative.pdf
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmss10.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmss9.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm

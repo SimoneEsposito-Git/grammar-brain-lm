@@ -7,7 +7,7 @@ from typing import Dict, List
 from english_words import get_english_words_set
 import spacy
 
-POS_TAGS = ["noun", "verb", "adj", "adv", "pron", "aux", "propn"]  # Common POS tags to consider for masking
+POS_TAGS = ["noun", "verb", "adj", "adv", "pron", "aux", "propn","intj"]  # Common POS tags to consider for masking
 class ContextGenerator:
     def __init__(self):
         self.model = None

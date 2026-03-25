@@ -21,8 +21,6 @@ from statsmodels.stats.multitest import fdrcorrection
 import scripts.plotting_utils as pu
 
 from data_loading import load_data, prepare_data, config, load_results, save_results
-from data_loading.validation import validate_prepared_data
-
 try:
     backend = set_backend("torch_cuda")
 except Exception as e:

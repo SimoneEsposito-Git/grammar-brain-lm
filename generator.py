@@ -34,9 +34,9 @@ def generate_results(subjects, modalities, modes, override=False, verbose=False)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate results from pipeline")
-    parser.add_argument("--subjects", nargs="+", required=True, help="List of subjects")
-    parser.add_argument("--modalities", nargs="+", required=True, help="List of modalities")
-    parser.add_argument("--modes", nargs="+", required=True, help="List of modes")
+    parser.add_argument("--subjects", nargs="+", default=config.SUBJECTS, help="List of subjects")
+    parser.add_argument("--modalities", nargs="+", default=config.MODALITIES, help="List of modalities")
+    parser.add_argument("--modes", nargs="+", default=config.MODES, help="List of modes")
     parser.add_argument("--override", action="store_true", help="Override existing files")
     parser.add_argument("--verbose", action="store_true", help="Verbose output")
 

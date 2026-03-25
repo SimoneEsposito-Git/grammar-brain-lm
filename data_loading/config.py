@@ -79,19 +79,14 @@ BATCH_SIZE = 32
 VERBOSE = False
 
 # Analysis configurations
+MODALITIES = ["listening", "reading"]
 MODES = [
     'baseline',
-    'english1000',
-    'zero',
-    'random',
-    'shuffle',
-    'remove-pos-noun',
-    'remove-pos-verb',
-    'remove-pos-adj',
-    'remove-pos-adv',
-    'remove-pos-pron',
-    'remove-pos-intj',
-    'remove-peaks',
-    'remove-valleys',
+    'noun',
+    'verb',
+    'adj',
+    'adv',
+    'pron',
+    'intj'
 ]
 

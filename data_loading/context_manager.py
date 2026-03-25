@@ -1,7 +1,6 @@
 import numpy as np
 import spacy
 from typing import Dict, List
-from .context_generator import ContextGenerator
 
 POS_TAGS = ["noun", "verb", "adj", "adv", "pron", "aux", "propn","intj"]  # Common POS tags to consider for masking
 
@@ -9,7 +8,6 @@ class ContextManager:
     def __init__(self, context_file: str):
         self.context_file = context_file
         self.contexts = self._load_contexts()
-        self.generator = ContextGenerator()
 
     def _load_contexts(self) -> Dict:
         """Load contexts from file or create new dict."""

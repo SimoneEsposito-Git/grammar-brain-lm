@@ -3,7 +3,7 @@ from pathlib import Path
 # Experiment configurations
 SUBJECTS = [
     "subject01",
-    "subject02",
+    #"subject02",
     "subject03",
     "subject04",
     "subject05",
@@ -89,4 +89,63 @@ MODES = [
     'pron',
     'intj'
 ]
+ROI = [
+    "AC",
+    "ATFP",
+    "Broca",
+    "EBA",
+    "FEF",
+    "FFA",
+    "FO",
+    "IFSFP",
+    "IPS",
+    "LO",
+    "M1F",
+    "M1H",
+    "M1M",
+    "OFA",
+    "OPA",
+    "PMvh",
+    "PPA",
+    "RSC",
+    "S1F",
+    "S1H",
+    "S1M",
+    "SEF",
+    "SMFA",
+    "SMHA",
+    "V1",
+    "V2",
+    "V3",
+    "V3A",
+    "V3B",
+    "V4",
+    "V7",
+    "VO",
+    "cIPL",
+    "hMT",
+    "pIC",
+    "pSTS",
+    "sPMv",
+]
 
+ROI_GROUPS_ = {
+    "Language & Frontal":        ["AC", "ATFP", "Broca", "IFS/FP", "M1F"],
+    "Motor & Somatosensory":     ["M1H", "M1M", "S1F", "S1H", "S1M", "SMFA", "SMHA"],
+    "Premotor & Supplementary":  ["PMvh", "PPA", "PSC", "SEF"],
+    "Visual":                    ["V1", "V2", "V3", "V3A", "V3B", "V4", "V7", "VO",
+                                  "FO", "FFA", "LO", "IPS"],
+    "Parietal & Temporal":       ["dIPL", "hMT", "pIC", "pSTS", "sMv", "OPA", "OFA", "EBA"],
+}
+
+ROI_GROUPS = {
+    "Auditory Cortex":             ["AC"],
+    "Early Visual Cortex":         ["V1", "V2", "V3", "V3A", "V3B", "V4"],
+    "Ventral Temporal Cortex":     ["FFA", "PPA", "VO"],
+    "Lower Temporal Cortex":       ["LO", "hMT", "EBA", "OFA"], 
+    "Lower Parietal Cortex":       ["dIPL"],
+    "Middle Parietal Cortex":      ["IPS", "V7", "OPA"],
+    "Inferior Pre-Frontal Cortex": ["IFS/FP", "FO"],
+    "Superior Pre-Frontal Cortex": ["SEF"],
+    "Brocas Area":                 ["Broca"],
+}

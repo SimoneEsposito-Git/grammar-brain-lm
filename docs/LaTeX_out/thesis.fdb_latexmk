@@ -1,13 +1,13 @@
 # Fdb version 4
-["biber LaTeX_out/thesis"] 0 "LaTeX_out/thesis.bcf" "LaTeX_out/thesis.bbl" "LaTeX_out/thesis" 1774178775.04493 -1
-  "LaTeX_out/thesis.bcf" 1774178774.76349 108648 a94c930dd709c23b41f38a72a7e91c41 "pdflatex"
+["biber LaTeX_out/thesis"] 0 "LaTeX_out/thesis.bcf" "LaTeX_out/thesis.bbl" "LaTeX_out/thesis" 1774471127.06742 -1
+  "LaTeX_out/thesis.bcf" 1774471126.95197 108648 a94c930dd709c23b41f38a72a7e91c41 "pdflatex"
   "refs.bib" 1772964405.88891 54516 31092b01e934f73e09bc7282f9e7036c ""
   (generated)
   "LaTeX_out/thesis.bbl"
   "LaTeX_out/thesis.blg"
   (rewritten before read)
-["pdflatex"] 1774178770.86565 "/Users/simoneesposito/Desktop/Uni/WiSe 25_26 FINAL BOSS/nonsense/docs/thesis.tex" "LaTeX_out/thesis.pdf" "thesis" 1774178775.04601 0
-  "/Users/simoneesposito/Desktop/Uni/WiSe 25_26 FINAL BOSS/nonsense/docs/thesis.tex" 1774178753.0973 22694 d9a17201d1557b177d68e94af83ace93 ""
+["pdflatex"] 1774471125.61098 "/Users/simoneesposito/Desktop/Uni/WiSe 25_26 FINAL BOSS/nonsense/docs/thesis.tex" "LaTeX_out/thesis.pdf" "thesis" 1774471127.0677 0
+  "/Users/simoneesposito/Desktop/Uni/WiSe 25_26 FINAL BOSS/nonsense/docs/thesis.tex" 1774470222.27376 23175 13e1e81c76f561c4a90d02b09b23d156 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm" 1136768653 1408 5937f58aa508ea2cea4901c07d10f5fe ""
@@ -231,10 +231,10 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1729862870.68926 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1729862716 8221430 c4792e46438310cb6499e796e60b68b9 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "LaTeX_out/thesis.aux" 1774178774.75579 6681 431c2f70b267550bd04dd600592fcee0 "pdflatex"
+  "LaTeX_out/thesis.aux" 1774471126.94836 6681 daf9444c0d3a05fdbe1a81a06cae68d5 "pdflatex"
   "LaTeX_out/thesis.bbl" 1774174634.66309 47162 ed3356530f5214f316987da884019e1f "biber LaTeX_out/thesis"
-  "LaTeX_out/thesis.out" 1774178774.75794 2036 0cef072a56fa4146e6dd80cdd1dbe34f "pdflatex"
-  "LaTeX_out/thesis.run.xml" 1774178774.76502 2319 33cfcadd9bcc28b77dbe294b254e0866 "pdflatex"
+  "LaTeX_out/thesis.out" 1774471126.94936 2036 0cef072a56fa4146e6dd80cdd1dbe34f "pdflatex"
+  "LaTeX_out/thesis.run.xml" 1774471126.95282 2319 33cfcadd9bcc28b77dbe294b254e0866 "pdflatex"
   "figures/Fig1/Fig1_alternative.pdf" 1774115736.6418 53633 43b2e6dbea6d7465c2cb6a898fbf9c7f ""
   "figures/Fig2/pos_distribution.pdf" 1773418191.99652 13056 edfacb0a0d2adc88f6d09b7e60c35c23 ""
   "figures/Fig2/subject07-listening-all.pdf" 1774120301.71133 477984 4e85ec4f37d27151031b058772b24d29 ""
@@ -245,10 +245,12 @@
   "figures/Fig3/subject04-listening.pdf" 1774175633.28143 47113 b7df3154b2c6422b5c6b64324a759ddf ""
   "figures/Fig3/subject05-listening.pdf" 1774175635.63738 259784 bdfe0d64955398fdf13af9a97692475e ""
   "figures/Fig3/subject06-listening.pdf" 1774175639.17722 195091 2467967fed3be469c97b3e8b828c76ad ""
-  "figures/Fig3/subject07-listening.pdf" 1774177548.47637 341732 19d23411c656177fad812d8cd30a7d52 ""
+  "figures/Fig3/subject07-listening.pdf" 1774457601.09842 339957 ec6961a8c225368e298e1fbb892db59b ""
   "figures/Fig3/subject08-listening.pdf" 1774175643.60244 347210 d4164f12c46292344eddacfec732d70f ""
   "figures/Fig3/subject09-listening.pdf" 1774175646.06212 259044 fd31790d118428f5398f55bb2d17f9c0 ""
-  "thesis.tex" 1774178753.0973 22694 d9a17201d1557b177d68e94af83ace93 ""
+  "figures/Fig4/roi_dominance_listening.pdf" 1774471125.18934 31312 26f97c4e5134a94d9733fa4e882c586a ""
+  "figures/Fig4/roi_dominance_reading.pdf" 1774471125.5312 33381 41dc8efa3713ee3b3d691159aca6cc9a ""
+  "thesis.tex" 1774470222.27376 23175 13e1e81c76f561c4a90d02b09b23d156 ""
   (generated)
   "LaTeX_out/thesis.aux"
   "LaTeX_out/thesis.bcf"

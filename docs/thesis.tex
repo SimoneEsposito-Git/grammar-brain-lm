@@ -354,6 +354,7 @@ attention computation.
     The percentage of each POS tag was calculated by counting the number of words with that tag and dividing it by the total number of words in the story. 
     The average percentage across the 10 training stories is plotted on the left, while the percentage for the validation story is plotted on the right.}
 \end{figure}
+
 \subjectfigure{figures/Fig3}        % base path (no trailing slash)
               {subject07-listening} % large panel (a)
               {subject08-listening} % panel (b) top
@@ -361,6 +362,20 @@ attention computation.
               {subject01-listening, subject02-listening, subject05-listening,
                subject03-listening, subject04-listening, subject06-listening}
                {Test caption for Fig. 3, describing the individual subject results for the listening modality.}
+\begin{figure}
+    \begin{subfigure}{\textwidth/2}
+        \centering
+        \stackinset{l}{5pt}{t}{5pt}{\floatlabel{a}}{
+            \includegraphics[width=\textwidth]{figures/Fig4/roi_dominance_listening.pdf}
+        }
+    \end{subfigure}
+    \begin{subfigure}{\textwidth/2}
+        \centering
+        \stackinset{l}{5pt}{t}{5pt}{\floatlabel{b}}{
+            \includegraphics[width=\textwidth]{figures/Fig4/roi_dominance_reading.pdf}
+        }
+    \end{subfigure}
+\end{figure}
 \newpage
 \section{Discussion} 
 \begin{table}[ht]

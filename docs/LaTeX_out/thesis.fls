@@ -453,6 +453,16 @@ INPUT ./figures/Fig3/subject06-listening.pdf
 INPUT ./figures/Fig3/subject06-listening.pdf
 INPUT ./figures/Fig3/subject06-listening.pdf
 INPUT ./figures/Fig3/subject06-listening.pdf
+INPUT ./figures/Fig4/roi_dominance_listening.pdf
+INPUT ./figures/Fig4/roi_dominance_listening.pdf
+INPUT ./figures/Fig4/roi_dominance_listening.pdf
+INPUT ./figures/Fig4/roi_dominance_listening.pdf
+INPUT ./figures/Fig4/roi_dominance_listening.pdf
+INPUT ./figures/Fig4/roi_dominance_reading.pdf
+INPUT ./figures/Fig4/roi_dominance_reading.pdf
+INPUT ./figures/Fig4/roi_dominance_reading.pdf
+INPUT ./figures/Fig4/roi_dominance_reading.pdf
+INPUT ./figures/Fig4/roi_dominance_reading.pdf
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
 INPUT LaTeX_out/thesis.aux
 INPUT LaTeX_out/thesis.out

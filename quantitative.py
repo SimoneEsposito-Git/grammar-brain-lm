@@ -46,9 +46,9 @@ def load_roi_mask(mask_file: str, roi) -> np.ndarray:
     mask_ = np.asarray(mask, dtype=bool)
     return mask_.T[::-1]
 
-def percentage(noun: np.ndarray, verb: np.ndarray, mask: np.ndarray, mapper: str) -> tuple[np.ndarray, int, int]:
-    noun_masked = noun[mask]
-    verb_masked = verb[mask]
+def percentage(noun: np.ndarray, verb: np.ndarray, baseline: np.ndarray, mask: np.ndarray, mapper: str) -> tuple[np.ndarray, int, int]:
+    noun_masked = baseline[mask] - noun[mask] 
+    verb_masked = baseline[mask] - verb[mask] 
 
     roi_size = np.sum(mask)
 
@@ -69,7 +69,8 @@ def percentage(noun: np.ndarray, verb: np.ndarray, mask: np.ndarray, mapper: str
     return percentages, n_valid, roi_size
 
 def plot_percentage(roi_stats: dict, modality: str, n_subjects: int,
-                    roi_groups: dict | None = None, output_dir: str | None = None):
+                    roi_groups: dict | None = None, output_dir: str | None = None, 
+                    show_plots: bool = False):
     """Plot noun/verb dominance as a horizontal diverging dot plot with ROI groups.
 
     Each ROI is a single row. Points left of 50% = verb dominant,
@@ -111,8 +112,8 @@ def plot_percentage(roi_stats: dict, modality: str, n_subjects: int,
             continue
 
         # Sort within group by dominance strength (weakest → strongest)
-        dom = [max(roi_stats[r]["mean"]) for r in present]
-        present = [present[i] for i in np.argsort(dom)]
+        #dom = [max(roi_stats[r]["mean"]) for r in present]
+        #present = [present[i] for i in np.argsort(dom)]
 
         if ordered_rois:               # divider before every group except first
             ordered_rois.append(None)
@@ -170,7 +171,7 @@ def plot_percentage(roi_stats: dict, modality: str, n_subjects: int,
 
     # ── Draw ─────────────────────────────────────────────────────────────────
     fig_height = max(5, total_height * 0.38 + 1.8)
-    fig, ax = plt.subplots(figsize=(7, fig_height))
+    fig, ax = plt.subplots(figsize=(5, fig_height))
 
     # Shaded half-panels
     ax.axvspan(50, 100, color=noun_color, alpha=0.04, zorder=0)
@@ -182,7 +183,7 @@ def plot_percentage(roi_stats: dict, modality: str, n_subjects: int,
     # Group header labels — inside the plot, left-aligned, just above the divider
     for label, yh in header_ys.items():
         ax.text(
-            0.01, yh - GAP+ 0.3,       # small nudge above the first ROI in the group
+            0.01, yh - GAP+ 0.1,       # small nudge above the first ROI in the group
             label,
             transform=ax.get_yaxis_transform(),
             fontsize=7.5, fontweight="bold",
@@ -228,9 +229,9 @@ def plot_percentage(roi_stats: dict, modality: str, n_subjects: int,
 
     handles = [
         plt.Line2D([0], [0], marker="o", color="w", markerfacecolor=verb_color,
-                   markersize=7, label="← Verb dominant"),
+                   markersize=7, label="Verb sensitive"),
         plt.Line2D([0], [0], marker="o", color="w", markerfacecolor=noun_color,
-                   markersize=7, label="Noun dominant →"),
+                   markersize=7, label="Noun sensitive"),
         plt.Line2D([0], [0], color="gray", linewidth=0.8, linestyle="--",
                    label="50% (chance)"),
     ]
@@ -238,9 +239,10 @@ def plot_percentage(roi_stats: dict, modality: str, n_subjects: int,
 
     fig.tight_layout()
     if output_dir:
-        plt.savefig(output_dir / f"roi_dominance_{modality}.pdf")
-    plt.show()
-      
+        plt.savefig(f"{output_dir}/roi_dominance_{modality}.pdf")
+    if show_plots:
+        plt.show()
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Quantitative analysis of flatmaps")
@@ -252,6 +254,8 @@ if __name__ == "__main__":
     # Hybrid threshold arguments
     parser.add_argument("--min_voxels", type=int, default=10, help="Absolute floor for statistical stability")
     parser.add_argument("--min_roi_pct", type=float, default=0.10, help="Minimum proportion of the ROI that must be valid")
+    
+    parser.add_argument("--show_plots", action="store_true", help="Whether to display plots interactively")
     
     args = parser.parse_args()
     
@@ -266,8 +270,13 @@ if __name__ == "__main__":
             )
             mapper = config.MAPPER_PATH / f"{subject}_mappers.hdf"
 
-            verbs = get_significant_voxels(results, "verb")
-            nouns = get_significant_voxels(results, "noun")
+            try:
+                verbs = get_significant_voxels(results, "verb")
+                nouns = get_significant_voxels(results, "noun")
+                baseline = get_significant_voxels(results, "baseline")
+            except Exception as e:
+                print(f"Error occurred while processing subject {subject}: {e}")
+                continue
 
             for roi in args.rois:
                 try:
@@ -276,7 +285,7 @@ if __name__ == "__main__":
                     print(f"ROI {roi} not found for {subject}; skipping.")
                     continue
 
-                percentages, n_valid, roi_size = percentage(nouns, verbs, mask, mapper)
+                percentages, n_valid, roi_size = percentage(nouns, verbs, baseline, mask, mapper)
                 
                 # Apply hybrid threshold
                 valid_pct = n_valid / roi_size if roi_size > 0 else 0
@@ -291,6 +300,7 @@ if __name__ == "__main__":
             values = np.array(roi_subject_values[roi], dtype=float)
             if values.size == 0:
                 print(f"No valid data collected for ROI {roi} in modality {modality}.")
+                roi_stats[roi] = {"mean": np.array([np.nan, np.nan]), "std": np.array([np.nan, np.nan])}
                 continue
 
             # Drop subject rows that are entirely NaN (no valid comparisons OR under threshold).
@@ -299,6 +309,7 @@ if __name__ == "__main__":
                 print(
                     f"Skipping ROI {roi} in modality {modality}: All subjects were under the threshold of {args.min_voxels} voxels."
                 )
+                roi_stats[roi] = {"mean": np.array([np.nan, np.nan]), "std": np.array([np.nan, np.nan])}
                 continue
 
             roi_stats[roi] = {
@@ -306,4 +317,4 @@ if __name__ == "__main__":
                 "std": np.nanstd(values, axis=0),
             }
 
-        plot_percentage(roi_stats, modality, len(args.subjects), config.ROI_GROUPS_, output_dir=args.output_dir)
+        plot_percentage(roi_stats, modality, len(args.subjects), config.ROI_GROUPS_, output_dir=args.output_dir, show_plots=args.show_plots)

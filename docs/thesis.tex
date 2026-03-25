@@ -6,9 +6,14 @@
 \usepackage{listings} 
 \usepackage{amsmath} 
 \usepackage{color} 
+\usepackage{adjustbox}
 \usepackage{hyperref} 
 \usepackage[parfill]{parskip}
 \usepackage{amssymb}
+\usepackage{tikz}      
+\usepackage{bigstrut}
+\usepackage{multirow}
+\usepackage{booktabs}
 \usepackage[
     style=authoryear, 
     backend=biber, 
@@ -16,6 +21,10 @@
     mincitenames=1
 ]{biblatex}
 \usepackage{etoolbox}
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 %\AtBeginEnvironment{quote}{\par\singlespacing\small}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \addbibresource{refs.bib}
@@ -41,6 +50,53 @@
 
 % 2. Define a custom command for the floating labels
 \newcommand{\floatlabel}[1]{\textsf{\textbf{\Large #1}}}
+\newcommand{\subjectfigure}[6]{%
+  % Parse the 6 grid images into \gridlist
+  \def\basepath{#1}%
+  \begin{figure}
+    % ── Panel a (large) ──────────────────────────────────────────────
+    \begin{minipage}[t]{0.65\linewidth}
+      \stackinset{l}{5pt}{t}{5pt}{\floatlabel{a}}{%
+        \includegraphics[width=\linewidth]{\basepath/#2.pdf}%
+      }%
+      \par\vspace{-10pt}
+      \noindent\begin{tikzpicture}
+        \draw[dotted, thick] (0,0) -- (\linewidth, 0);
+      \end{tikzpicture}
+    \end{minipage}%
+    \hfill
+    % ── Vertical divider ─────────────────────────────────────────────
+    \begin{tikzpicture}[remember picture]
+      \draw[dotted, thick] (0,0) -- (0,-5);
+    \end{tikzpicture}%
+    \hfill
+    % ── Panel b (two stacked) ────────────────────────────────────────
+    \begin{minipage}[b]{0.33\linewidth}
+        \stackinset{l}{5pt}{t}{-28pt}{\floatlabel{b}}{%
+          \includegraphics[width=\linewidth]{\basepath/#3.pdf}%
+        }\\[2pt]
+        \includegraphics[width=\linewidth]{\basepath/#4.pdf}%
+    \end{minipage}%
+    \vspace{-2pt}
+    % ── Grid (2x3) ───────────────────────────────────────────────────
+    \begin{minipage}{\linewidth}
+      \centering
+      \forcsvlist{\gridimage{#1}}{#5}
+    \end{minipage}
+    \centering
+    \caption{#6}
+  \end{figure}
+}
+
+% Helper: renders one grid image, inserting \hfill or \\ at the right spots
+\newcounter{gridcount}
+\newcommand{\gridimage}[2]{%
+  \stepcounter{gridcount}%
+  \includegraphics[width=0.33\linewidth]{#1/#2.pdf}%
+  \ifnum\value{gridcount}=3 \\ \else
+  \ifnum\value{gridcount}=6 \else
+  \hfill \fi\fi
+}
 
 \title{Understanding Grammar Representation in the Human Brain via Information-Restricted LLMs} 
 \author{Simone Esposito} 
@@ -71,22 +127,8 @@ However, subsequent studies have found contradicting results, with some patients
 \end{itemize}
 
 Another hypothesis for the apparent distinction is that the brain does not process GC \textit{per se} but rather the meaning that is usually associated with the word \parencite{vigliocco_nouns_2011}. Particularly, nouns are usually associated with \textbf{objects} while verbs tend to be associated with \textbf{actions.} This hypothesis also falls into the range of the \textbf{emergentist} views of psycholinguistics, wherein GC distinction is viewed as an emergent property driven by semantic constraints.
-\section{Background} 
 
-\subsection{Voxelwise Encoding Modelling} 
-
-This thesis uses a method known as voxelwise encoding models, in which BOLD responses of each individual voxel are modelled as linear combinations of specific features. When the prediction accuracy for each voxel is then mapped onto the brain, areas that are better predicted may indicate that the corresponding part of the brain might encode information of the given features. The features themselves are generally nonlinear transformations of the stimuli onto a high-dimensional feature space.  
-
-One prominent model \parencite{huth_natural_2016} constructs the features by computing, for each word in the stimulus, the co-occurrence between that word and 985 basic English words based on a large corpus of texts. This embeds each word in the stimulus onto a 985-dimensional vector, where similar words tend to correlate. This model has proven to be highly effective at predicting brain activity.  
-
-\subsection{Contextual Embeddings} 
-Nevertheless, the main shortcoming of that model is that the same word will always be mapped to the same embedding, regardless of context. For example, the word \textit{fine} in \textit{"I am fine," "I have to pay a fine,"} and \textit{"I used a fine brush"} all have completely different meanings, which might dilute the information in the features.  
-
-To address this, language models (LM) started to be used to generate contextual embeddings. First, \textcite{jain_incorporating_2018} started by using Long Short-Term Memory networks (LSTM), then as technology improved, more advanced language models such as GPT-2 or Llama started to be used to generate such embeddings.  
-
-To show that these contextual models actually relied on the context, the latter was scrambled and randomized, which, as expected, led to an overall worse performance. Nevertheless, there has not been a paper taking a closer look at what effect other kinds of context manipulation might have on prediction accuracy.
-
-\section{Materials} 
+\section{Materials and Methods} 
 
 \subsection{Stimuli} 
 
@@ -131,9 +173,9 @@ To fit the multiple feature spaces to the BOLD responses I used Banded Ridge Reg
 on Ridge Regression, a linear regression method that augments the least-squares objective with an $\ell_2$
 penalty to reduce overfitting to the training data. This corresponds to finding the weight vector
  
-\begin{equation}
+\begin{equation*}
     \hat{\beta} = \argmin_{\beta} \lVert X\beta - y \rVert^2_2 + \alpha \lVert \beta \rVert^2_2
-\end{equation}
+\end{equation*}
  
 with $\alpha > 0$ being the regularization parameter, which is typically selected through grid search or
 random search with cross-validation.
@@ -141,10 +183,10 @@ random search with cross-validation.
 BRR extends Ridge Regression by assigning a separate regularization parameter $\alpha_i$ to each feature
 space $X_i$ nunez2019.
  
-\begin{equation}
+\begin{equation*}
     \hat{\beta} = \argmin_{\beta} \left\lVert \sum^{m}_{i=1} X_i \beta_i - y \right\rVert^2_2
     + \sum^{m}_{i=1} \alpha_i \lVert \beta_i \rVert^2_2
-\end{equation}
+\end{equation*}
  
 This is important since the feature spaces can vary greatly in size and signal-to-noise ratio and thus
 need different levels of regularization.
@@ -155,109 +197,151 @@ To reproduce the original study, the 985-dimensional Eng1000 features were provi
 
 To account for response variance caused by various modality-dependent nuisances, several additional features were provided. 
 
-\subsubsection{Phonemes}  
-A list of phoneme-time pairs was constructed for each of the 39 English phonemes. This list was then down-sampled to the fMRI acquisition rate. The result is a $(39 \times N_{TR})$ array. These features were used when fitting the model to the \textit{listening} responses.
+\textit{Phonemes}  
 
-\subsubsection{Letters} 
+A list of phoneme-time pairs was constructed for each of the 39 English phonemes. This list was then down-sampled to the fMRI acquisition rate. The result is a $(39 \times N_{TR})$ array. These features were used when fitting the model to the listening data.
+
+\textit{Letters} 
+
 Similar to the phonemes, a 26-parameter model was created to represent the frequency of each of the 26 letters in the English alphabet that appeared in the written stories. This was also down-sampled to the sampling rate, resulting in a $(26 \times N_{TR})$ array. 
 
-\subsubsection{Additional Features} 
+\textit{Additional Features} 
+
 To account for the highly variable speech rate both within and across stories, single-feature models were constructed. These count the number of words, number of phonemes, number of letters, and number of story speaker’s pauses that occurred during the acquisition of each fMRI volume (2.0045 s). To account for the variable word lengths during the visual presentation, a single-feature word length variation model was constructed by taking the variance of word lengths that occurred during the acquisition of each fMRI volume.
 
-\subsubsection{Contextualized Embeddings}
-
-The largest issue with the lexical \textit{english1000} embeddings is the lack of contextual information in the feature space. Put differently, the same word will be mapped to the same feature vector regardless of the context it is in. For example, the word \textit{fine} has a very different meaning in the sentences ``I am fine'' and ``I paid a fine.''
-
-To account for this, I made use of \textit{contextualized embeddings} (CE), which as the name suggests, aim to include contextual information in the word embeddings. Such embeddings were introduced by the Long Short-Term Memory (LSTM) network ELMo \parencite{peters_deep_2018} and refined by the transformer model BERT \parencite{devlin_bert_2019}. 
-
-High quality CEs can be generated using modern Language Models (LM). For my paper I decided to use GPT-2's embeddings, as it is commonly used in other related literature \parencite{schrimpf_neural_2021,tuckute_driving_2024}.
-
+\subsubsection{Contextual Embeddings}
+ 
+The largest issue with the lexical \textit{English1000} embeddings is the lack of contextual
+information in the feature space. Put differently, the same word will be mapped to the same
+feature vector regardless of the context it appears in. For example, the word \textit{fine}
+has a very different meaning in the sentences ``I am fine'' and ``I paid a fine''.
+ 
+To account for this, I made use of \textit{contextual embeddings}, which, as the name suggests,
+aim to include contextual information in the word embeddings. Such embeddings were introduced by
+the Long Short-Term Memory (LSTM) network ELMo \parencite{peters_deep_2018} and refined by the
+transformer model BERT \parencite{devlin_bert_2019}.
+ 
+Contextual embeddings play a fundamental role in all modern Language Models (LM), and for this
+thesis I decided to use GPT-2's embeddings, as it is commonly used in related
+literature \parencite{schrimpf_neural_2021, tuckute_driving_2024}.
+ 
+Given an input sequence comprised of the $i$-th word of a story $w_{i}$ and its $k$-length
+context $C_{i} = (w_s, \ldots, w_{i-1})$ with $s = \max(0, i-k)$, I can generate the contextual
+embeddings through the following steps.
+ 
 \textit{Tokenization}
-
-Before a sentence or word can be embedded into vectors, it needs to be broken up into a set of token IDs $(t_1, \dots, t_n) \in V^n$ with $V$ being the vocabulary of all possible token IDs. Since single words can be broken up into multiple tokens, I need to keep track of which tokens are part of the context and which represent the target word. To do this, I first generate the tokens for the whole sentence $(t_1, \dots, t_n)$ to pass unto the LM, then just the tokens for the context $(t_1, \dots, t_m)$ to get the index $m < n$ where the target word starts. For this thesis, I used a context size of 20 words \parencite{pasquiou_information-restricted_2023}.
-
+ 
+Before a sentence or word can be embedded into vectors, it needs to be broken up into a set of
+token IDs. This turns the input sequence into a sequence of tokens
+$(t_1, \ldots, t_L) \in \mathbb{N}^L$.
+ 
 \textit{Initial Embeddings}
-
-Upon passing on the tokens, GPT-2 first converts them into embedding vectors via a lookup table with a fixed embedding size $d_{emb}$, then adding those to their positional encoding vectors to generate the initial embeddings. These initial embeddings are non-contextual.
-
+ 
+Upon receiving the token sequence, GPT-2 first converts the tokens into embedding vectors via a
+\textit{lookup table} with a fixed embedding size $d_{\text{model}} = 768$, then adds positional
+encodings to generate the initial embeddings. These initial embeddings are non-contextual.
+ 
 \textit{Hidden Layers}
-
-The initial embeddings then go through a sequence of layers where they are first weighed using the attention mechanism \parencite{vaswani_attention_2023} then passed through a feed-forward network to enrich them with contextual information from surrounding embeddings, finally generating a new CE with the same size $d_{emb}$. Previous studies have found that the middle layers, e.g., Layer 8 for GPT-2 small, are best at predicting brain activity in VEMs \parencite{schrimpf_neural_2021,jain_incorporating_2018}.
-
+ 
+The initial embeddings then go through a sequence of layers where they are first weighted using
+the attention mechanism \parencite{vaswani_attention_2023}, then passed through a feed-forward
+network to enrich them with contextual information from surrounding tokens. This yields a new
+contextualized embedding of the same dimensionality $d_{\text{model}}$.
+ 
+Previous studies have found that the middle layers, e.g., Layer~8 for GPT-2 small, are best at
+predicting brain activity in VEMs \parencite{schrimpf_neural_2021, jain_incorporating_2018}, and
+Layer~8 is therefore used throughout this work.
+ 
 \textit{Averaging}
-
-The hidden state $H_8 \in \mathbb{R}^{n \times d_{emb}}$ contains the CE for the whole sentence. To get the vector of the target word, I first need to extract the embeddings of the target word's tokens $(h_8^{(m)}, \dots, h_8^{(n)})$. These embeddings are then averaged across tokens:
-\[
-    \overline{h}_8 = \frac{1}{n - m + 1} \sum_{i=m}^{n} h_8^{(i)}
-\]
-
-This yields the final CE for our target word.
-
+ 
+The hidden state $H_8 \in \mathbb{R}^{L \times 768}$ contains the contextualized embeddings for
+every token in the input sequence. These tokens are then averaged to return $w$'s contextualized
+embedding $e_w$:
+ 
+\begin{equation*}
+    e_w = \frac{1}{L} \sum_{i=1}^{L} h_8^{(i)}
+\end{equation*}
+ 
 \textit{Downsampling}
-
-After repeating the process for each word $w_i \in (w_0, \dots, w_{N_{words}})$, I have an embedding matrix $E \in \mathbb{R}^{N_{words} \times d_{emb}}$. To be able to fit the features to the fMRI data, I need to downsample the CEs onto a feature space $F \in \mathbb{R}^{N_{TRs} \times d_{emb}}$ via a Lanczos filter \parencite{deniz_representation_2019}.
-
-\subsubsection{Context Masking}
-
-The masking of Parts of Speech (POS) was done automatically using Python's \texttt{spaCy} library. First, the target POS for the whole text is masked. This corresponds to applying the masking function $f_i: W_i \rightarrow W_i \cup \{'XXXX'\}$ to each story $S_i$, which replaces a word $w \in W_i$ with the redacting string if its POS corresponds to the target category, while leaving it unchanged otherwise:
-
-\begin{quote}
-    \textit{Original:} \dots So I was going up to \textbf{camp} and feeling pretty good about it and I decided on the \textbf{way} I would stop into Ithaca. I heard it was kind of a neat \textbf{town}. So I pulled off the \textbf{highway} into Ithaca and um it's on the southern \textbf{shore} of \textbf{lake} Cayuga\dots
-    
-    \textit{Masked (Nouns):} \dots So I was going up to \textbf{XXXX} and feeling pretty good about it and I decided on the \textbf{XXXX} I would stop into Ithaca. I heard it was kind of a neat \textbf{XXXX}. So I pulled off the \textbf{XXXX} into Ithaca and um it's on the southern \textbf{XXXX} of \textbf{XXXX} Cayuga\dots
-\end{quote}
-
-Afterwards, a sliding window of size $k=20$ moves over each word $w_{i,j} \in S_i$ to construct the context set:
-
-\[ C_{i,j} = \{ f_i(w_{i,m}) \mid \max(0, j-k) \le m < j \} \]
-
-where $w_{i,0} = \epsilon$ represents the empty context for the first word of each story.
-
-\textit{Common nouns and Proper nouns}
-
-\textit{Contractions}
+ 
+After repeating this process for each word in each story, I have an embedding matrix
+$E_j \in \mathbb{R}^{N_j \times 768}$ with $N_j = \lvert S_j \rvert$ being the number of words
+in the $j$-th story. To fit the features to the fMRI data, the contextual embeddings are
+downsampled onto a feature space $F_j \in \mathbb{R}^{K_j \times 768}$ via a Lanczos filter,
+with $K_j$ being the number of sample points (TRs) of the $j$-th story.
+ 
+The baseline contextualized embeddings are generated using a context length of 20 words for each
+word in each story.
+ 
+% -----------------------------------------------------------------------
+ 
+\subsection{Context Masking}
+ 
+The masking of Parts of Speech (POS) was performed automatically using Python's \texttt{spaCy}
+library. This library first splits an input sequence into a series of word-like tokens based on
+language-specific rules. For example, \textit{don't} is split into two tokens \textit{do} and
+\textit{n't}. These tokens are then assigned a POS tag that takes their context into
+consideration.
+ 
+Given a set of POS tags $P$, I can generate a boolean mask for each story:
+ 
+\begin{equation*}
+    M_j = \bigl(f_{\text{mask}}(t_{j,1}),\, \ldots,\, f_{\text{mask}}(t_{j,n})\bigr)
+    \qquad
+    f_{\text{mask}}(t) =
+    \begin{cases}
+        0 & \text{POS}(t) \in P \\
+        1 & \text{POS}(t) \notin P
+    \end{cases}
+\end{equation*}
+ 
+Since proper nouns and auxiliary verbs perform similar functions to nouns and verbs respectively,
+they are included in the noun and verb POS categories accordingly.
+ 
+\textit{Attention Mask}
+ 
+To apply the POS masks during the generation of contextual embeddings for a word $w$, the mask
+values for $w$ and its context $C$ are first mapped to the GPT-2 tokens, yielding $M'_w$. They
+are then used as \textit{attention masks}, indicating which tokens the model should attend to and
+which should not. The resulting contextual embedding is calculated by averaging only the unmasked
+hidden states:
+ 
+\begin{equation*}
+    \bar{e}_w = \frac{1}{L'} \sum_{i=1}^{L} m_w^{\prime(i)}\, h_8^{(i)}
+    \qquad
+    L' = \sum_{i=1}^{L} m_w^{\prime(i)}
+\end{equation*}
+ 
+Rather than removing masked tokens from the input sequence --- which would alter positional
+encodings and shift the attention context of remaining tokens --- attention masking preserves the
+original sequence structure while selectively excluding the target POS category from the model's
+attention computation.
 
 \begin{figure}
-    \includegraphics{figures/Fig1_alternative.pdf}
+    \includegraphics{figures/Fig1/Fig1_alternative.pdf}
     \centering
-    \caption{Example of the masked context embeddings generation. The max 20 words context is masked before going through GPT-2. 
-    Extracting the hidden state $H_8$ at layer 8 yields the contextual embeddings for the context 
-    and the target word. 
-    The latter get averaged to produce the final contextual embedding for the target word. This process is repeated for each word in the story, 
-    yielding a contextual $(N \times 768)$ embedding matrix. Finally, the embedding matrix is downsampled to match the fMRI sampling rate, 
-    yielding the final $(K \times 768)$ feature space.
-    The same procedure was applied to verbs, adjectives, adverbs, pronouns and interjections.}
+    \caption{Contextual embedding pipeline with POS attention masking. A stimulus sentence is passed through a noun filter, which uses spaCy POS tags to generate an attention mask (green: unmasked; red: masked). The masked input is fed into GPT-2, whose hidden state at Layer 8, $H_8\in \mathbb{R}^{L \times 768}$, is then averaged over unmasked tokens to produce a single contextualized embedding $e_w \in \mathbb{R}^{768}$ for the target word.}
 \end{figure}
-\section{Methods}  
 
-\subsection{Contextual Embeddings Generation}
-
-\subsection{Context Masking}
-\subsection{Multiple Kernel Ridge Regression} 
-\subsection{Permutation Testing} 
-\subsection{FDR Correction} 
-
-\subsection{Visualization} 
-\label{sec:vis} 
 \newpage
 \section{Results} 
 \begin{figure}
     \begin{subfigure}{\textwidth}
         \centering
         \stackinset{l}{5pt}{t}{5pt}{\floatlabel{a}}{
-            \includegraphics{figures/subject07-listening-all.pdf}
+            \includegraphics{figures/Fig2/subject07-listening-all.pdf}
         }
     \end{subfigure}
     \begin{subfigure}{\textwidth}
         \centering
         \stackinset{l}{5pt}{t}{5pt}{\floatlabel{b}}{
-            \includegraphics{figures/subject07-reading-all.pdf}
+            \includegraphics{figures/Fig2/subject07-reading-all.pdf}
         }
         \end{subfigure}
     \begin{subfigure}{\textwidth}
         \centering
         \stackinset{l}{5pt}{t}{5pt}{\floatlabel{c}}{
-            \includegraphics{figures/pos_distribution.pdf}
+            \includegraphics{figures/Fig2/pos_distribution.pdf}
         }
     \end{subfigure}
 
@@ -270,9 +354,38 @@ where $w_{i,0} = \epsilon$ represents the empty context for the first word of ea
     The percentage of each POS tag was calculated by counting the number of words with that tag and dividing it by the total number of words in the story. 
     The average percentage across the 10 training stories is plotted on the left, while the percentage for the validation story is plotted on the right.}
 \end{figure}
+\subjectfigure{figures/Fig3}        % base path (no trailing slash)
+              {subject07-listening} % large panel (a)
+              {subject08-listening} % panel (b) top
+              {subject09-listening} % panel (b) bottom
+              {subject01-listening, subject02-listening, subject05-listening,
+               subject03-listening, subject04-listening, subject06-listening}
+               {Test caption for Fig. 3, describing the individual subject results for the listening modality.}
 \newpage
 \section{Discussion} 
-\newpage
+\begin{table}[ht]
+
+    \begin{adjustbox}{center, max width=\paperwidth}
+        \begin{tabular}[t]{llccccccccc}
+            \toprule
+            &&AC&EVC&VTC&LTC&LPC&MPC&IPC&SPC&BA\\
+            \midrule
+            \multirow{5}{*}{Nouns}&Fronto-Temporal&--&--&$\uparrow$&$\uparrow$&--&--&$\downarrow$&--&$\downarrow$\\
+            &Object-Action (Semantic)&--&$\uparrow$&$\uparrow$&$\uparrow$&--&--&--&--&--\\
+            &Combinatorial (Morphological)&--&--&--&--&--&--&--&--&--\\
+            &Lexicalist (Lemma-based)&--&--&--&$\uparrow$&--&--&--&--&--\\
+            &Distributed Account&$\uparrow$&$\uparrow$&$\uparrow$&$\uparrow$&$\uparrow$&$\uparrow$&$\uparrow$&$\uparrow$&$\uparrow$\\
+            \midrule
+            \multirow{5}{*}{Verbs}&Fronto-Temporal&--&--&$\downarrow$&$\downarrow$&--&--&$\uparrow$&--&$\uparrow$\\
+            &Object-Action (Semantic)&--&--&--&--&$\uparrow$&$\uparrow$&$\uparrow$&--&$\uparrow$\\
+            &Combinatorial (Morphological)&--&--&--&--&--&--&$\uparrow$&$\uparrow$&$\uparrow$\\
+            &Lexicalist (Lemma-based)&--&--&--&$\uparrow$&--&--&--&--&--\\
+            &Distributed Account&$\uparrow$&$\uparrow$&$\uparrow$&$\uparrow$&$\uparrow$&$\uparrow$&$\uparrow$&$\uparrow$&$\uparrow$\\
+            \bottomrule
+        \end{tabular}
+    \end{adjustbox}
+    \caption{Predicted brain area response to noun and verb processing according to different psycholinguistic models and the observed results in this thesis. The arrows indicate whether the observed response was higher ($\uparrow$) or lower ($\downarrow$) compared to the baseline model, while dashes indicate no significant difference.}
+\end{table}%
 \section{Literature}
 \printbibliography
 \end{document}

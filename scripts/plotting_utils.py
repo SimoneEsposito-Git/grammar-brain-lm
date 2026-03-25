@@ -243,7 +243,7 @@ class BivariateStrategy(ColorStrategy):
     def __call__(self, flatmaps: List[np.ndarray], background: Optional[np.ndarray] = None, **kwargs) -> np.ndarray:
         rgb_map = get_bivariate_color(flatmaps[0], flatmaps[1], vmin=0, vmax=self.vmax)
         mask = np.isnan(flatmaps[0]) | np.isnan(flatmaps[1])
-        rgb_map[mask] = background[mask] if background is not None else [1, 1, 1]
+        rgb_map[mask] = background[mask]*0.7 if background is not None else [1, 1, 1]
         return rgb_map
     
     def get_legend_type(self) -> str:
@@ -397,6 +397,8 @@ class SinglePanelBuilder(FigureBuilder):
     ):
         ax = axes[0]
         ax.imshow(rgb_map, interpolation='none')
+        ax.set_facecolor('none')
+        fig.patch.set_alpha(0)
         ax.axis("off")
         
         # Use suptitle for consistent positioning
@@ -481,7 +483,7 @@ class SinglePanelBuilder(FigureBuilder):
             if not output_filename:
                 output_filename = "flatmap.pdf"
             output_path = os.path.join(self.config.output_dir, output_filename)
-            plt.savefig(output_path, format='pdf', bbox_inches='tight')
+            plt.savefig(output_path, format='pdf', bbox_inches='tight', transparent=True)
             print(f"Saved to {output_path}")
         
         if self.config.show:
@@ -517,7 +519,7 @@ class BivariateLegendBuilder(SinglePanelBuilder):
         ax.axis("off")
         
         if title:
-            fig.suptitle(title, fontsize=12, y=0.9)
+            fig.suptitle(title, fontsize=12, y=0.95)
         if subject:
             fig.text(0.5, 0.75, subject, ha='center', fontsize=12)
             
@@ -527,8 +529,8 @@ class BivariateLegendBuilder(SinglePanelBuilder):
         legend_inner_bottom = self.config.legend_padding
         legend_inner_top = self.config.legend_height - self.config.legend_padding
         legend_inner_height = legend_inner_top - legend_inner_bottom
-        legend_size = 0.15
-        legend_x = 0.5 - legend_size / 2
+        legend_size = 0.2
+        legend_x = 0.85 - legend_size / 2
         legend_y = 0.05
         
         ax_inset = fig.add_axes([legend_x, legend_y, legend_size, legend_size])
@@ -539,25 +541,37 @@ class BivariateLegendBuilder(SinglePanelBuilder):
         legend_rgb = get_bivariate_color(x_grid, y_grid, vmin=0, vmax=legend_vmax)
         ax_inset.imshow(legend_rgb, origin='lower', extent=[0, legend_vmax, 0, legend_vmax])
         ax_inset.set_xticks([0, legend_vmax])
+        ax_inset.set_xticklabels(['0', str(legend_vmax)], ha='left')  # left-align so '0' hugs left edge
+
         ax_inset.set_yticks([0, legend_vmax])
-        ax_inset.tick_params(labelsize=8)
+        ax_inset.set_yticklabels(['0', str(legend_vmax)], va='bottom')  # bottom-align so '0' hugs bottom edge
+        for label, ha in zip(ax_inset.get_xticklabels(), ['left', 'right']):
+            label.set_ha(ha)
+
+        for label, va in zip(ax_inset.get_yticklabels(), ['bottom', 'top']):
+            label.set_va(va)
+        ax_inset.tick_params(labelsize=4, length=0, pad=2) 
+        ax_inset.spines['top'].set_visible(False)
+        ax_inset.spines['right'].set_visible(False)
+        ax_inset.spines['bottom'].set_visible(False)
+        ax_inset.spines['left'].set_visible(False)
         # Place labels inside the legend band to prevent clipping
         fig.text(
-            0.5,
-            legend_y + legend_size + 0.004,
+            legend_x + legend_size / 2,
+            legend_y - 0.1,
             legend_labels[0],
             ha="center",
             va="bottom",
-            fontsize=8,
+            fontsize=6,
         )
         fig.text(
-            legend_x - 0.01,
+            legend_x,
             legend_y + legend_size / 2,
             legend_labels[1],
             ha="right",
             va="center",
             rotation=90,
-            fontsize=8,
+            fontsize=6,
         )
 
 # endregion
@@ -625,7 +639,8 @@ class FlatmapPlotter:
         # black background
         # background = np.zeros_like(self.mapper.get_brain_bkg())
         rgb_map = strategy(flatmaps, background=background, **kwargs)
-        rgb_map[~self.mapper.get_brain_mask()] = [1, 1, 1]
+        alpha = self.mapper.get_brain_mask().astype(float)[..., np.newaxis]
+        rgb_map = np.concatenate([rgb_map, alpha], axis=-1)
         
         
         # Auto-select builder based on strategy type

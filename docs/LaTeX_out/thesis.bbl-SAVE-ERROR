@@ -274,80 +274,6 @@
       \endverb
       \keyw{Adult,Brain Damage,Chronic,Humans,Intracranial Aneurysm,Language Disorders,Language Tests,Male,Mental Recall,Reading,Semantics,Speech Disorders,Speech Production Measurement,Verbal Behavior}
     \endentry
-    \entry{deniz_representation_2019}{article}{}
-      \name{author}{4}{}{%
-        {{un=0,uniquepart=base,hash=782dd8c41d40fc441446fb601cbd076a}{%
-           family={Deniz},
-           familyi={D\bibinitperiod},
-           given={Fatma},
-           giveni={F\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=9f6543b7881d1807423f2b6d9eb303ad}{%
-           family={Nunez-Elizalde},
-           familyi={N\bibinithyphendelim E\bibinitperiod},
-           given={Anwar\bibnamedelima O.},
-           giveni={A\bibinitperiod\bibinitdelim O\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=05d42f05e1c1b0db4e4636f235e44891}{%
-           family={Huth},
-           familyi={H\bibinitperiod},
-           given={Alexander\bibnamedelima G.},
-           giveni={A\bibinitperiod\bibinitdelim G\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=e0c5bfbfb8feea98ef16c23fb0f4297d}{%
-           family={Gallant},
-           familyi={G\bibinitperiod},
-           given={Jack\bibnamedelima L.},
-           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {Society for Neuroscience}%
-      }
-      \strng{namehash}{db5d82974775eb5aa99fbca87d64df13}
-      \strng{fullhash}{bb9fd817ea1096df95758de85ce65e2c}
-      \strng{bibnamehash}{db5d82974775eb5aa99fbca87d64df13}
-      \strng{authorbibnamehash}{db5d82974775eb5aa99fbca87d64df13}
-      \strng{authornamehash}{db5d82974775eb5aa99fbca87d64df13}
-      \strng{authorfullhash}{bb9fd817ea1096df95758de85ce65e2c}
-      \field{sortinit}{D}
-      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{An integral part of human language is the capacity to extract meaning from spoken and written words, but the precise relationship between brain representations of information perceived by listening versus reading is unclear. Prior neuroimaging studies have shown that semantic information in spoken language is represented in multiple regions in the human cerebral cortex, while amodal semantic information appears to be represented in a few broad brain regions. However, previous studies were too insensitive to determine whether semantic representations were shared at a fine level of detail rather than merely at a coarse scale. We used {fMRI} to record brain activity in two separate experiments while participants listened to or read several hours of the same narrative stories, and then created voxelwise encoding models to characterize semantic selectivity in each voxel and in each individual participant. We find that semantic tuning during listening and reading are highly correlated in most semantically selective regions of cortex, and models estimated using one modality accurately predict voxel responses in the other modality. These results suggest that the representation of language semantics is independent of the sensory modality through which the semantic information is received. {SIGNIFICANCE} {STATEMENT} Humans can comprehend the meaning of words from both spoken and written language. It is therefore important to understand the relationship between the brain representations of spoken or written text. Here, we show that although the representation of semantic information in the human brain is quite complex, the semantic representations evoked by listening versus reading are almost identical. These results suggest that the representation of language semantics is independent of the sensory modality through which the semantic information is received.}
-      \field{day}{25}
-      \field{issn}{0270-6474, 1529-2401}
-      \field{journaltitle}{Journal of Neuroscience}
-      \field{langid}{english}
-      \field{month}{9}
-      \field{number}{39}
-      \field{shortjournal}{J. Neurosci.}
-      \field{title}{The Representation of Semantic Information Across Human Cerebral Cortex During Listening Versus Reading Is Invariant to Stimulus Modality}
-      \field{urlday}{7}
-      \field{urlmonth}{3}
-      \field{urlyear}{2026}
-      \field{volume}{39}
-      \field{year}{2019}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \field{pages}{7722\bibrangedash 7736}
-      \range{pages}{15}
-      \verb{doi}
-      \verb 10.1523/JNEUROSCI.0675-19.2019
-      \endverb
-      \verb{file}
-      \verb Full Text PDF:/Users/simoneesposito/Zotero/storage/W5XE78EV/Deniz et al. - 2019 - The Representation of Semantic Information Across Human Cerebral Cortex During Listening Versus Read.pdf:application/pdf
-      \endverb
-      \verb{urlraw}
-      \verb https://www.jneurosci.org/content/39/39/7722
-      \endverb
-      \verb{url}
-      \verb https://www.jneurosci.org/content/39/39/7722
-      \endverb
-      \keyw{{BOLD},cross-modal representations,{fMRI},listening,reading,semantics}
-    \endentry
     \entry{devlin_bert_2019}{misc}{}
       \name{author}{4}{}{%
         {{un=0,uniquepart=base,hash=13202969e372bc82318f9629cbdd199b}{%
@@ -420,81 +346,6 @@
       \endverb
       \keyw{Computer Science - Computation and Language}
     \endentry
-    \entry{huth_natural_2016}{article}{}
-      \name{author}{5}{}{%
-        {{un=1,uniquepart=given,hash=05d42f05e1c1b0db4e4636f235e44891}{%
-           family={Huth},
-           familyi={H\bibinitperiod},
-           given={Alexander\bibnamedelima G.},
-           giveni={A\bibinitperiod\bibinitdelim G\bibinitperiod},
-           givenun=1}}%
-        {{un=0,uniquepart=base,hash=81369b3c59fb638e692cbd95a51fbef2}{%
-           family={Heer},
-           familyi={H\bibinitperiod},
-           given={Wendy\bibnamedelima A.},
-           giveni={W\bibinitperiod\bibinitdelim A\bibinitperiod},
-           givenun=0,
-           prefix={de},
-           prefixi={d\bibinitperiod},
-           prefixun=0}}%
-        {{un=0,uniquepart=base,hash=15f19cfb916ba0b8afb494f250ea80a2}{%
-           family={Griffiths},
-           familyi={G\bibinitperiod},
-           given={Thomas\bibnamedelima L.},
-           giveni={T\bibinitperiod\bibinitdelim L\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=4a4e520db998aa4b178046ef8ef631b4}{%
-           family={Theunissen},
-           familyi={T\bibinitperiod},
-           given={Frédéric\bibnamedelima E.},
-           giveni={F\bibinitperiod\bibinitdelim E\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=e0c5bfbfb8feea98ef16c23fb0f4297d}{%
-           family={Gallant},
-           familyi={G\bibinitperiod},
-           given={Jack\bibnamedelima L.},
-           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{88b016d69c0b9172f85115e35d145c57}
-      \strng{fullhash}{92c1dcbe5daacba179a4dc081e41f3fc}
-      \strng{bibnamehash}{88b016d69c0b9172f85115e35d145c57}
-      \strng{authorbibnamehash}{88b016d69c0b9172f85115e35d145c57}
-      \strng{authornamehash}{88b016d69c0b9172f85115e35d145c57}
-      \strng{authorfullhash}{92c1dcbe5daacba179a4dc081e41f3fc}
-      \field{sortinit}{H}
-      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{The meaning of language is represented in regions of the cerebral cortex collectively known as the “semantic system”. However, little of the semantic system has been mapped comprehensively, and the semantic selectivity of most regions is unknown. Here we systematically map semantic selectivity across the cortex using voxel-wise modeling of {fMRI} data collected while subjects listened to hours of narrative stories. We show that the semantic system is organized into intricate patterns that appear consistent across individuals. We then use a novel generative model to create a detailed semantic atlas. Our results suggest that most areas within the semantic system represent information about specific semantic domains, or groups of related concepts, and our atlas shows which domains are represented in each area. This study demonstrates that data-driven methods—commonplace in studies of human neuroanatomy and functional connectivity—provide a powerful and efficient means for mapping functional representations in the brain.}
-      \field{day}{28}
-      \field{issn}{0028-0836}
-      \field{journaltitle}{Nature}
-      \field{month}{4}
-      \field{number}{7600}
-      \field{shortjournal}{Nature}
-      \field{title}{Natural speech reveals the semantic maps that tile human cerebral cortex}
-      \field{urlday}{7}
-      \field{urlmonth}{3}
-      \field{urlyear}{2026}
-      \field{volume}{532}
-      \field{year}{2016}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \field{pages}{453\bibrangedash 458}
-      \range{pages}{6}
-      \verb{doi}
-      \verb 10.1038/nature17637
-      \endverb
-      \verb{urlraw}
-      \verb https://pmc.ncbi.nlm.nih.gov/articles/PMC4852309/
-      \endverb
-      \verb{url}
-      \verb https://pmc.ncbi.nlm.nih.gov/articles/PMC4852309/
-      \endverb
-    \endentry
     \entry{jain_incorporating_2018}{inproceedings}{}
       \name{author}{2}{}{%
         {{un=0,uniquepart=base,hash=346bb277e1aba1de1507800f162fec58}{%
@@ -503,12 +354,12 @@
            given={Shailee},
            giveni={S\bibinitperiod},
            givenun=0}}%
-        {{un=1,uniquepart=given,hash=4fd47c8b41439f5c75ec99cb6e0d2990}{%
+        {{un=0,uniquepart=base,hash=4fd47c8b41439f5c75ec99cb6e0d2990}{%
            family={Huth},
            familyi={H\bibinitperiod},
            given={Alexander},
            giveni={A\bibinitperiod},
-           givenun=1}}%
+           givenun=0}}%
       }
       \list{publisher}{1}{%
         {Curran Associates, Inc.}%
@@ -543,77 +394,6 @@
       \verb{url}
       \verb https://papers.nips.cc/paper_files/paper/2018/hash/f471223d1a1614b58a7dc45c9d01df19-Abstract.html
       \endverb
-    \endentry
-    \entry{pasquiou_information-restricted_2023}{misc}{}
-      \name{author}{4}{}{%
-        {{un=0,uniquepart=base,hash=39507b132de446637198ceab67f17110}{%
-           family={Pasquiou},
-           familyi={P\bibinitperiod},
-           given={Alexandre},
-           giveni={A\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=14dcf5daa1f8aef2b120fd7e5ede0e0e}{%
-           family={Lakretz},
-           familyi={L\bibinitperiod},
-           given={Yair},
-           giveni={Y\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=0f3fc06fb9fcbb01b9cc0985eaf0a71c}{%
-           family={Thirion},
-           familyi={T\bibinitperiod},
-           given={Bertrand},
-           giveni={B\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=089b3b479c068e109f0d6f0ab2022dfa}{%
-           family={Pallier},
-           familyi={P\bibinitperiod},
-           given={Christophe},
-           giveni={C\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {arXiv}%
-      }
-      \strng{namehash}{1bac7aaead4181fa0f5c249541f6712f}
-      \strng{fullhash}{9b5262c649c04adc8206ee7cbcd285ae}
-      \strng{bibnamehash}{1bac7aaead4181fa0f5c249541f6712f}
-      \strng{authorbibnamehash}{1bac7aaead4181fa0f5c249541f6712f}
-      \strng{authornamehash}{1bac7aaead4181fa0f5c249541f6712f}
-      \strng{authorfullhash}{9b5262c649c04adc8206ee7cbcd285ae}
-      \field{sortinit}{P}
-      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{A fundamental question in neurolinguistics concerns the brain regions involved in syntactic and semantic processing during speech comprehension, both at the lexical (word processing) and supra-lexical levels (sentence and discourse processing). To what extent are these regions separated or intertwined? To address this question, we trained a lexical language model, Glove, and a supra-lexical language model, {GPT}-2, on a text corpus from which we selectively removed either syntactic or semantic information. We then assessed to what extent these information-restricted models were able to predict the time-courses of {fMRI} signal of humans listening to naturalistic text. We also manipulated the size of contextual information provided to {GPT}-2 in order to determine the windows of integration of brain regions involved in supra-lexical processing. Our analyses show that, while most brain regions involved in language are sensitive to both syntactic and semantic variables, the relative magnitudes of these effects vary a lot across these regions. Furthermore, we found an asymmetry between the left and right hemispheres, with semantic and syntactic processing being more dissociated in the left hemisphere than in the right, and the left and right hemispheres showing respectively greater sensitivity to short and long contexts. The use of information-restricted {NLP} models thus shed new light on the spatial organization of syntactic processing, semantic processing and compositionality.}
-      \field{day}{28}
-      \field{eprinttype}{arxiv}
-      \field{month}{2}
-      \field{number}{{arXiv}:2302.14389}
-      \field{title}{Information-Restricted Neural Language Models Reveal Different Brain Regions' Sensitivity to Semantics, Syntax and Context}
-      \field{urlday}{7}
-      \field{urlmonth}{3}
-      \field{urlyear}{2026}
-      \field{year}{2023}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{doi}
-      \verb 10.48550/arXiv.2302.14389
-      \endverb
-      \verb{eprint}
-      \verb 2302.14389 [cs]
-      \endverb
-      \verb{file}
-      \verb Preprint PDF:/Users/simoneesposito/Zotero/storage/BWAERZS4/Pasquiou et al. - 2023 - Information-Restricted Neural Language Models Reveal Different Brain Regions' Sensitivity to Semanti.pdf:application/pdf
-      \endverb
-      \verb{urlraw}
-      \verb http://arxiv.org/abs/2302.14389
-      \endverb
-      \verb{url}
-      \verb http://arxiv.org/abs/2302.14389
-      \endverb
-      \keyw{Computer Science - Computation and Language}
     \endentry
     \entry{peters_deep_2018}{misc}{}
       \name{author}{7}{}{%

@@ -18,7 +18,6 @@ from .file_io import (
     ensure_directory_exists,
 )
 from .preprocessing import *
-from .validation import validate_embeddings, check_data_alignment
 from .config import *
 
 

@@ -42,23 +42,6 @@ class EmbeddingManager:
             )
 
         return self.embeddings[mode]
-
-    def _generate_and_cache_(self, stories, mode, dataseqs, contexts, verbose):
-        """Generate embeddings for missing stories and save to disk."""
-        from .embedding_generator import contextual_embeddings
-
-        new_emb = contextual_embeddings(
-            dataseqs,
-            "openai-community/gpt2",
-            8,
-            interp="lanczos",
-            contexts=contexts,
-            verbose=verbose,
-        )
-        for story in stories:
-            self.embeddings[mode][story] = new_emb[story]
-
-        self._save_embeddings()
         
     def _generate_and_cache(self, stories, mode, dataseqs, mask, verbose=False, window_size=20):
         """Generate embeddings for missing stories and save to disk."""

@@ -65,7 +65,7 @@ TEXTGRID_PATH = DATA_DIR / "stimuli" / "textgrids"
 TRFILE_PATH = DATA_DIR / "stimuli" / "trfiles"
 FEATURE_PATH = DATA_DIR / "features"
 EMBEDDINGS_FILE = FEATURE_PATH / "embeddings.npz"
-CONTEXTS_FILE = FEATURE_PATH / "contexts.npz"
+CONTEXTS_FILE = FEATURE_PATH / "masks.npz"
 RESPONSE_PATH = DATA_DIR / "responses"
 MAPPER_PATH = DATA_DIR / "mappers"
 
@@ -94,3 +94,4 @@ MODES = [
     'remove-peaks',
     'remove-valleys',
 ]
+

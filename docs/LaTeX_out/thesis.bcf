@@ -168,7 +168,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>sortlocale</bcf:key>
-      <bcf:value>english</bcf:value>
+      <bcf:value>german</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>sortingtemplatename</bcf:key>
@@ -2366,14 +2366,23 @@
     <bcf:citekey order="2" intorder="1">damasio_neural_2001</bcf:citekey>
     <bcf:citekey order="2" intorder="2">de_renzi_sparing_1995</bcf:citekey>
     <bcf:citekey order="3" intorder="1">crepaldi_clustering_2013</bcf:citekey>
-    <bcf:citekey order="4" intorder="1">vigliocco_nouns_2011</bcf:citekey>
-    <bcf:citekey order="5" intorder="1">peters_deep_2018</bcf:citekey>
-    <bcf:citekey order="6" intorder="1">devlin_bert_2019</bcf:citekey>
-    <bcf:citekey order="7" intorder="1">schrimpf_neural_2021</bcf:citekey>
-    <bcf:citekey order="7" intorder="2">tuckute_driving_2024</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">vaswani_attention_2023</bcf:citekey>
-    <bcf:citekey order="9" intorder="1">schrimpf_neural_2021</bcf:citekey>
-    <bcf:citekey order="9" intorder="2">jain_incorporating_2018</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">ADD_CITATION</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">vigliocco_nouns_2011</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">ADD_CITATION</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">ADD_CITATION</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">ADD_CITATION</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">huth_natural_2016</bcf:citekey>
+    <bcf:citekey order="9" intorder="2">deniz_representation_2019</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">nunez_voxelwise_2019</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">peters_deep_2018</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">devlin_bert_2019</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">schrimpf_neural_2021</bcf:citekey>
+    <bcf:citekey order="13" intorder="2">tuckute_driving_2024</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">vaswani_attention_2023</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">schrimpf_neural_2021</bcf:citekey>
+    <bcf:citekey order="15" intorder="2">jain_incorporating_2018</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">schrimpf_neural_2021</bcf:citekey>
+    <bcf:citekey order="16" intorder="2">jain_incorporating_2018</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nyt">

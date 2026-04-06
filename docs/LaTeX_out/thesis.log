@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.25)  25 MAR 2026 21:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.25)  29 MAR 2026 22:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -577,73 +577,151 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count332
 \@lastruleclass=\count333
 \@thisrulewidth=\dimen303
+) (/usr/local/texlive/2024/texmf-dist/tex/latex/layouts/layouts.sty
+Package: layouts 2009/09/02 v2.6d graphical depiction of document elements
+\l@ylen=\skip63
+\layoutsbox=\box74
+\l@youtunitlength=\skip64
+\l@youtlinethick=\skip65
+\l@youtlinethickii=\skip66
+\l@ysetupparskip=\skip67
+\l@ysetupbaselineskip=\skip68
+\l@yonem=\skip69
+\l@yonex=\skip70
+\l@ylmarg=\skip71
+\l@yrmarg=\skip72
+\l@yitmindent=\skip73
+\l@ylblwidth=\skip74
+\l@ylblsep=\skip75
+\l@ylparindent=\skip76
+\l@ytsep=\skip77
+\l@ypskip=\skip78
+\l@yptsep=\skip79
+\l@ypsep=\skip80
+\l@yitmsep=\skip81
+\l@ytok=\toks40
+\l@youtpw=\count334
+\l@youtph=\count335
+\l@youthpi=\count336
+\l@youthpii=\count337
+\l@youthpiii=\count338
+\l@youthpiv=\count339
+\l@youthpv=\count340
+\l@youthpvi=\count341
+\l@youthpvii=\count342
+\l@youtparskip=\count343
+\l@youtvpi=\count344
+\l@youtvpii=\count345
+\l@youtvpiii=\count346
+\l@youtvpiv=\count347
+\l@youtvpv=\count348
+\l@youtvpvi=\count349
+\l@youtvpvii=\count350
+\l@youthdo=\count351
+\l@youthdi=\count352
+\l@youthdii=\count353
+\l@youthdiii=\count354
+\l@youthdiv=\count355
+\l@youthdv=\count356
+\l@youthdvi=\count357
+\l@youthdvii=\count358
+\l@youtvdo=\count359
+\l@youtvdi=\count360
+\l@youtvdii=\count361
+\l@youtvdiii=\count362
+\l@youtvdiv=\count363
+\l@youtvdv=\count364
+\l@youtvdvi=\count365
+\l@youtvdvii=\count366
+\l@youtvdviii=\count367
+\l@youtxci=\count368
+\l@youtxcii=\count369
+\l@youtxciii=\count370
+\l@youtxciv=\count371
+\l@youtxcv=\count372
+\l@youtxcvi=\count373
+\l@youtyci=\count374
+\l@youtycii=\count375
+\l@youtyciii=\count376
+\l@youtyciv=\count377
+\l@youtycv=\count378
+\l@youtycvi=\count379
+\l@youtycvii=\count380
+\l@youtycviii=\count381
+\l@youtxco=\count382
+\l@youtyco=\count383
+\l@ytempdima=\skip82
+\trimedge=\skip83
+\trimtop=\skip84
+\uppermargin=\skip85
+\spinemargin=\skip86
 ) (/usr/local/texlive/2024/texmf-dist/tex/latex/biblatex/biblatex.sty
 Package: biblatex 2023/03/05 v3.19 programmable bibliographies (PK/MW)
  (/usr/local/texlive/2024/texmf-dist/tex/latex/logreq/logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count334
+\lrq@indent=\count384
  (/usr/local/texlive/2024/texmf-dist/tex/latex/logreq/logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 )) (/usr/local/texlive/2024/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 )
-\c@tabx@nest=\count335
-\c@listtotal=\count336
-\c@listcount=\count337
-\c@liststart=\count338
-\c@liststop=\count339
-\c@citecount=\count340
-\c@citetotal=\count341
-\c@multicitecount=\count342
-\c@multicitetotal=\count343
-\c@instcount=\count344
-\c@maxnames=\count345
-\c@minnames=\count346
-\c@maxitems=\count347
-\c@minitems=\count348
-\c@citecounter=\count349
-\c@maxcitecounter=\count350
-\c@savedcitecounter=\count351
-\c@uniquelist=\count352
-\c@uniquename=\count353
-\c@refsection=\count354
-\c@refsegment=\count355
-\c@maxextratitle=\count356
-\c@maxextratitleyear=\count357
-\c@maxextraname=\count358
-\c@maxextradate=\count359
-\c@maxextraalpha=\count360
-\c@abbrvpenalty=\count361
-\c@highnamepenalty=\count362
-\c@lownamepenalty=\count363
-\c@maxparens=\count364
-\c@parenlevel=\count365
-\blx@tempcnta=\count366
-\blx@tempcntb=\count367
-\blx@tempcntc=\count368
-\c@blx@maxsection=\count369
-\blx@maxsegment@0=\count370
-\blx@notetype=\count371
-\blx@parenlevel@text=\count372
-\blx@parenlevel@foot=\count373
-\blx@sectionciteorder@0=\count374
-\blx@sectionciteorderinternal@0=\count375
-\blx@entrysetcounter=\count376
-\blx@biblioinstance=\count377
-\labelnumberwidth=\skip63
-\labelalphawidth=\skip64
-\biblabelsep=\skip65
-\bibitemsep=\skip66
-\bibnamesep=\skip67
-\bibinitsep=\skip68
-\bibparsep=\skip69
-\bibhang=\skip70
+\c@tabx@nest=\count385
+\c@listtotal=\count386
+\c@listcount=\count387
+\c@liststart=\count388
+\c@liststop=\count389
+\c@citecount=\count390
+\c@citetotal=\count391
+\c@multicitecount=\count392
+\c@multicitetotal=\count393
+\c@instcount=\count394
+\c@maxnames=\count395
+\c@minnames=\count396
+\c@maxitems=\count397
+\c@minitems=\count398
+\c@citecounter=\count399
+\c@maxcitecounter=\count400
+\c@savedcitecounter=\count401
+\c@uniquelist=\count402
+\c@uniquename=\count403
+\c@refsection=\count404
+\c@refsegment=\count405
+\c@maxextratitle=\count406
+\c@maxextratitleyear=\count407
+\c@maxextraname=\count408
+\c@maxextradate=\count409
+\c@maxextraalpha=\count410
+\c@abbrvpenalty=\count411
+\c@highnamepenalty=\count412
+\c@lownamepenalty=\count413
+\c@maxparens=\count414
+\c@parenlevel=\count415
+\blx@tempcnta=\count416
+\blx@tempcntb=\count417
+\blx@tempcntc=\count418
+\c@blx@maxsection=\count419
+\blx@maxsegment@0=\count420
+\blx@notetype=\count421
+\blx@parenlevel@text=\count422
+\blx@parenlevel@foot=\count423
+\blx@sectionciteorder@0=\count424
+\blx@sectionciteorderinternal@0=\count425
+\blx@entrysetcounter=\count426
+\blx@biblioinstance=\count427
+\labelnumberwidth=\skip87
+\labelalphawidth=\skip88
+\biblabelsep=\skip89
+\bibitemsep=\skip90
+\bibnamesep=\skip91
+\bibinitsep=\skip92
+\bibparsep=\skip93
+\bibhang=\skip94
 \blx@bcfin=\read3
 \blx@bcfout=\write4
 \blx@langwohyphens=\language89
-\c@mincomprange=\count378
-\c@maxcomprange=\count379
-\c@mincompwidth=\count380
+\c@mincomprange=\count428
+\c@maxcomprange=\count429
+\c@mincompwidth=\count430
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/biblatex/blx-dm.def
@@ -653,88 +731,88 @@ Package biblatex Info: Trying to load biblatex style data model...
 Package biblatex Info: ... file 'authoryear.dbx' not found.
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count381
-\c@savedafterword=\count382
-\c@annotator=\count383
-\c@savedannotator=\count384
-\c@author=\count385
-\c@savedauthor=\count386
-\c@bookauthor=\count387
-\c@savedbookauthor=\count388
-\c@commentator=\count389
-\c@savedcommentator=\count390
-\c@editor=\count391
-\c@savededitor=\count392
-\c@editora=\count393
-\c@savededitora=\count394
-\c@editorb=\count395
-\c@savededitorb=\count396
-\c@editorc=\count397
-\c@savededitorc=\count398
-\c@foreword=\count399
-\c@savedforeword=\count400
-\c@holder=\count401
-\c@savedholder=\count402
-\c@introduction=\count403
-\c@savedintroduction=\count404
-\c@namea=\count405
-\c@savednamea=\count406
-\c@nameb=\count407
-\c@savednameb=\count408
-\c@namec=\count409
-\c@savednamec=\count410
-\c@translator=\count411
-\c@savedtranslator=\count412
-\c@shortauthor=\count413
-\c@savedshortauthor=\count414
-\c@shorteditor=\count415
-\c@savedshorteditor=\count416
-\c@labelname=\count417
-\c@savedlabelname=\count418
-\c@institution=\count419
-\c@savedinstitution=\count420
-\c@lista=\count421
-\c@savedlista=\count422
-\c@listb=\count423
-\c@savedlistb=\count424
-\c@listc=\count425
-\c@savedlistc=\count426
-\c@listd=\count427
-\c@savedlistd=\count428
-\c@liste=\count429
-\c@savedliste=\count430
-\c@listf=\count431
-\c@savedlistf=\count432
-\c@location=\count433
-\c@savedlocation=\count434
-\c@organization=\count435
-\c@savedorganization=\count436
-\c@origlocation=\count437
-\c@savedoriglocation=\count438
-\c@origpublisher=\count439
-\c@savedorigpublisher=\count440
-\c@publisher=\count441
-\c@savedpublisher=\count442
-\c@language=\count443
-\c@savedlanguage=\count444
-\c@origlanguage=\count445
-\c@savedoriglanguage=\count446
-\c@pageref=\count447
-\c@savedpageref=\count448
-\shorthandwidth=\skip71
-\shortjournalwidth=\skip72
-\shortserieswidth=\skip73
-\shorttitlewidth=\skip74
-\shortauthorwidth=\skip75
-\shorteditorwidth=\skip76
-\locallabelnumberwidth=\skip77
-\locallabelalphawidth=\skip78
-\localshorthandwidth=\skip79
-\localshortjournalwidth=\skip80
-\localshortserieswidth=\skip81
-\localshorttitlewidth=\skip82
-\localshortauthorwidth=\skip83
-\localshorteditorwidth=\skip84
+\c@afterword=\count431
+\c@savedafterword=\count432
+\c@annotator=\count433
+\c@savedannotator=\count434
+\c@author=\count435
+\c@savedauthor=\count436
+\c@bookauthor=\count437
+\c@savedbookauthor=\count438
+\c@commentator=\count439
+\c@savedcommentator=\count440
+\c@editor=\count441
+\c@savededitor=\count442
+\c@editora=\count443
+\c@savededitora=\count444
+\c@editorb=\count445
+\c@savededitorb=\count446
+\c@editorc=\count447
+\c@savededitorc=\count448
+\c@foreword=\count449
+\c@savedforeword=\count450
+\c@holder=\count451
+\c@savedholder=\count452
+\c@introduction=\count453
+\c@savedintroduction=\count454
+\c@namea=\count455
+\c@savednamea=\count456
+\c@nameb=\count457
+\c@savednameb=\count458
+\c@namec=\count459
+\c@savednamec=\count460
+\c@translator=\count461
+\c@savedtranslator=\count462
+\c@shortauthor=\count463
+\c@savedshortauthor=\count464
+\c@shorteditor=\count465
+\c@savedshorteditor=\count466
+\c@labelname=\count467
+\c@savedlabelname=\count468
+\c@institution=\count469
+\c@savedinstitution=\count470
+\c@lista=\count471
+\c@savedlista=\count472
+\c@listb=\count473
+\c@savedlistb=\count474
+\c@listc=\count475
+\c@savedlistc=\count476
+\c@listd=\count477
+\c@savedlistd=\count478
+\c@liste=\count479
+\c@savedliste=\count480
+\c@listf=\count481
+\c@savedlistf=\count482
+\c@location=\count483
+\c@savedlocation=\count484
+\c@organization=\count485
+\c@savedorganization=\count486
+\c@origlocation=\count487
+\c@savedoriglocation=\count488
+\c@origpublisher=\count489
+\c@savedorigpublisher=\count490
+\c@publisher=\count491
+\c@savedpublisher=\count492
+\c@language=\count493
+\c@savedlanguage=\count494
+\c@origlanguage=\count495
+\c@savedoriglanguage=\count496
+\c@pageref=\count497
+\c@savedpageref=\count498
+\shorthandwidth=\skip95
+\shortjournalwidth=\skip96
+\shortserieswidth=\skip97
+\shorttitlewidth=\skip98
+\shortauthorwidth=\skip99
+\shorteditorwidth=\skip100
+\locallabelnumberwidth=\skip101
+\locallabelalphawidth=\skip102
+\localshorthandwidth=\skip103
+\localshortjournalwidth=\skip104
+\localshortserieswidth=\skip105
+\localshorttitlewidth=\skip106
+\localshortauthorwidth=\skip107
+\localshorteditorwidth=\skip108
 Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/biblatex/blx-compat.def
@@ -744,19 +822,19 @@ Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/biblatex/biblatex.def
 File: biblatex.def 2023/03/05 v3.19 biblatex compatibility (PK/MW)
-\c@textcitecount=\count449
-\c@textcitetotal=\count450
-\c@textcitemaxnames=\count451
-\c@biburlbigbreakpenalty=\count452
-\c@biburlbreakpenalty=\count453
-\c@biburlnumpenalty=\count454
-\c@biburlucpenalty=\count455
-\c@biburllcpenalty=\count456
+\c@textcitecount=\count499
+\c@textcitetotal=\count500
+\c@textcitemaxnames=\count501
+\c@biburlbigbreakpenalty=\count502
+\c@biburlbreakpenalty=\count503
+\c@biburlnumpenalty=\count504
+\c@biburlucpenalty=\count505
+\c@biburllcpenalty=\count506
 \biburlbigskip=\muskip18
 \biburlnumskip=\muskip19
 \biburlucskip=\muskip20
 \biburllcskip=\muskip21
-\c@smartand=\count457
+\c@smartand=\count507
 )
 Package biblatex Info: Trying to load bibliography style 'authoryear'...
 Package biblatex Info: ... file 'authoryear.bbx' found.
@@ -766,8 +844,8 @@ Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
 File: standard.bbx 2023/03/05 v3.19 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count458
-\c@bbx:relatedtotal=\count459
+\c@bbx:relatedcount=\count508
+\c@bbx:relatedtotal=\count509
 ))
 Package biblatex Info: Trying to load citation style 'authoryear'...
 Package biblatex Info: ... file 'authoryear.cbx' found.
@@ -792,15 +870,15 @@ Package biblatex Info: Document encoding is UTF8 ....
 Package: expl3 2024-02-20 L3 programming layer (loader) 
  (/usr/local/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count460
-\l__pdf_internal_box=\box74
+\l__color_backend_stack_int=\count510
+\l__pdf_internal_box=\box75
 ))
 Package biblatex Info: ... and expl3
 (biblatex)             2024-02-20 L3 programming layer (loader) 
 (biblatex)             is new enough (at least 2020/04/06),
 (biblatex)             setting 'casechanger=expl3'.
- (/usr/local/texlive/2024/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty
-(/usr/local/texlive/2024/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+
+(/usr/local/texlive/2024/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty (/usr/local/texlive/2024/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
 Package: xparse 2024-02-18 L3 Experimental document command parser
 )
 Package: blx-case-expl3 2023/03/05 v3.19 expl3 case changing code for biblatex
@@ -813,47 +891,85 @@ File: upzd.fd 2001/06/04 font definitions for U/pzd.
 LaTeX Font Info:    Trying to load font information for U+psy on input line 64.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/upsy.fd
 File: upsy.fd 2001/06/04 font definitions for U/psy.
-))
-\c@gridcount=\count461
-\@quotelevel=\count462
-\@quotereset=\count463
- (LaTeX_out/thesis.aux)
+)) (/usr/local/texlive/2024/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2024/02/07 v24.2 The Babel package
+\babel@savecnt=\count511
+\U@D=\dimen304
+\l@unhyphenated=\language90
+ (/usr/local/texlive/2024/texmf-dist/tex/generic/babel/txtbabel.def)
+\bbl@readstream=\read4
+\bbl@dirlevel=\count512
+ (/usr/local/texlive/2024/texmf-dist/tex/generic/babel-english/english.ldf
+Language: english 2017/06/06 v3.3r English support from the babel system
+Package babel Info: Hyphen rules for 'canadian' set to \l@english
+(babel)             (\language0). Reported on input line 102.
+Package babel Info: Hyphen rules for 'australian' set to \l@ukenglish
+(babel)             (\language23). Reported on input line 105.
+Package babel Info: Hyphen rules for 'newzealand' set to \l@ukenglish
+(babel)             (\language23). Reported on input line 108.
+) (/usr/local/texlive/2024/texmf-dist/tex/generic/babel-german/german.ldf
+Language: german 2024/01/19 v2.14 German support for babel (pre-1996 orthography)
+ (/usr/local/texlive/2024/texmf-dist/tex/generic/babel-german/germanb.ldf
+Language: germanb 2024/01/19 v2.14 German support for babel (pre-1996 orthography)
+Package babel Info: Making " an active character on input line 139.
+))) (/usr/local/texlive/2024/texmf-dist/tex/generic/babel/locale/de/babel-german.tex
+Package babel Info: Importing font and identification data for german
+(babel)             from babel-de-1901.ini. Reported on input line 25.
+) (/usr/local/texlive/2024/texmf-dist/tex/generic/babel/locale/en/babel-english.tex
+Package babel Info: Importing font and identification data for english
+(babel)             from babel-en.ini. Reported on input line 11.
+)
+\c@gridcount=\count513
+
+
+Package biblatex Warning: 'babel/polyglossia' detected but 'csquotes' missing.
+(biblatex)                Loading 'csquotes' recommended.
+
+\@quotelevel=\count514
+\@quotereset=\count515
+(LaTeX_out/thesis.aux)
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 106.
-LaTeX Font Info:    ... okay on input line 106.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 106.
-LaTeX Font Info:    ... okay on input line 106.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 106.
-LaTeX Font Info:    ... okay on input line 106.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 106.
-LaTeX Font Info:    ... okay on input line 106.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 106.
-LaTeX Font Info:    ... okay on input line 106.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 106.
-LaTeX Font Info:    ... okay on input line 106.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 106.
-LaTeX Font Info:    ... okay on input line 106.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 106.
-LaTeX Font Info:    ... okay on input line 106.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 106.
-LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 105.
+LaTeX Font Info:    ... okay on input line 105.
  (/usr/local/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count464
-\scratchdimen=\dimen304
-\scratchbox=\box75
-\nofMPsegments=\count465
-\nofMParguments=\count466
-\everyMPshowfont=\toks40
-\MPscratchCnt=\count467
-\MPscratchDim=\dimen305
-\MPnumerator=\count468
-\makeMPintoPDFobject=\count469
-\everyMPtoPDFconversion=\toks41
+\scratchcounter=\count516
+\scratchdimen=\dimen305
+\scratchbox=\box76
+\nofMPsegments=\count517
+\nofMParguments=\count518
+\everyMPshowfont=\toks41
+\MPscratchCnt=\count519
+\MPscratchDim=\dimen306
+\MPnumerator=\count520
+\makeMPintoPDFobject=\count521
+\everyMPtoPDFconversion=\toks42
 ) (/usr/local/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+ (/usr/local/texlive/2024/texmf-dist/tex/latex/grfext/grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+)
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
@@ -861,12 +977,21 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count470
-Package hyperref Info: Link coloring OFF on input line 106.
+\c@lstlisting=\count522
+Package hyperref Info: Link coloring OFF on input line 105.
  (LaTeX_out/thesis.out) (LaTeX_out/thesis.out)
 \@outlinefile=\write5
 \openout5 = `thesis.out'.
 
+
+
+Package layouts Warning: Layout scale set to 0.5 on input line 105.
+
+Package biblatex Info: Trying to load language 'german'...
+Package biblatex Info: ... file 'german.lbx' found.
+(/usr/local/texlive/2024/texmf-dist/tex/latex/biblatex/lbx/german.lbx
+File: german.lbx 2023/03/05 v3.19 biblatex localization (PK/MW)
+)
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/biblatex/lbx/english.lbx
@@ -880,145 +1005,183 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'thesis.bbl' found.
  (LaTeX_out/thesis.bbl)
-Package biblatex Info: Reference section=0 on input line 106.
-Package biblatex Info: Reference segment=0 on input line 106.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 109.
+Package biblatex Info: Reference section=0 on input line 105.
+Package biblatex Info: Reference segment=0 on input line 105.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 123.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 109.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 123.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [2] [3]
-Overfull \hbox (3.3328pt too wide) in paragraph at lines 202--203
+{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
+Overfull \hbox (3.3328pt too wide) in paragraph at lines 234--235
 []\OT1/cmr/m/n/10 A list of phoneme-time pairs was con-structed for each of the 39 En-glish phonemes.
  []
 
-[4] [5]
+[5] [6]
 
 pdfTeX warning: pdflatex (file ./figures/Fig1/Fig1_alternative.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<figures/Fig1/Fig1_alternative.pdf, id=122, 193.91847pt x 216.0853pt>
+<figures/Fig1/Fig1_alternative.pdf, id=92, 193.91847pt x 216.0853pt>
 File: figures/Fig1/Fig1_alternative.pdf Graphic file (type pdf)
 <use figures/Fig1/Fig1_alternative.pdf>
-Package pdftex.def Info: figures/Fig1/Fig1_alternative.pdf  used on input line 321.
+Package pdftex.def Info: figures/Fig1/Fig1_alternative.pdf  used on input line 353.
 (pdftex.def)             Requested size: 193.91798pt x 216.08476pt.
-[6]
-<figures/Fig2/subject07-listening-all.pdf, id=128, 240.29774pt x 137.13919pt>
+[7 <./figures/Fig1/Fig1_alternative.pdf>] [8]
+<figures/Fig2/subject07-listening-all.pdf, id=158, 240.29774pt x 137.13919pt>
 File: figures/Fig2/subject07-listening-all.pdf Graphic file (type pdf)
 <use figures/Fig2/subject07-listening-all.pdf>
-Package pdftex.def Info: figures/Fig2/subject07-listening-all.pdf  used on input line 333.
+Package pdftex.def Info: figures/Fig2/subject07-listening-all.pdf  used on input line 379.
 (pdftex.def)             Requested size: 240.29715pt x 137.13884pt.
-<figures/Fig2/subject07-reading-all.pdf, id=129, 240.29774pt x 164.46445pt>
+<figures/Fig2/subject07-reading-all.pdf, id=159, 240.29774pt x 161.2148pt>
 File: figures/Fig2/subject07-reading-all.pdf Graphic file (type pdf)
 <use figures/Fig2/subject07-reading-all.pdf>
-Package pdftex.def Info: figures/Fig2/subject07-reading-all.pdf  used on input line 339.
-(pdftex.def)             Requested size: 240.29715pt x 164.46404pt.
-<figures/Fig2/pos_distribution.pdf, id=130, 244.46957pt x 160.37415pt>
+Package pdftex.def Info: figures/Fig2/subject07-reading-all.pdf  used on input line 385.
+(pdftex.def)             Requested size: 240.29715pt x 161.2144pt.
+<figures/Fig2/pos_distribution.pdf, id=160, 243.27074pt x 142.69331pt>
 File: figures/Fig2/pos_distribution.pdf Graphic file (type pdf)
 <use figures/Fig2/pos_distribution.pdf>
-Package pdftex.def Info: figures/Fig2/pos_distribution.pdf  used on input line 345.
-(pdftex.def)             Requested size: 244.46896pt x 160.37375pt.
-<figures/Fig3/subject07-listening.pdf, id=131, 240.29774pt x 165.0165pt>
+Package pdftex.def Info: figures/Fig2/pos_distribution.pdf  used on input line 391.
+(pdftex.def)             Requested size: 243.27013pt x 142.69296pt.
+<figures/Fig3/subject07-listening.pdf, id=162, 240.29774pt x 165.0165pt>
 File: figures/Fig3/subject07-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject07-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject07-listening.pdf  used on input line 364.
+Package pdftex.def Info: figures/Fig3/subject07-listening.pdf  used on input line 417.
 (pdftex.def)             Requested size: 224.2479pt x 153.9925pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 364--364
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 417--417
 [] 
  []
 
-<figures/Fig3/subject08-listening.pdf, id=132, 127.37587pt x 66.27518pt>
+<figures/Fig3/subject08-listening.pdf, id=163, 127.37587pt x 66.27518pt>
 File: figures/Fig3/subject08-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject08-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject08-listening.pdf  used on input line 364.
+Package pdftex.def Info: figures/Fig3/subject08-listening.pdf  used on input line 417.
 (pdftex.def)             Requested size: 113.85063pt x 59.23752pt.
-<figures/Fig3/subject09-listening.pdf, id=133, 127.37587pt x 69.83447pt>
+<figures/Fig3/subject09-listening.pdf, id=164, 127.37587pt x 69.83447pt>
 File: figures/Fig3/subject09-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject09-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject09-listening.pdf  used on input line 364.
+Package pdftex.def Info: figures/Fig3/subject09-listening.pdf  used on input line 417.
 (pdftex.def)             Requested size: 113.85063pt x 62.41887pt.
-<figures/Fig3/subject01-listening.pdf, id=134, 127.37587pt x 75.8624pt>
+<figures/Fig3/subject01-listening.pdf, id=165, 127.37587pt x 75.8624pt>
 File: figures/Fig3/subject01-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject01-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject01-listening.pdf  used on input line 364.
+Package pdftex.def Info: figures/Fig3/subject01-listening.pdf  used on input line 417.
 (pdftex.def)             Requested size: 113.85063pt x 67.80669pt.
-<figures/Fig3/subject02-listening.pdf, id=135, 127.37587pt x 66.05118pt>
+<figures/Fig3/subject02-listening.pdf, id=166, 127.37587pt x 66.05118pt>
 File: figures/Fig3/subject02-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject02-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject02-listening.pdf  used on input line 364.
+Package pdftex.def Info: figures/Fig3/subject02-listening.pdf  used on input line 417.
 (pdftex.def)             Requested size: 113.85063pt x 59.03732pt.
-<figures/Fig3/subject05-listening.pdf, id=136, 127.37587pt x 73.44992pt>
+<figures/Fig3/subject05-listening.pdf, id=167, 127.37587pt x 73.44992pt>
 File: figures/Fig3/subject05-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject05-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject05-listening.pdf  used on input line 364.
+Package pdftex.def Info: figures/Fig3/subject05-listening.pdf  used on input line 417.
 (pdftex.def)             Requested size: 113.85063pt x 65.65039pt.
-<figures/Fig3/subject03-listening.pdf, id=137, 127.37587pt x 71.08084pt>
+<figures/Fig3/subject03-listening.pdf, id=168, 127.37587pt x 71.08084pt>
 File: figures/Fig3/subject03-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject03-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject03-listening.pdf  used on input line 364.
+Package pdftex.def Info: figures/Fig3/subject03-listening.pdf  used on input line 417.
 (pdftex.def)             Requested size: 113.85063pt x 63.53288pt.
-<figures/Fig3/subject04-listening.pdf, id=138, 127.37587pt x 69.6027pt>
+<figures/Fig3/subject04-listening.pdf, id=169, 127.37587pt x 69.6027pt>
 File: figures/Fig3/subject04-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject04-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject04-listening.pdf  used on input line 364.
+Package pdftex.def Info: figures/Fig3/subject04-listening.pdf  used on input line 417.
 (pdftex.def)             Requested size: 113.85063pt x 62.21172pt.
-<figures/Fig3/subject06-listening.pdf, id=139, 127.37587pt x 67.74701pt>
+<figures/Fig3/subject06-listening.pdf, id=170, 127.37587pt x 67.74701pt>
 File: figures/Fig3/subject06-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject06-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject06-listening.pdf  used on input line 364.
+Package pdftex.def Info: figures/Fig3/subject06-listening.pdf  used on input line 417.
 (pdftex.def)             Requested size: 113.85063pt x 60.55305pt.
-<figures/Fig4/roi_dominance_listening.pdf, id=140, 361.35pt x 871.5762pt>
-File: figures/Fig4/roi_dominance_listening.pdf Graphic file (type pdf)
-<use figures/Fig4/roi_dominance_listening.pdf>
-Package pdftex.def Info: figures/Fig4/roi_dominance_listening.pdf  used on input line 370.
-(pdftex.def)             Requested size: 172.5pt x 416.06436pt.
+<figures/Fig4/roi_dominance_paired.pdf, id=171, 339.66899pt x 528.2937pt>
+File: figures/Fig4/roi_dominance_paired.pdf Graphic file (type pdf)
+<use figures/Fig4/roi_dominance_paired.pdf>
+Package pdftex.def Info: figures/Fig4/roi_dominance_paired.pdf  used on input line 424.
+(pdftex.def)             Requested size: 339.66815pt x 528.29242pt.
+LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 425.
+(/usr/local/texlive/2024/texmf-dist/tex/latex/base/ts1cmss.fd
+File: ts1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+)
 
-Overfull \hbox (6.66666pt too wide) in paragraph at lines 370--371
- [][] 
+LaTeX Warning: Float too large for page by 28.29242pt on input line 426.
+
+[9] [10 <./figures/Fig2/subject07-listening-all.pdf> <./figures/Fig2/subject07-reading-all.pdf> <./figures/Fig2/pos_distribution.pdf>] [11 <./figures/Fig3/subject07-listening.pdf> <./figures/Fig3/subject08-listening.pdf> <./figures/Fig3/subject09-listening.pdf> <./figures/Fig3/subject01-listening.pdf> <./figures/Fig3/subject02-listening.pdf> <./figures/Fig3/subject05-listening.pdf> <./figures/Fig3/subject03-listening.pdf> <./figures/Fig3/subject04-listening.pdf> <./figures/Fig3/subject06-listening.pdf>] [12{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./figures/Fig4/roi_dominance_paired.pdf>] [13]
+<figures/Fig3/subject07-reading.pdf, id=528, 240.29774pt x 165.0165pt>
+File: figures/Fig3/subject07-reading.pdf Graphic file (type pdf)
+<use figures/Fig3/subject07-reading.pdf>
+Package pdftex.def Info: figures/Fig3/subject07-reading.pdf  used on input line 462.
+(pdftex.def)             Requested size: 224.2479pt x 153.9925pt.
+
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 462--462
+[] 
  []
 
-<figures/Fig4/roi_dominance_reading.pdf, id=141, 361.35pt x 871.5762pt>
-File: figures/Fig4/roi_dominance_reading.pdf Graphic file (type pdf)
-<use figures/Fig4/roi_dominance_reading.pdf>
-Package pdftex.def Info: figures/Fig4/roi_dominance_reading.pdf  used on input line 376.
-(pdftex.def)             Requested size: 172.5pt x 416.06436pt.
-
-Overfull \hbox (6.66666pt too wide) in paragraph at lines 376--377
- [][] 
- []
-
-
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 366--378
-[][] [] 
- []
-
-[7 <./figures/Fig1/Fig1_alternative.pdf>] [8 <./figures/Fig2/subject07-listening-all.pdf> <./figures/Fig2/subject07-reading-all.pdf> <./figures/Fig2/pos_distribution.pdf>] [9 <./figures/Fig3/subject07-listening.pdf> <./figures/Fig3/subject08-listening.pdf> <./figures/Fig3/subject09-listening.pdf> <./figures/Fig3/subject01-listening.pdf> <./figures/Fig3/subject02-listening.pdf> <./figures/Fig3/subject05-listening.pdf> <./figures/Fig3/subject03-listening.pdf> <./figures/Fig3/subject04-listening.pdf> <./figures/Fig3/subject06-listening.pdf>] [10 <./figures/Fig4/roi_dominance_listening.pdf> <./figures/Fig4/roi_dominance_reading.pdf>] [11] [12] (LaTeX_out/thesis.aux)
+<figures/Fig3/subject08-reading.pdf, id=529, 127.37587pt x 66.27518pt>
+File: figures/Fig3/subject08-reading.pdf Graphic file (type pdf)
+<use figures/Fig3/subject08-reading.pdf>
+Package pdftex.def Info: figures/Fig3/subject08-reading.pdf  used on input line 462.
+(pdftex.def)             Requested size: 113.85063pt x 59.23752pt.
+<figures/Fig3/subject09-reading.pdf, id=530, 127.37587pt x 69.83447pt>
+File: figures/Fig3/subject09-reading.pdf Graphic file (type pdf)
+<use figures/Fig3/subject09-reading.pdf>
+Package pdftex.def Info: figures/Fig3/subject09-reading.pdf  used on input line 462.
+(pdftex.def)             Requested size: 113.85063pt x 62.41887pt.
+<figures/Fig3/subject01-reading.pdf, id=531, 127.37587pt x 75.8624pt>
+File: figures/Fig3/subject01-reading.pdf Graphic file (type pdf)
+<use figures/Fig3/subject01-reading.pdf>
+Package pdftex.def Info: figures/Fig3/subject01-reading.pdf  used on input line 462.
+(pdftex.def)             Requested size: 113.85063pt x 67.80669pt.
+<figures/Fig3/subject02-reading.pdf, id=532, 127.37587pt x 66.05118pt>
+File: figures/Fig3/subject02-reading.pdf Graphic file (type pdf)
+<use figures/Fig3/subject02-reading.pdf>
+Package pdftex.def Info: figures/Fig3/subject02-reading.pdf  used on input line 462.
+(pdftex.def)             Requested size: 113.85063pt x 59.03732pt.
+<figures/Fig3/subject05-reading.pdf, id=533, 127.37587pt x 73.44992pt>
+File: figures/Fig3/subject05-reading.pdf Graphic file (type pdf)
+<use figures/Fig3/subject05-reading.pdf>
+Package pdftex.def Info: figures/Fig3/subject05-reading.pdf  used on input line 462.
+(pdftex.def)             Requested size: 113.85063pt x 65.65039pt.
+<figures/Fig3/subject03-reading.pdf, id=534, 127.37587pt x 71.08084pt>
+File: figures/Fig3/subject03-reading.pdf Graphic file (type pdf)
+<use figures/Fig3/subject03-reading.pdf>
+Package pdftex.def Info: figures/Fig3/subject03-reading.pdf  used on input line 462.
+(pdftex.def)             Requested size: 113.85063pt x 63.53288pt.
+<figures/Fig3/subject04-reading.pdf, id=535, 127.37587pt x 69.6027pt>
+File: figures/Fig3/subject04-reading.pdf Graphic file (type pdf)
+<use figures/Fig3/subject04-reading.pdf>
+Package pdftex.def Info: figures/Fig3/subject04-reading.pdf  used on input line 462.
+(pdftex.def)             Requested size: 113.85063pt x 62.21172pt.
+<figures/Fig3/subject06-reading.pdf, id=536, 127.37587pt x 67.74701pt>
+File: figures/Fig3/subject06-reading.pdf Graphic file (type pdf)
+<use figures/Fig3/subject06-reading.pdf>
+Package pdftex.def Info: figures/Fig3/subject06-reading.pdf  used on input line 462.
+(pdftex.def)             Requested size: 113.85063pt x 60.55305pt.
+[14] [15 <./figures/Fig3/subject07-reading.pdf> <./figures/Fig3/subject08-reading.pdf> <./figures/Fig3/subject09-reading.pdf> <./figures/Fig3/subject01-reading.pdf> <./figures/Fig3/subject02-reading.pdf> <./figures/Fig3/subject05-reading.pdf> <./figures/Fig3/subject03-reading.pdf> <./figures/Fig3/subject04-reading.pdf> <./figures/Fig3/subject06-reading.pdf>] (LaTeX_out/thesis.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 0CEF072A56FA4146E6DD80CDD1DBE34F;2036.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 Package logreq Info: Writing requests to 'thesis.run.xml'.
 \openout1 = `thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 32405 strings out of 474116
- 608939 string characters out of 5743681
- 1949187 words of memory out of 5000000
- 54234 multiletter control sequences out of 15000+600000
- 570810 words of font info for 84 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 84i,13n,93p,2170b,1689s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on LaTeX_out/thesis.pdf (12 pages, 3510446 bytes).
+ 33741 strings out of 474116
+ 637594 string characters out of 5743681
+ 1946187 words of memory out of 5000000
+ 55521 multiletter control sequences out of 15000+600000
+ 568642 words of font info for 75 fonts, out of 8000000 for 9000
+ 1143 hyphenation exceptions out of 8191
+ 84i,13n,93p,2170b,1949s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb>
+Output written on LaTeX_out/thesis.pdf (15 pages, 5561402 bytes).
 PDF statistics:
- 747 PDF objects out of 1000 (max. 8388607)
- 376 compressed objects within 4 object streams
- 44 named destinations out of 1000 (max. 500000)
- 200 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 796 PDF objects out of 1000 (max. 8388607)
+ 433 compressed objects within 5 object streams
+ 55 named destinations out of 1000 (max. 500000)
+ 128 words of extra memory for PDF output out of 10000 (max. 10000000)
 

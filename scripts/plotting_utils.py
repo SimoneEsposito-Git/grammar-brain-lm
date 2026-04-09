@@ -1,59 +1,3 @@
-"""
-Flatmap visualization utilities for brain imaging analysis.
-
-ARCHITECTURE:
-    Fully composable, strategy-based design with zero duplication:
-
-    1. UTILITY FUNCTIONS
-       - load_sparse_array, map_to_flat, smooth_flatmap, get_bivariate_color
-       - Low-level operations (file I/O, data transformation, colors)
-
-    2. MAPPERS & CACHES
-       - FlatmapMapper: Encapsulates subject-specific mapper file logic
-       - Lazy loads and caches mapper data to avoid repeated file I/O
-
-    3. COLOR STRATEGIES (pluggable)
-       - ColorStrategy (abstract): Define color algorithm
-       - Implementations: SingleCorrelation, Bivariate, LoserTakesItAll variants
-       - Each strategy is self-contained and testable
-
-    4. FIGURE BUILDERS (layout & rendering logic)
-       - FigureBuilder: Abstract base for figure composition
-       - Handles: axes setup, legends, colorbars, ROI overlays
-       - Subclasses: SinglePanelBuilder, BivariateLegendBuilder, etc.
-
-    5. UNIFIED PLOTTER (one class to rule them all)
-       - FlatmapPlotter: Takes data + strategy + builder
-       - Same pipeline for all visualization types
-       - No subclassing needed, just inject your strategy
-
-ADDING NEW VISUALIZATION TYPES:
-    Just create a ColorStrategy, no new plotter class:
-    
-    ```python
-    class MyColorStrategy(ColorStrategy):
-        def __call__(self, flatmaps, **kwargs):
-            return rgb_array
-    
-    # Plot it:
-    plotter = FlatmapPlotter(mapper, figure_builder)
-    plotter.plot(
-        data=correlations,
-        strategy=MyColorStrategy(**params),
-        title="My visualization"
-    )
-    ```
-
-KEY IMPROVEMENTS:
-    - No abstract methods → no forced subclassing
-    - Mapper caching → faster repeated plots
-    - Dependency injection → composable, testable
-    - Single entry point → less confusion
-    - Strategy as callable → simpler interface
-    - Figure builder handles all layout → easy customization
-    - No class per visualization type → scales to 100+ variants
-"""
-
 import numpy as np
 import scipy.sparse
 import h5py
@@ -73,6 +17,7 @@ from functools import lru_cache
 # region UTILITY FUNCTIONS
 # ============================================================================
 
+VC_ROIS = ["V1", "V2", "V3", "V3A", "V3B", "V4", "V7", "VO","FO", "FFA", "LO", "IPS"]
 def smooth_flatmap(data, sigma=2.0):
     """Applies a NaN-safe Gaussian blur to a 2D flatmap."""
     v = data.copy()
@@ -109,17 +54,23 @@ def load_sparse_array(fname, varname):
         sparsemat = scipy.sparse.csr_matrix(data, shape=hf["%s_shape" % varname])
     return sparsemat 
 
-def _overlay_flatmap_rois(ax, map_file, roi_index=0):
-    """Overlay flatmap ROIs on a given axis"""
+def _overlay_flatmap_rois(rgb_map, map_file, roi_index=0):
+    """Composite ROI boundaries directly into the RGB array.
+    
+    Args:
+        rgb_map: RGBA array of shape (H, W, 4) — modified in place
+        map_file: path to the HDF mapper file
+        roi_index: which ROI layer to overlay
+    """
     with h5py.File(map_file) as hf:
         overlay = hf["flatmap_rois"][:, :, roi_index]
     overlay = np.rot90(overlay, k=1)
-    ax.imshow(
-        overlay,
-        cmap=mcolors.ListedColormap(["#CCCCCC"]),
-        alpha=np.where(overlay > 0, 1.0, 0.0),
-        interpolation="nearest",
-    )
+
+    roi_mask = overlay > 0
+    rgb_map[roi_mask, 0] = 0.8
+    rgb_map[roi_mask, 1] = 0.8
+    rgb_map[roi_mask, 2] = 0.8
+    rgb_map[roi_mask, 3] = 1.0
 
 # endregion
 # ============================================================================
@@ -157,6 +108,7 @@ class FlatmapMapper:
         img = (np.nan * np.ones(pixmask.shape)).astype(voxels.dtype)
         mimg = (np.nan * np.ones(badmask.shape)).astype(voxels.dtype)
         mimg[badmask] = (pixmap * voxels.ravel())[badmask].astype(mimg.dtype)
+        return mimg
         img[pixmask] = mimg
         return img.T[::-1]
     
@@ -175,6 +127,18 @@ class FlatmapMapper:
             except:
                 curvature = np.zeros(self.get_brain_mask().shape)
             return np.stack([curvature, curvature, curvature], axis=-1)
+    
+    def mask_vc(self, voxels: np.ndarray) -> np.ndarray:
+        """Get visual cortex mask"""
+        masked = voxels.copy()
+        with h5py.File(self.map_file, mode="r") as hf:
+            for roi in VC_ROIS:
+                name = "roi_mask_%s" % roi
+                if name in hf:
+                    roi_mask = hf[name][()].astype(bool)
+                    
+                    masked[roi_mask] = np.nan
+        return masked
 
 # endregion
 # ============================================================================
@@ -232,6 +196,36 @@ class SingleCorrelationStrategy(ColorStrategy):
             'label': 'Correlation'
         }
 
+class ContrastStrategy(ColorStrategy):
+    """Contrast between two maps: (corr_1 - corr_2) with diverging colormap"""
+    
+    def __init__(self, vmin: float = -0.5, vmax: float = 0.5):
+        self.vmin = vmin
+        self.vmax = vmax
+        self.cmap = mcolors.LinearSegmentedColormap.from_list(
+            "blue_black_orange",
+            ["#0082FF", "#000000", "#FF8200"]
+        )
+    
+    def __call__(self, flatmaps: List[np.ndarray], background: Optional[np.ndarray] = None, **kwargs) -> np.ndarray:
+        contrast = flatmaps[0] - flatmaps[1]
+        cmap = self.cmap
+        norm = plt.Normalize(vmin=self.vmin, vmax=self.vmax, clip=True)
+        rgb = cmap(norm(contrast))[..., :3]
+        if background is not None:
+            rgb[np.isnan(contrast)] = background[np.isnan(contrast)]
+        return rgb
+    
+    def get_legend_type(self) -> str:
+        return 'colorbar'
+    
+    def get_legend_data(self) -> Dict:
+        return {
+            'vmin': self.vmin,
+            'vmax': self.vmax,
+            'cmap': self.cmap,
+            'label': 'Contrast'
+        }
 
 class BivariateStrategy(ColorStrategy):
     """Bivariate color mapping: corr_1 (Blue) vs corr_2 (Orange)"""
@@ -309,6 +303,7 @@ class FigureConfig:
     """Configuration for figure rendering"""
     figsize: Tuple[int, int] = (12, 9)
     dpi: int = 150
+    mask_vc: bool = True
     smooth: bool = False
     sigma: float = 2.0
     show_regions: bool = False
@@ -427,7 +422,9 @@ class SinglePanelBuilder(FigureBuilder):
             cbar_height = min(0.03, legend_inner_height * 0.4)
             cbar_y = legend_inner_bottom + (legend_inner_height - cbar_height) / 2
             cbar_ax = fig.add_axes([0.25, cbar_y, 0.5, cbar_height])
-            cbar = fig.colorbar(sm, cax=cbar_ax, label=label, orientation='horizontal')
+            cbar = fig.colorbar(sm, cax=cbar_ax, orientation='horizontal')
+            cbar.ax.tick_params(labelsize=6)
+            cbar.set_label(label, fontsize=8)
         
         # Fallback for explicit colorbar_data
         elif colorbar_data is not None:
@@ -467,15 +464,11 @@ class SinglePanelBuilder(FigureBuilder):
                 loc='center',
                 ncol=min(len(legend_elements), 3),
                 bbox_to_anchor=(0.5, legend_center_y),
-                fontsize=8,
+                fontsize=6,
                 handletextpad=0,
                 columnspacing=0.1,
                 frameon=False
             )
-        
-        if self.config.show_regions and self.mapper:
-            _overlay_flatmap_rois(axes[0], self.mapper.map_file)
-        
         # Don't use tight_layout since we're using manual positioning
         
         if self.config.save:
@@ -627,6 +620,9 @@ class FlatmapPlotter:
         builder_kwargs = builder_kwargs or {}
         
         # Map to flatmaps
+        if self.config.mask_vc:
+            data = [self.mapper.mask_vc(d) for d in data]
+            
         flatmaps = [self.mapper.to_flatmap(d) for d in data]
         
         # Smooth if requested
@@ -635,14 +631,15 @@ class FlatmapPlotter:
         
         # Generate colors
         
+        # Generate colors
         background = self.mapper.get_brain_bkg(background_color)
-        # black background
-        # background = np.zeros_like(self.mapper.get_brain_bkg())
         rgb_map = strategy(flatmaps, background=background, **kwargs)
         alpha = self.mapper.get_brain_mask().astype(float)[..., np.newaxis]
         rgb_map = np.concatenate([rgb_map, alpha], axis=-1)
-        
-        
+
+        # Composite ROIs into the array before rendering
+        if self.config.show_regions:
+            _overlay_flatmap_rois(rgb_map, self.mapper.map_file)
         # Auto-select builder based on strategy type
         if self.builder is None:
             strategy_type = strategy.get_legend_type()

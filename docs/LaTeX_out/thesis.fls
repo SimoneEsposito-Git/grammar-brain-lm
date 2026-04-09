@@ -467,11 +467,13 @@ INPUT ./figures/Fig3/subject06-listening.pdf
 INPUT ./figures/Fig3/subject06-listening.pdf
 INPUT ./figures/Fig3/subject06-listening.pdf
 INPUT ./figures/Fig3/subject06-listening.pdf
-INPUT ./figures/Fig4/roi_dominance_paired.pdf
-INPUT ./figures/Fig4/roi_dominance_paired.pdf
-INPUT ./figures/Fig4/roi_dominance_paired.pdf
-INPUT ./figures/Fig4/roi_dominance_paired.pdf
-INPUT ./figures/Fig4/roi_dominance_paired.pdf
+INPUT ./figures/Fig4/roi_dominance.pdf
+INPUT ./figures/Fig4/roi_dominance.pdf
+INPUT ./figures/Fig4/roi_dominance.pdf
+INPUT ./figures/Fig4/roi_dominance.pdf
+INPUT ./figures/Fig4/roi_dominance.pdf
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmss8.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmss8.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/ts1cmss.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/ts1cmss.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/ts1cmss.fd
@@ -543,6 +545,7 @@ INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pf
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb

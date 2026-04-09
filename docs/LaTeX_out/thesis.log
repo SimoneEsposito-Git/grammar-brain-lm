@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.25)  29 MAR 2026 22:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.25)  9 APR 2026 18:41
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1017,146 +1017,142 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
-Overfull \hbox (3.3328pt too wide) in paragraph at lines 234--235
+Overfull \hbox (3.3328pt too wide) in paragraph at lines 238--239
 []\OT1/cmr/m/n/10 A list of phoneme-time pairs was con-structed for each of the 39 En-glish phonemes.
  []
 
 [5] [6]
 
 pdfTeX warning: pdflatex (file ./figures/Fig1/Fig1_alternative.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<figures/Fig1/Fig1_alternative.pdf, id=92, 193.91847pt x 216.0853pt>
+<figures/Fig1/Fig1_alternative.pdf, id=89, 193.91847pt x 216.0853pt>
 File: figures/Fig1/Fig1_alternative.pdf Graphic file (type pdf)
 <use figures/Fig1/Fig1_alternative.pdf>
-Package pdftex.def Info: figures/Fig1/Fig1_alternative.pdf  used on input line 353.
+Package pdftex.def Info: figures/Fig1/Fig1_alternative.pdf  used on input line 357.
 (pdftex.def)             Requested size: 193.91798pt x 216.08476pt.
-[7 <./figures/Fig1/Fig1_alternative.pdf>] [8]
-<figures/Fig2/subject07-listening-all.pdf, id=158, 240.29774pt x 137.13919pt>
+[7] [8 <./figures/Fig1/Fig1_alternative.pdf>]
+<figures/Fig2/subject07-listening-all.pdf, id=153, 240.29774pt x 137.13919pt>
 File: figures/Fig2/subject07-listening-all.pdf Graphic file (type pdf)
 <use figures/Fig2/subject07-listening-all.pdf>
-Package pdftex.def Info: figures/Fig2/subject07-listening-all.pdf  used on input line 379.
+Package pdftex.def Info: figures/Fig2/subject07-listening-all.pdf  used on input line 383.
 (pdftex.def)             Requested size: 240.29715pt x 137.13884pt.
-<figures/Fig2/subject07-reading-all.pdf, id=159, 240.29774pt x 161.2148pt>
+<figures/Fig2/subject07-reading-all.pdf, id=154, 240.29774pt x 161.2148pt>
 File: figures/Fig2/subject07-reading-all.pdf Graphic file (type pdf)
 <use figures/Fig2/subject07-reading-all.pdf>
-Package pdftex.def Info: figures/Fig2/subject07-reading-all.pdf  used on input line 385.
+Package pdftex.def Info: figures/Fig2/subject07-reading-all.pdf  used on input line 389.
 (pdftex.def)             Requested size: 240.29715pt x 161.2144pt.
-<figures/Fig2/pos_distribution.pdf, id=160, 243.27074pt x 142.69331pt>
+<figures/Fig2/pos_distribution.pdf, id=155, 243.27074pt x 142.69331pt>
 File: figures/Fig2/pos_distribution.pdf Graphic file (type pdf)
 <use figures/Fig2/pos_distribution.pdf>
-Package pdftex.def Info: figures/Fig2/pos_distribution.pdf  used on input line 391.
+Package pdftex.def Info: figures/Fig2/pos_distribution.pdf  used on input line 395.
 (pdftex.def)             Requested size: 243.27013pt x 142.69296pt.
-<figures/Fig3/subject07-listening.pdf, id=162, 240.29774pt x 165.0165pt>
+<figures/Fig3/subject07-listening.pdf, id=157, 240.29774pt x 165.0165pt>
 File: figures/Fig3/subject07-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject07-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject07-listening.pdf  used on input line 417.
+Package pdftex.def Info: figures/Fig3/subject07-listening.pdf  used on input line 421.
 (pdftex.def)             Requested size: 224.2479pt x 153.9925pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 417--417
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 421--421
 [] 
  []
 
-<figures/Fig3/subject08-listening.pdf, id=163, 127.37587pt x 66.27518pt>
+<figures/Fig3/subject08-listening.pdf, id=158, 127.37587pt x 66.27518pt>
 File: figures/Fig3/subject08-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject08-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject08-listening.pdf  used on input line 417.
+Package pdftex.def Info: figures/Fig3/subject08-listening.pdf  used on input line 421.
 (pdftex.def)             Requested size: 113.85063pt x 59.23752pt.
-<figures/Fig3/subject09-listening.pdf, id=164, 127.37587pt x 69.83447pt>
+<figures/Fig3/subject09-listening.pdf, id=159, 127.37587pt x 69.83447pt>
 File: figures/Fig3/subject09-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject09-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject09-listening.pdf  used on input line 417.
+Package pdftex.def Info: figures/Fig3/subject09-listening.pdf  used on input line 421.
 (pdftex.def)             Requested size: 113.85063pt x 62.41887pt.
-<figures/Fig3/subject01-listening.pdf, id=165, 127.37587pt x 75.8624pt>
+<figures/Fig3/subject01-listening.pdf, id=160, 127.37587pt x 75.8624pt>
 File: figures/Fig3/subject01-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject01-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject01-listening.pdf  used on input line 417.
+Package pdftex.def Info: figures/Fig3/subject01-listening.pdf  used on input line 421.
 (pdftex.def)             Requested size: 113.85063pt x 67.80669pt.
-<figures/Fig3/subject02-listening.pdf, id=166, 127.37587pt x 66.05118pt>
+<figures/Fig3/subject02-listening.pdf, id=161, 127.37587pt x 66.05118pt>
 File: figures/Fig3/subject02-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject02-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject02-listening.pdf  used on input line 417.
+Package pdftex.def Info: figures/Fig3/subject02-listening.pdf  used on input line 421.
 (pdftex.def)             Requested size: 113.85063pt x 59.03732pt.
-<figures/Fig3/subject05-listening.pdf, id=167, 127.37587pt x 73.44992pt>
+<figures/Fig3/subject05-listening.pdf, id=162, 127.37587pt x 73.44992pt>
 File: figures/Fig3/subject05-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject05-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject05-listening.pdf  used on input line 417.
+Package pdftex.def Info: figures/Fig3/subject05-listening.pdf  used on input line 421.
 (pdftex.def)             Requested size: 113.85063pt x 65.65039pt.
-<figures/Fig3/subject03-listening.pdf, id=168, 127.37587pt x 71.08084pt>
+<figures/Fig3/subject03-listening.pdf, id=163, 127.37587pt x 71.08084pt>
 File: figures/Fig3/subject03-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject03-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject03-listening.pdf  used on input line 417.
+Package pdftex.def Info: figures/Fig3/subject03-listening.pdf  used on input line 421.
 (pdftex.def)             Requested size: 113.85063pt x 63.53288pt.
-<figures/Fig3/subject04-listening.pdf, id=169, 127.37587pt x 69.6027pt>
+<figures/Fig3/subject04-listening.pdf, id=164, 127.37587pt x 69.6027pt>
 File: figures/Fig3/subject04-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject04-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject04-listening.pdf  used on input line 417.
+Package pdftex.def Info: figures/Fig3/subject04-listening.pdf  used on input line 421.
 (pdftex.def)             Requested size: 113.85063pt x 62.21172pt.
-<figures/Fig3/subject06-listening.pdf, id=170, 127.37587pt x 67.74701pt>
+<figures/Fig3/subject06-listening.pdf, id=165, 127.37587pt x 67.74701pt>
 File: figures/Fig3/subject06-listening.pdf Graphic file (type pdf)
 <use figures/Fig3/subject06-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject06-listening.pdf  used on input line 417.
+Package pdftex.def Info: figures/Fig3/subject06-listening.pdf  used on input line 421.
 (pdftex.def)             Requested size: 113.85063pt x 60.55305pt.
-<figures/Fig4/roi_dominance_paired.pdf, id=171, 339.66899pt x 528.2937pt>
-File: figures/Fig4/roi_dominance_paired.pdf Graphic file (type pdf)
-<use figures/Fig4/roi_dominance_paired.pdf>
-Package pdftex.def Info: figures/Fig4/roi_dominance_paired.pdf  used on input line 424.
-(pdftex.def)             Requested size: 339.66815pt x 528.29242pt.
-LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 425.
+<figures/Fig4/roi_dominance.pdf, id=166, 379.24498pt x 369.3047pt>
+File: figures/Fig4/roi_dominance.pdf Graphic file (type pdf)
+<use figures/Fig4/roi_dominance.pdf>
+Package pdftex.def Info: figures/Fig4/roi_dominance.pdf  used on input line 428.
+(pdftex.def)             Requested size: 345.0pt x 335.97765pt.
+LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 429.
 (/usr/local/texlive/2024/texmf-dist/tex/latex/base/ts1cmss.fd
 File: ts1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
-)
-
-LaTeX Warning: Float too large for page by 28.29242pt on input line 426.
-
-[9] [10 <./figures/Fig2/subject07-listening-all.pdf> <./figures/Fig2/subject07-reading-all.pdf> <./figures/Fig2/pos_distribution.pdf>] [11 <./figures/Fig3/subject07-listening.pdf> <./figures/Fig3/subject08-listening.pdf> <./figures/Fig3/subject09-listening.pdf> <./figures/Fig3/subject01-listening.pdf> <./figures/Fig3/subject02-listening.pdf> <./figures/Fig3/subject05-listening.pdf> <./figures/Fig3/subject03-listening.pdf> <./figures/Fig3/subject04-listening.pdf> <./figures/Fig3/subject06-listening.pdf>] [12{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./figures/Fig4/roi_dominance_paired.pdf>] [13]
-<figures/Fig3/subject07-reading.pdf, id=528, 240.29774pt x 165.0165pt>
+) [9] [10 <./figures/Fig2/subject07-listening-all.pdf> <./figures/Fig2/subject07-reading-all.pdf> <./figures/Fig2/pos_distribution.pdf>] [11 <./figures/Fig3/subject07-listening.pdf> <./figures/Fig3/subject08-listening.pdf> <./figures/Fig3/subject09-listening.pdf> <./figures/Fig3/subject01-listening.pdf> <./figures/Fig3/subject02-listening.pdf> <./figures/Fig3/subject05-listening.pdf> <./figures/Fig3/subject03-listening.pdf> <./figures/Fig3/subject04-listening.pdf> <./figures/Fig3/subject06-listening.pdf>] [12{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./figures/Fig4/roi_dominance.pdf>] [13]
+<figures/Fig3/subject07-reading.pdf, id=491, 240.29774pt x 165.0165pt>
 File: figures/Fig3/subject07-reading.pdf Graphic file (type pdf)
 <use figures/Fig3/subject07-reading.pdf>
-Package pdftex.def Info: figures/Fig3/subject07-reading.pdf  used on input line 462.
+Package pdftex.def Info: figures/Fig3/subject07-reading.pdf  used on input line 466.
 (pdftex.def)             Requested size: 224.2479pt x 153.9925pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 462--462
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 466--466
 [] 
  []
 
-<figures/Fig3/subject08-reading.pdf, id=529, 127.37587pt x 66.27518pt>
+<figures/Fig3/subject08-reading.pdf, id=492, 127.37587pt x 66.27518pt>
 File: figures/Fig3/subject08-reading.pdf Graphic file (type pdf)
 <use figures/Fig3/subject08-reading.pdf>
-Package pdftex.def Info: figures/Fig3/subject08-reading.pdf  used on input line 462.
+Package pdftex.def Info: figures/Fig3/subject08-reading.pdf  used on input line 466.
 (pdftex.def)             Requested size: 113.85063pt x 59.23752pt.
-<figures/Fig3/subject09-reading.pdf, id=530, 127.37587pt x 69.83447pt>
+<figures/Fig3/subject09-reading.pdf, id=493, 127.37587pt x 69.83447pt>
 File: figures/Fig3/subject09-reading.pdf Graphic file (type pdf)
 <use figures/Fig3/subject09-reading.pdf>
-Package pdftex.def Info: figures/Fig3/subject09-reading.pdf  used on input line 462.
+Package pdftex.def Info: figures/Fig3/subject09-reading.pdf  used on input line 466.
 (pdftex.def)             Requested size: 113.85063pt x 62.41887pt.
-<figures/Fig3/subject01-reading.pdf, id=531, 127.37587pt x 75.8624pt>
+<figures/Fig3/subject01-reading.pdf, id=494, 127.37587pt x 75.8624pt>
 File: figures/Fig3/subject01-reading.pdf Graphic file (type pdf)
 <use figures/Fig3/subject01-reading.pdf>
-Package pdftex.def Info: figures/Fig3/subject01-reading.pdf  used on input line 462.
+Package pdftex.def Info: figures/Fig3/subject01-reading.pdf  used on input line 466.
 (pdftex.def)             Requested size: 113.85063pt x 67.80669pt.
-<figures/Fig3/subject02-reading.pdf, id=532, 127.37587pt x 66.05118pt>
+<figures/Fig3/subject02-reading.pdf, id=495, 127.37587pt x 66.05118pt>
 File: figures/Fig3/subject02-reading.pdf Graphic file (type pdf)
 <use figures/Fig3/subject02-reading.pdf>
-Package pdftex.def Info: figures/Fig3/subject02-reading.pdf  used on input line 462.
+Package pdftex.def Info: figures/Fig3/subject02-reading.pdf  used on input line 466.
 (pdftex.def)             Requested size: 113.85063pt x 59.03732pt.
-<figures/Fig3/subject05-reading.pdf, id=533, 127.37587pt x 73.44992pt>
+<figures/Fig3/subject05-reading.pdf, id=496, 127.37587pt x 73.44992pt>
 File: figures/Fig3/subject05-reading.pdf Graphic file (type pdf)
 <use figures/Fig3/subject05-reading.pdf>
-Package pdftex.def Info: figures/Fig3/subject05-reading.pdf  used on input line 462.
+Package pdftex.def Info: figures/Fig3/subject05-reading.pdf  used on input line 466.
 (pdftex.def)             Requested size: 113.85063pt x 65.65039pt.
-<figures/Fig3/subject03-reading.pdf, id=534, 127.37587pt x 71.08084pt>
+<figures/Fig3/subject03-reading.pdf, id=497, 127.37587pt x 71.08084pt>
 File: figures/Fig3/subject03-reading.pdf Graphic file (type pdf)
 <use figures/Fig3/subject03-reading.pdf>
-Package pdftex.def Info: figures/Fig3/subject03-reading.pdf  used on input line 462.
+Package pdftex.def Info: figures/Fig3/subject03-reading.pdf  used on input line 466.
 (pdftex.def)             Requested size: 113.85063pt x 63.53288pt.
-<figures/Fig3/subject04-reading.pdf, id=535, 127.37587pt x 69.6027pt>
+<figures/Fig3/subject04-reading.pdf, id=498, 127.37587pt x 69.6027pt>
 File: figures/Fig3/subject04-reading.pdf Graphic file (type pdf)
 <use figures/Fig3/subject04-reading.pdf>
-Package pdftex.def Info: figures/Fig3/subject04-reading.pdf  used on input line 462.
+Package pdftex.def Info: figures/Fig3/subject04-reading.pdf  used on input line 466.
 (pdftex.def)             Requested size: 113.85063pt x 62.21172pt.
-<figures/Fig3/subject06-reading.pdf, id=536, 127.37587pt x 67.74701pt>
+<figures/Fig3/subject06-reading.pdf, id=499, 127.37587pt x 67.74701pt>
 File: figures/Fig3/subject06-reading.pdf Graphic file (type pdf)
 <use figures/Fig3/subject06-reading.pdf>
-Package pdftex.def Info: figures/Fig3/subject06-reading.pdf  used on input line 462.
+Package pdftex.def Info: figures/Fig3/subject06-reading.pdf  used on input line 466.
 (pdftex.def)             Requested size: 113.85063pt x 60.55305pt.
 [14] [15 <./figures/Fig3/subject07-reading.pdf> <./figures/Fig3/subject08-reading.pdf> <./figures/Fig3/subject09-reading.pdf> <./figures/Fig3/subject01-reading.pdf> <./figures/Fig3/subject02-reading.pdf> <./figures/Fig3/subject05-reading.pdf> <./figures/Fig3/subject03-reading.pdf> <./figures/Fig3/subject04-reading.pdf> <./figures/Fig3/subject06-reading.pdf>] (LaTeX_out/thesis.aux)
  ***********
@@ -1170,18 +1166,18 @@ Package logreq Info: Writing requests to 'thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33741 strings out of 474116
- 637594 string characters out of 5743681
- 1946187 words of memory out of 5000000
- 55521 multiletter control sequences out of 15000+600000
- 568642 words of font info for 75 fonts, out of 8000000 for 9000
+ 33737 strings out of 474116
+ 637393 string characters out of 5743681
+ 1947187 words of memory out of 5000000
+ 55516 multiletter control sequences out of 15000+600000
+ 569242 words of font info for 77 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  84i,13n,93p,2170b,1949s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb>
-Output written on LaTeX_out/thesis.pdf (15 pages, 5561402 bytes).
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb>
+Output written on LaTeX_out/thesis.pdf (15 pages, 5560470 bytes).
 PDF statistics:
- 796 PDF objects out of 1000 (max. 8388607)
- 433 compressed objects within 5 object streams
+ 763 PDF objects out of 1000 (max. 8388607)
+ 429 compressed objects within 5 object streams
  55 named destinations out of 1000 (max. 500000)
  128 words of extra memory for PDF output out of 10000 (max. 10000000)
 

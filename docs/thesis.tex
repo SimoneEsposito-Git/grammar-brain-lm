@@ -147,7 +147,8 @@
 
 \selectlanguage{english}
 \section*{Introduction}
-Ever since the start of elementary school, identifying and distinguishing Grammatical Class (GC) – especially nouns and verbs – plays a fundamental role in the understanding of grammar. Researchers in the field of linguistic neuroscience have long examined whether this distinction was represented in the brain. However, this has proven to be particularly challenging, with many studies showing contradicting results. 
+Language is a uniquely human capacity, and grammar is its organizing principle. Among the most fundamental categories of grammar are parts of speech (POS) — the distinctions between nouns, verbs, adjectives, and other word classes. 
+In particular, the distinction between nouns and verbs has been a central focus of research in psycholinguistics and cognitive neuroscience. To investigate how the brain represents this distinction, researchers have employed various methodologies, including neuropsychological studies - which examine patients with brain damage - and brain imaging techniques, such as functional magnetic resonance imaging (fMRI). 
 
 \subsection*{Neuropsychological studies}
 
@@ -157,8 +158,7 @@ However, subsequent studies have found contradicting results, with some patients
 
 \subsection*{Brain Imaging}
 
-With the advancement of brain imaging techniques, such as fMRI, researchers have started to investigate the neural correlates of GC processing in healthy individuals. The results of these studies can be broadly categorized into three groups \parencite{ADD_CITATION}. First, some studies have found the neural distinction between nouns and verbs to be mainly driven by the semantic properties of the words, with nouns being more associated with objects and verbs with actions \parencite{vigliocco_nouns_2011}. This view is often associated with the \textbf{emergentist} perspective in psycholinguistics, which posits that GC distinctions emerge from semantic constraints rather than being explicitly represented in the brain. Second, some studies have suggested that the difference can be attributed to grammatical operations like morphological inflection, which are more common in verbs than nouns \parencite{ADD_CITATION}. This view is often associated with the \textbf{combinatorial} perspective, which posits that GC distinctions are procedural and related to the combinatorial properties of words. 
-\parencite{ADD_CITATION}. Finally, some studies have found no clear distinction between the two classes \parencite{ADD_CITATION}, pointing to a more \textbf{distributed} representation of GC in the brain.
+With the advancement of brain imaging techniques, such as fMRI, researchers have started to investigate the neural correlates of GC processing in healthy individuals. The results of these studies can be broadly categorized into three groups. First, some studies have found the neural distinction between nouns and verbs to be mainly driven by the semantic properties of the words, with nouns being more associated with objects and verbs with actions \parencite{vigliocco_nouns_2011}. This view is often associated with the \textbf{emergentist} perspective in psycholinguistics, which posits that GC distinctions emerge from semantic constraints rather than being explicitly represented in the brain. Second, some studies have suggested that the difference can be attributed to grammatical operations like morphological inflection, which are more common in verbs than nouns. This view is often associated with the \textbf{combinatorial} perspective, which posits that GC distinctions are procedural and related to the combinatorial properties of words. Finally, some studies have found no clear distinction between the two classes \parencite{crepaldi_clustering_2013}, pointing to a more \textbf{distributed} representation of GC in the brain.
 
 The main limitation of these studies is that they rely on highly controlled stimuli, such as single words or simple sentences, which may not capture the complexity of natural language processing. 
 
@@ -183,7 +183,11 @@ Each spoken (and written) story was presented during a separate fMRI scan. The l
 
 Each functional run was motion-corrected using the FMRIB Linear Image Registration Tool (FLIRT) from FSL 5.0 (Jenkinson and Smith, 2001; Jenkinson et al., 2002). All volumes in the run were then averaged over time to obtain a high-quality template volume. FLIRT was also used to automatically align the template volume for each run with the overall template, which was chosen to be the temporal average of the first functional run for each participant.  
 
- 
+\subsection*{Voxelwise Encoding Model Framework}
+Voxelwise encoding models (VEM) aim to predict the BOLD response for each individual voxel $v$ from the stimulus $S$.
+This is usually done by first extracting one or more sets of features (called feature spaces) from the stimulus,
+then modeling the brain response as a linear combination of those feature spaces.
+
 This corresponds to approximating the function $f(S) = g(S)\beta$ where $g$ transforms the $N$-length stimulus
 into an $N\times P$ feature space with $\beta$ as the $P\times V$ weights, $V$ being the number of voxels.
 This can be accomplished by fitting the feature spaces $g(S_{\text{train}})$ to the responses $R_{\text{train}}$
@@ -421,8 +425,8 @@ To investigate the sensitivity to nouns and verbs in more detail, I focused on t
 \end{figure}
 \begin{figure}
     \centering
-    \includegraphics{figures/Fig4/roi_dominance_paired.pdf}
-    \caption{\textbf{Relative reliance on nouns versus verbs across regions of interest (ROIs).} Points indicate the proportion of the total performance drop within each ROI attributable to masking the preferred word class. Values are computed by summing the voxel-wise performance decrements (baseline $>$ masked condition) for nouns and verbs, and expressing each as a percentage of the total combined decrement. The dashed line at 50\% represents equal reliance on both grammatical classes. Values further from the center indicate a stronger magnitude-weighted dominance. Error bars represent ± 1 standard deviation across n subjects.}
+    \includegraphics[width=\textwidth]{figures/Fig4/roi_dominance.pdf}
+    \caption{\textbf{Noun and Verb sensitivity across Regions of Interest (ROIs).} Points indicate the average drop in performance $\Delta r = r_\text{baseline}-r_\text{masked}$ for the noun-masked model (blue) and the verb-masked model (orange) across voxels within each ROI. Values are computed by first averaging the positive drops in performance within each ROI for each subject, then averaging across the cohort. Error bars represent ± 1 standard deviation across subjects.}
 \end{figure}
 
 

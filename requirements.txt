@@ -8,3 +8,5 @@ english-words
 himalaya
 seaborn
 PyQT5
+nibabel
+pycortex

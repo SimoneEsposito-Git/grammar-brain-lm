@@ -767,39 +767,6 @@
       \verb https://www.pnas.org/doi/10.1073/pnas.2105646118
       \endverb
     \endentry
-    \entry{ADD_CITATION}{article}{}
-      \name{author}{2}{}{%
-        {{un=0,uniquepart=base,hash=5d0ddda3a367ceb26fbaeca02e391c22}{%
-           family={Smith},
-           familyi={S\bibinitperiod},
-           given={John},
-           giveni={J\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=d6cfb2b8c4b3f9440ec4642438129367}{%
-           family={Doe},
-           familyi={D\bibinitperiod},
-           given={Jane},
-           giveni={J\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{45c88cccd97ad3c93e9dfc2a1eefc27c}
-      \strng{fullhash}{45c88cccd97ad3c93e9dfc2a1eefc27c}
-      \strng{bibnamehash}{45c88cccd97ad3c93e9dfc2a1eefc27c}
-      \strng{authorbibnamehash}{45c88cccd97ad3c93e9dfc2a1eefc27c}
-      \strng{authornamehash}{45c88cccd97ad3c93e9dfc2a1eefc27c}
-      \strng{authorfullhash}{45c88cccd97ad3c93e9dfc2a1eefc27c}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Journal of Example Studies}
-      \field{number}{1}
-      \field{title}{An Example Article}
-      \field{volume}{10}
-      \field{year}{2020}
-    \endentry
     \entry{tuckute_driving_2024}{article}{}
       \name{author}{8}{}{%
         {{un=0,uniquepart=base,hash=c100bb0b90e1c209addb45ded07de9fc}{%

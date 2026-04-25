@@ -3,7 +3,7 @@ from pathlib import Path
 # Experiment configurations
 SUBJECTS = [
     "subject01",
-    #"subject02",
+    "subject02",
     "subject03",
     "subject04",
     "subject05",

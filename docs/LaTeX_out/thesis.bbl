@@ -19,6 +19,133 @@
 
 \refsection{0}
   \datalist[entry]{nyt/global//global/global}
+    \entry{bird_why_2000}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=75e5cbe55276a1b890a460a7a3589922}{%
+           family={Bird},
+           familyi={B\bibinitperiod},
+           given={Helen},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=83bc56621eaf89ee5056a417703ee5b9}{%
+           family={Howard},
+           familyi={H\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=893d4f60a06fe5dfb4dcdf940cc037a1}{%
+           family={Franklin},
+           familyi={F\bibinitperiod},
+           given={Sue},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a391a70ce518db852d95e40face5c4a6}
+      \strng{fullhash}{d771d15928eee0bbb08adbb51df9c5bd}
+      \strng{bibnamehash}{d771d15928eee0bbb08adbb51df9c5bd}
+      \strng{authorbibnamehash}{d771d15928eee0bbb08adbb51df9c5bd}
+      \strng{authornamehash}{a391a70ce518db852d95e40face5c4a6}
+      \strng{authorfullhash}{d771d15928eee0bbb08adbb51df9c5bd}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Semantic category effects, such as difficulties in naming animate things relative to inanimate objects, have been explained in terms of the relative weightings of perceptual and functional features within the semantic representations of these concepts. We argue that grammatical category deficits, such as difficulties in naming nouns relative to verbs, can be explained within the same framework. We hypothesize that verb concepts are richer in functional than sensory features and present a model of the semantic representations of animate nouns, inanimate nouns, and verbs. The model demonstrates that sensory feature damage results in a deficit for naming living things but spares verb naming, and functional feature damage results in a deficit for naming inanimate objects and verbs. We then report the assessment results of two patient groups. In accordance with the model's predictions, the “verb spared” patients were consistently worse at naming living things than inanimate objects, and their definitions of both living and nonliving items were lacking in sensory information. We conclude that damage to sensory features in semantic representations causes difficulties in naming concrete nouns relative to action verbs, and within the grammatical category of nouns, animate items will be more severely affected. Imageability was shown to be a strong predictor of naming performance in the “verb deficit” patients, and when this variable was controlled no class effect remained. Production of definitions revealed no differential damage to sensory or functional features, and no consistent effect of animacy in naming was shown. While the model suggests that verb deficits might occur in patients for whom functional features are damaged relative to sensory features, we conclude that the “verb deficit” shown in our patients (and potentially in many previously reported cases) was an artifact of the lower imageability of verbs in confrontation naming tasks.}
+      \field{day}{1}
+      \field{issn}{0093-934X}
+      \field{journaltitle}{Brain and Language}
+      \field{month}{5}
+      \field{number}{3}
+      \field{shortjournal}{Brain and Language}
+      \field{shorttitle}{Why Is a Verb Like an Inanimate Object?}
+      \field{title}{Why Is a Verb Like an Inanimate Object? Grammatical Category and Semantic Category Deficits}
+      \field{urlday}{16}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{volume}{72}
+      \field{year}{2000}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{246\bibrangedash 309}
+      \range{pages}{64}
+      \verb{doi}
+      \verb 10.1006/brln.2000.2292
+      \endverb
+      \verb{file}
+      \verb PDF:/Users/simoneesposito/Zotero/storage/PP6XX9X9/Bird et al. - 2000 - Why Is a Verb Like an Inanimate Object Grammatical Category and Semantic Category Deficits.pdf:application/pdf;ScienceDirect Snapshot:/Users/simoneesposito/Zotero/storage/4X5Z5IU3/S0093934X00922922.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S0093934X00922922
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S0093934X00922922
+      \endverb
+      \keyw{animacy,anomia,category,features,functional,imageability,Key Words: aphasia,nouns,semantics,sensory,verbs}
+    \endentry
+    \entry{caucheteux_disentangling_2021}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=60b0dee36c03f3d79184e3fe4c948885}{%
+           family={Caucheteux},
+           familyi={C\bibinitperiod},
+           given={Charlotte},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=12ebe424e1c87de156c57e8fa7683f46}{%
+           family={Gramfort},
+           familyi={G\bibinitperiod},
+           given={Alexandre},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=48f5a8ec0de95113f574f57dcddec6a5}{%
+           family={King},
+           familyi={K\bibinitperiod},
+           given={Jean-Remi},
+           giveni={J\bibinithyphendelim R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {PMLR}%
+      }
+      \strng{namehash}{7b4d20fc0084248b693173021dccbce4}
+      \strng{fullhash}{2d8abf310ffb74c1b7088c737fcabd5f}
+      \strng{bibnamehash}{2d8abf310ffb74c1b7088c737fcabd5f}
+      \strng{authorbibnamehash}{2d8abf310ffb74c1b7088c737fcabd5f}
+      \strng{authornamehash}{7b4d20fc0084248b693173021dccbce4}
+      \strng{authorfullhash}{2d8abf310ffb74c1b7088c737fcabd5f}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The activations of language transformers like {GPT}-2 have been shown to linearly map onto brain activity during speech comprehension. However, the nature of these activations remains largely unknown and presumably conflate distinct linguistic classes. Here, we propose a taxonomy to factorize the high-dimensional activations of language models into four combinatorial classes: lexical, compositional, syntactic, and semantic representations. We then introduce a statistical method to decompose, through the lens of {GPT}-2’s activations, the brain activity of 345 subjects recorded with functional magnetic resonance imaging ({fMRI}) during the listening of  4.6 hours of narrated text. The results highlight two findings. First, compositional representations recruit a more widespread cortical network than lexical ones, and encompass the bilateral temporal, parietal and prefrontal cortices. Second, contrary to previous claims, syntax and semantics are not associated with separated modules, but, instead, appear to share a common and distributed neural substrate. Overall, this study introduces a versatile framework to isolate, in the brain activity, the distributed representations of linguistic constructs.}
+      \field{booktitle}{Proceedings of the 38th International Conference on Machine Learning}
+      \field{day}{1}
+      \field{eventtitle}{International Conference on Machine Learning}
+      \field{issn}{2640-3498}
+      \field{langid}{english}
+      \field{month}{7}
+      \field{title}{Disentangling syntax and semantics in the brain with deep networks}
+      \field{urlday}{19}
+      \field{urlmonth}{2}
+      \field{urlyear}{2026}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1336\bibrangedash 1348}
+      \range{pages}{13}
+      \verb{file}
+      \verb Full Text PDF:/Users/simoneesposito/Zotero/storage/QA533HAY/Caucheteux et al. - 2021 - Disentangling syntax and semantics in the brain with deep networks.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://proceedings.mlr.press/v139/caucheteux21a.html
+      \endverb
+      \verb{url}
+      \verb https://proceedings.mlr.press/v139/caucheteux21a.html
+      \endverb
+    \endentry
     \entry{crepaldi_clustering_2013}{article}{}
       \name{author}{6}{}{%
         {{un=0,uniquepart=base,hash=6c0760312fa1f2f58aa538690d1afad2}{%
@@ -274,6 +401,72 @@
       \endverb
       \keyw{Adult,Brain Damage,Chronic,Humans,Intracranial Aneurysm,Language Disorders,Language Tests,Male,Mental Recall,Reading,Semantics,Speech Disorders,Speech Production Measurement,Verbal Behavior}
     \endentry
+    \entry{deerwester_indexing_1990}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=33824b0de08cf4a7075df4f3770a32a6}{%
+           family={Deerwester},
+           familyi={D\bibinitperiod},
+           given={Scott},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b281fab8d7a0d96509cc71fbce9567cd}{%
+           family={Dumais},
+           familyi={D\bibinitperiod},
+           given={Susan\bibnamedelima T.},
+           giveni={S\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d79a565eb206b2ecd49bc4a5b0618dfc}{%
+           family={Furnas},
+           familyi={F\bibinitperiod},
+           given={George\bibnamedelima W.},
+           giveni={G\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f5e0d418f5c3737f54ae9933b0cfc7fe}{%
+           family={Landauer},
+           familyi={L\bibinitperiod},
+           given={Thomas\bibnamedelima K.},
+           giveni={T\bibinitperiod\bibinitdelim K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7c88ecf79d79d0e2a2c3d1021ce406df}{%
+           family={Harshman},
+           familyi={H\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a2dd299301a7eaaa9b5f0155e02ad2c0}
+      \strng{fullhash}{f683779a2a2e588185c10a49f1e6a271}
+      \strng{bibnamehash}{a2dd299301a7eaaa9b5f0155e02ad2c0}
+      \strng{authorbibnamehash}{a2dd299301a7eaaa9b5f0155e02ad2c0}
+      \strng{authornamehash}{a2dd299301a7eaaa9b5f0155e02ad2c0}
+      \strng{authorfullhash}{f683779a2a2e588185c10a49f1e6a271}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Abstract A new method for automatic indexing and retrieval is described. The approach is to take advantage of implicit higher-order structure in the association of terms with documents (“semantic structure”) in order to improve the detection of relevant documents on the basis of terms found in queries. The particular technique used is singular-value decomposition, in which a large term by document matrix is decomposed into a set of ca. 100 orthogonal factors from which the original matrix can be approximated by linear combination. Documents are represented by ca. 100 item vectors of factor weights. Queries are represented as pseudo-document vectors formed from weighted combinations of terms, and documents with supra-threshold cosine values are returned. Initial tests find this completely automatic method for retrieval to be promising. © 1990 John Wiley \& Sons, Inc.}
+      \field{journaltitle}{Journal of the American Society for Information Science}
+      \field{number}{6}
+      \field{title}{Indexing by latent semantic analysis}
+      \field{volume}{41}
+      \field{year}{1990}
+      \field{pages}{391\bibrangedash 407}
+      \range{pages}{17}
+      \verb{doi}
+      \verb https://doi.org/10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9
+      \endverb
+      \verb{eprint}
+      \verb https://asistdl.onlinelibrary.wiley.com/doi/pdf/10.1002/%28SICI%291097-4571%28199009%2941%3A6%3C391%3A%3AAID-ASI1%3E3.0.CO%3B2-9
+      \endverb
+      \verb{urlraw}
+      \verb https://asistdl.onlinelibrary.wiley.com/doi/abs/10.1002/%28SICI%291097-4571%28199009%2941%3A6%3C391%3A%3AAID-ASI1%3E3.0.CO%3B2-9
+      \endverb
+      \verb{url}
+      \verb https://asistdl.onlinelibrary.wiley.com/doi/abs/10.1002/%28SICI%291097-4571%28199009%2941%3A6%3C391%3A%3AAID-ASI1%3E3.0.CO%3B2-9
+      \endverb
+    \endentry
     \entry{deniz_representation_2019}{article}{}
       \name{author}{4}{}{%
         {{un=0,uniquepart=base,hash=782dd8c41d40fc441446fb601cbd076a}{%
@@ -420,6 +613,118 @@
       \endverb
       \keyw{Computer Science - Computation and Language}
     \endentry
+    \entry{fedorenko_new_2010}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=461c2b9b36ddc2caa9f63ed4c6e53851}{%
+           family={Fedorenko},
+           familyi={F\bibinitperiod},
+           given={Elena},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a9664b7efcc6fe313e266b0ac31c3024}{%
+           family={Hsieh},
+           familyi={H\bibinitperiod},
+           given={Ping-Jui},
+           giveni={P\bibinithyphendelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=606013ba29b1cddc63ede8de40bdb595}{%
+           family={Nieto-Castañón},
+           familyi={N\bibinithyphendelim C\bibinitperiod},
+           given={Ana},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=01991f917eeabd46fc6ec01f48b94e80}{%
+           family={Whitfield-Gabrieli},
+           familyi={W\bibinithyphendelim G\bibinitperiod},
+           given={Susan},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ff93dffb93792d8617ab3b7c2b0be9c3}{%
+           family={Kanwisher},
+           familyi={K\bibinitperiod},
+           given={Nadia},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{48718ed8df58f9c678a3d81c899a76f1}
+      \strng{fullhash}{a3e098605f6cf1d9b7032191508a4a0f}
+      \strng{bibnamehash}{48718ed8df58f9c678a3d81c899a76f1}
+      \strng{authorbibnamehash}{48718ed8df58f9c678a3d81c899a76f1}
+      \strng{authornamehash}{48718ed8df58f9c678a3d81c899a76f1}
+      \strng{authorfullhash}{a3e098605f6cf1d9b7032191508a4a0f}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Neurophysiology}
+      \field{number}{2}
+      \field{title}{New method for fMRI investigations of language: defining ROIs functionally in individual subjects}
+      \field{volume}{104}
+      \field{year}{2010}
+    \endentry
+    \entry{fischl_high-resolution_1999}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=e4210e5a0305aced45740a9ccb645743}{%
+           family={Fischl},
+           familyi={F\bibinitperiod},
+           given={Bruce},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d0e37970133f5cb82bbcf207d47b22d9}{%
+           family={Sereno},
+           familyi={S\bibinitperiod},
+           given={Martin\bibnamedelima I.},
+           giveni={M\bibinitperiod\bibinitdelim I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e771d93b7f193c93eb2f6cc980f8b770}{%
+           family={Tootell},
+           familyi={T\bibinitperiod},
+           given={Roger\bibnamedelima B.H.},
+           giveni={R\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f2139ff0c90c2e8b9eef57b68cad07e3}{%
+           family={Dale},
+           familyi={D\bibinitperiod},
+           given={Anders\bibnamedelima M.},
+           giveni={A\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{afcbe227c3adc6239c6f90e03040bb6d}
+      \strng{fullhash}{60904c30a2e9fb543313c75fd294c046}
+      \strng{bibnamehash}{afcbe227c3adc6239c6f90e03040bb6d}
+      \strng{authorbibnamehash}{afcbe227c3adc6239c6f90e03040bb6d}
+      \strng{authornamehash}{afcbe227c3adc6239c6f90e03040bb6d}
+      \strng{authorfullhash}{60904c30a2e9fb543313c75fd294c046}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Abstract The neurons of the human cerebral cortex are arranged in a highly folded sheet, with the majority of the cortical surface area buried in folds. Cortical maps are typically arranged with a topography oriented parallel to the cortical surface. Despite this unambiguous sheetlike geometry, the most commonly used coordinate systems for localizing cortical features are based on 3-D stereotaxic coordinates rather than on position relative to the 2-D cortical sheet. In order to address the need for a more natural surface-based coordinate system for the cortex, we have developed a means for generating an average folding pattern across a large number of individual subjects as a function on the unit sphere and of nonrigidly aligning each individual with the average. This establishes a spherical surface-based coordinate system that is adapted to the folding pattern of each individual subject, allowing for much higher localization accuracy of structural and functional features of the human brain. Hum. Brain Mapping 8:272–284, 1999. © 1999 Wiley-Liss, Inc.}
+      \field{journaltitle}{Human Brain Mapping}
+      \field{number}{4}
+      \field{title}{High-resolution intersubject averaging and a coordinate system for the cortical surface}
+      \field{volume}{8}
+      \field{year}{1999}
+      \field{pages}{272\bibrangedash 284}
+      \range{pages}{13}
+      \verb{doi}
+      \verb https://doi.org/10.1002/(SICI)1097-0193(1999)8:4<272::AID-HBM10>3.0.CO;2-4
+      \endverb
+      \verb{eprint}
+      \verb https://onlinelibrary.wiley.com/doi/pdf/10.1002/%28SICI%291097-0193%281999%298%3A4%3C272%3A%3AAID-HBM10%3E3.0.CO%3B2-4
+      \endverb
+      \verb{urlraw}
+      \verb https://onlinelibrary.wiley.com/doi/abs/10.1002/%28SICI%291097-0193%281999%298%3A4%3C272%3A%3AAID-HBM10%3E3.0.CO%3B2-4
+      \endverb
+      \verb{url}
+      \verb https://onlinelibrary.wiley.com/doi/abs/10.1002/%28SICI%291097-0193%281999%298%3A4%3C272%3A%3AAID-HBM10%3E3.0.CO%3B2-4
+      \endverb
+      \keyw{intersubject averaging,coordinate systems,atlas}
+    \endentry
     \entry{huth_natural_2016}{article}{}
       \name{author}{5}{}{%
         {{un=1,uniquepart=given,hash=05d42f05e1c1b0db4e4636f235e44891}{%
@@ -542,6 +847,199 @@
       \endverb
       \verb{url}
       \verb https://papers.nips.cc/paper_files/paper/2018/hash/f471223d1a1614b58a7dc45c9d01df19-Abstract.html
+      \endverb
+    \endentry
+    \entry{lund_producing_1996}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=1758118c000491453ab0f339ac62fc24}{%
+           family={Lund},
+           familyi={L\bibinitperiod},
+           given={Kevin},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ebde26a2d519a6285ad7536023d4189d}{%
+           family={Burgess},
+           familyi={B\bibinitperiod},
+           given={Curt},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{271456849d5fffb9559283e3f93c95c7}
+      \strng{fullhash}{271456849d5fffb9559283e3f93c95c7}
+      \strng{bibnamehash}{271456849d5fffb9559283e3f93c95c7}
+      \strng{authorbibnamehash}{271456849d5fffb9559283e3f93c95c7}
+      \strng{authornamehash}{271456849d5fffb9559283e3f93c95c7}
+      \strng{authorfullhash}{271456849d5fffb9559283e3f93c95c7}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{A procedure that processes a corpus of text and produces numeric vectors containing information about its meanings for each word is presented. This procedure is applied to a large corpus of natural language text taken from Usenet, and the resulting vectors are examined to determine what information is contained within them. These vectors provide the coordinates in a high-dimensional space in which word relationships can be analyzed. Analyses of both vector similarity and multidimensional scaling demonstrate that there is significant semantic information carried in the vectors. A comparison of vector similarity with human reaction times in a single-word priming experiment is presented. These vectors provide the basis for a representational model of semantic memory, hyperspace analogue to language ({HAL}).}
+      \field{day}{1}
+      \field{issn}{1532-5970}
+      \field{journaltitle}{Behavior Research Methods, Instruments, \& Computers}
+      \field{month}{6}
+      \field{number}{2}
+      \field{shortjournal}{Behavior Research Methods, Instruments, \& Computers}
+      \field{title}{Producing high-dimensional semantic spaces from lexical co-occurrence}
+      \field{volume}{28}
+      \field{year}{1996}
+      \field{dateera}{ce}
+      \field{pages}{203\bibrangedash 208}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.3758/BF03204766
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.3758/BF03204766
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.3758/BF03204766
+      \endverb
+    \endentry
+    \entry{mitchell_predicting_2008}{article}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=d331eeb7f00e650950ccadcb9c47efec}{%
+           family={Mitchell},
+           familyi={M\bibinitperiod},
+           given={Tom\bibnamedelima M.},
+           giveni={T\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=643a65731400c62face46b79fa964b4c}{%
+           family={Shinkareva},
+           familyi={S\bibinitperiod},
+           given={Svetlana\bibnamedelima V.},
+           giveni={S\bibinitperiod\bibinitdelim V\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ddbd2edc7e895891133d5d552671f1f1}{%
+           family={Carlson},
+           familyi={C\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3280323ed230b928937252bb24e21229}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Kai-Min},
+           giveni={K\bibinithyphendelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=155b6733ea0900ac37ade065638eb166}{%
+           family={Malave},
+           familyi={M\bibinitperiod},
+           given={Vicente\bibnamedelima L.},
+           giveni={V\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5c215b142d277fc6ba7bf7196709a7a4}{%
+           family={Mason},
+           familyi={M\bibinitperiod},
+           given={Robert\bibnamedelima A.},
+           giveni={R\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6006c71105c1133c69eafebb4196ca46}{%
+           family={Just},
+           familyi={J\bibinitperiod},
+           given={Marcel\bibnamedelima Adam},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{8bbc63f0e06cddebc9b6e440e5d27e86}
+      \strng{fullhash}{3c9984fd90d9a5da3a0f96a5eaced9eb}
+      \strng{bibnamehash}{8bbc63f0e06cddebc9b6e440e5d27e86}
+      \strng{authorbibnamehash}{8bbc63f0e06cddebc9b6e440e5d27e86}
+      \strng{authornamehash}{8bbc63f0e06cddebc9b6e440e5d27e86}
+      \strng{authorfullhash}{3c9984fd90d9a5da3a0f96a5eaced9eb}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The question of how the human brain represents conceptual knowledge has been debated in many scientific fields. Brain imaging studies have shown that different spatial patterns of neural activation are associated with thinking about different semantic categories of pictures and words (for example, tools, buildings, and animals). We present a computational model that predicts the functional magnetic resonance imaging (fMRI) neural activation associated with words for which fMRI data are not yet available. This model is trained with a combination of data from a trillion-word text corpus and observed fMRI data associated with viewing several dozen concrete nouns. Once trained, the model predicts fMRI activation for thousands of other concrete nouns in the text corpus, with highly significant accuracies over the 60 nouns for which we currently have fMRI data.}
+      \field{journaltitle}{Science}
+      \field{number}{5880}
+      \field{title}{Predicting Human Brain Activity Associated with the Meanings of Nouns}
+      \field{volume}{320}
+      \field{year}{2008}
+      \field{pages}{1191\bibrangedash 1195}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1126/science.1152876
+      \endverb
+      \verb{eprint}
+      \verb https://www.science.org/doi/pdf/10.1126/science.1152876
+      \endverb
+      \verb{urlraw}
+      \verb https://www.science.org/doi/abs/10.1126/science.1152876
+      \endverb
+      \verb{url}
+      \verb https://www.science.org/doi/abs/10.1126/science.1152876
+      \endverb
+    \endentry
+    \entry{negi_optimizing_2025}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=a0582f3237c8b90e75007ea9f1d42bdb}{%
+           family={Negi},
+           familyi={N\bibinitperiod},
+           given={Anuja},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ffb3902e4d92a2467520cce51ba5c208}{%
+           family={Tseng},
+           familyi={T\bibinitperiod},
+           given={Christine},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9f6543b7881d1807423f2b6d9eb303ad}{%
+           family={Nunez-Elizalde},
+           familyi={N\bibinithyphendelim E\bibinitperiod},
+           given={Anwar\bibnamedelima O},
+           giveni={A\bibinitperiod\bibinitdelim O\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=53305f144eae1c9cd50019de9ff7326c}{%
+           family={Gong},
+           familyi={G\bibinitperiod},
+           given={Xue\bibnamedelima Lily},
+           giveni={X\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=782dd8c41d40fc441446fb601cbd076a}{%
+           family={Deniz},
+           familyi={D\bibinitperiod},
+           given={Fatma},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Cold Spring Harbor Laboratory}%
+      }
+      \strng{namehash}{57b986460475fb2398d81b80692aa806}
+      \strng{fullhash}{177f11cd83b09344cb192e1b3cba4f8d}
+      \strng{bibnamehash}{57b986460475fb2398d81b80692aa806}
+      \strng{authorbibnamehash}{57b986460475fb2398d81b80692aa806}
+      \strng{authornamehash}{57b986460475fb2398d81b80692aa806}
+      \strng{authorfullhash}{177f11cd83b09344cb192e1b3cba4f8d}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Recent studies have shown that contextual semantic embeddings from language models can accurately predict human brain activity during language processing. However, most studies use contextual embeddings with the same context length and model layer for all voxels, potentially overlooking meaningful variations across the brain. In this study, we investigate whether optimizing contextual embeddings for individual voxels improves their ability to predict brain activity during reading. We optimize embeddings for each voxel by selecting the best-predicting context length, model layer, or both. We perform this optimization with two different types of stimuli (isolated sentences and narratives), and quantify the performance gains of optimized embeddings over standard fixed embeddings. Our results show that voxel-specific optimization substantially improves the prediction accuracy of contextual semantic embeddings. These findings demonstrate that voxel-specific contextual tuning provides a more accurate and nuanced account of how the contextual semantic information is represented across the cortex.Competing Interest StatementThe authors have declared no competing interest.German Federal Ministry of Education and Research, 01GQ1906European Research Council, 101042567}
+      \field{journaltitle}{bioRxiv}
+      \field{title}{Optimizing Language Model Embeddings to Voxel Activity Improves Brain Activity Predictions}
+      \field{year}{2025}
+      \verb{doi}
+      \verb 10.1101/2025.09.18.676935
+      \endverb
+      \verb{eprint}
+      \verb https://www.biorxiv.org/content/early/2025/11/13/2025.09.18.676935.full.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.biorxiv.org/content/early/2025/11/13/2025.09.18.676935
+      \endverb
+      \verb{url}
+      \verb https://www.biorxiv.org/content/early/2025/11/13/2025.09.18.676935
       \endverb
     \endentry
     \entry{nunez_voxelwise_2019}{article}{}
@@ -767,6 +1265,237 @@
       \verb https://www.pnas.org/doi/10.1073/pnas.2105646118
       \endverb
     \endentry
+    \entry{shapiro_representation_2003}{article}{}
+      \name{author}{2}{}{%
+        {{un=1,uniquepart=given,hash=7c38529c201a5b6fe7883314d39b64c5}{%
+           family={Shapiro},
+           familyi={S\bibinitperiod},
+           given={Kevin},
+           giveni={K\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=92d05f5d386a7f8a618b43d747591049}{%
+           family={Caramazza},
+           familyi={C\bibinitperiod},
+           given={Alfonso},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{3dd21fa2b3395dc315ea12d33199cc5f}
+      \strng{fullhash}{3dd21fa2b3395dc315ea12d33199cc5f}
+      \strng{bibnamehash}{3dd21fa2b3395dc315ea12d33199cc5f}
+      \strng{authorbibnamehash}{3dd21fa2b3395dc315ea12d33199cc5f}
+      \strng{authornamehash}{3dd21fa2b3395dc315ea12d33199cc5f}
+      \strng{authorfullhash}{3dd21fa2b3395dc315ea12d33199cc5f}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{day}{1}
+      \field{issn}{1364-6613, 1879-307X}
+      \field{journaltitle}{Trends in Cognitive Sciences}
+      \field{month}{5}
+      \field{number}{5}
+      \field{shortjournal}{Trends in Cognitive Sciences}
+      \field{urlday}{19}
+      \field{urlmonth}{2}
+      \field{urlyear}{2026}
+      \field{volume}{7}
+      \field{year}{2003}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{201\bibrangedash 206}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1016/S1364-6613(03)00060-3
+      \endverb
+      \verb{file}
+      \verb Full Text PDF:/Users/simoneesposito/Zotero/storage/N4RZHG4C/Shapiro and Caramazza - 2003 - The representation of grammatical categories in the brain.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.cell.com/trends/cognitive-sciences/abstract/S1364-6613(03)00060-3
+      \endverb
+      \verb{url}
+      \verb https://www.cell.com/trends/cognitive-sciences/abstract/S1364-6613(03)00060-3
+      \endverb
+    \endentry
+    \entry{shapiro_dissociating_2005}{article}{}
+      \name{author}{8}{}{%
+        {{un=1,uniquepart=given,hash=6b582260fcc1f3de5ca92c63915f9d69}{%
+           family={Shapiro},
+           familyi={S\bibinitperiod},
+           given={Kevin\bibnamedelima A.},
+           giveni={K\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=c84b507d9ee8413707ee39a2e2152cee}{%
+           family={Mottaghy},
+           familyi={M\bibinitperiod},
+           given={Felix\bibnamedelima M.},
+           giveni={F\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=eca5233a7769f79de79384c259d5432d}{%
+           family={Schiller},
+           familyi={S\bibinitperiod},
+           given={Niels\bibnamedelima O.},
+           giveni={N\bibinitperiod\bibinitdelim O\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=18c966865679a322b8a1deebd6194976}{%
+           family={Poeppel},
+           familyi={P\bibinitperiod},
+           given={Thorsten\bibnamedelima D.},
+           giveni={T\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b587d4996fcf6669cb68c3379284e584}{%
+           family={Flüß},
+           familyi={F\bibinitperiod},
+           given={Michael\bibnamedelima O.},
+           giveni={M\bibinitperiod\bibinitdelim O\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0ec450d7593d12433ad351adc05ed2bf}{%
+           family={Müller},
+           familyi={M\bibinitperiod},
+           given={H.\bibnamedelimi -W.},
+           giveni={H\bibinitperiod\bibinitdelim \bibinithyphendelim \bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=92d05f5d386a7f8a618b43d747591049}{%
+           family={Caramazza},
+           familyi={C\bibinitperiod},
+           given={Alfonso},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=75334a48519218b0e4698e5b7a4ef402}{%
+           family={Krause},
+           familyi={K\bibinitperiod},
+           given={Bernd\bibnamedelima J.},
+           giveni={B\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{332e9a21a47df759120b65b49c00b222}
+      \strng{fullhash}{e699f04dc2236796b34883f4138bcb5a}
+      \strng{bibnamehash}{332e9a21a47df759120b65b49c00b222}
+      \strng{authorbibnamehash}{332e9a21a47df759120b65b49c00b222}
+      \strng{authornamehash}{332e9a21a47df759120b65b49c00b222}
+      \strng{authorfullhash}{e699f04dc2236796b34883f4138bcb5a}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Dissociations in the ability to produce words of different grammatical categories are well established in neuropsychology but have not been corroborated fully with evidence from brain imaging. Here we report on a {PET} study designed to reveal the anatomical correlates of grammatical processes involving nouns and verbs. German-speaking subjects were asked to produce either plural and singular nouns, or first-person plural and singular verbs. Verbs, relative to nouns, activated a left frontal cortical network, while the opposite contrast (nouns–verbs) showed greater activation in temporal regions bilaterally. Similar patterns emerged when subjects performed the task with pseudowords used as nouns or as verbs. These results converge with findings from lesion studies and suggest that grammatical category is an important dimension of organization for knowledge of language in the brain.}
+      \field{day}{15}
+      \field{issn}{1053-8119}
+      \field{journaltitle}{{NeuroImage}}
+      \field{month}{2}
+      \field{number}{4}
+      \field{shortjournal}{{NeuroImage}}
+      \field{title}{Dissociating neural correlates for nouns and verbs}
+      \field{urlday}{26}
+      \field{urlmonth}{2}
+      \field{urlyear}{2026}
+      \field{volume}{24}
+      \field{year}{2005}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1058\bibrangedash 1067}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1016/j.neuroimage.2004.10.015
+      \endverb
+      \verb{file}
+      \verb Full Text:/Users/simoneesposito/Zotero/storage/YWYEQ58S/Shapiro et al. - 2005 - Dissociating neural correlates for nouns and verbs.pdf:application/pdf;ScienceDirect Snapshot:/Users/simoneesposito/Zotero/storage/7NF4GMIU/S1053811904006226.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S1053811904006226
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S1053811904006226
+      \endverb
+      \keyw{Neural correlates,Noun,Verb}
+    \endentry
+    \entry{siri_neural_2007}{article}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=1daba1a5791ec85939d1c27fac078dd5}{%
+           family={Siri},
+           familyi={S\bibinitperiod},
+           given={Simona},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ab5c65da58535b269c62eb36323ebb68}{%
+           family={Tettamanti},
+           familyi={T\bibinitperiod},
+           given={Marco},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e0f121a1d1041f3f0fdcfc3912848357}{%
+           family={Cappa},
+           familyi={C\bibinitperiod},
+           given={Stefano\bibnamedelima F.},
+           giveni={S\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=73059609b4dcb7526c9e91a82ebca91a}{%
+           family={Rosa},
+           familyi={R\bibinitperiod},
+           given={Pasquale\bibnamedelima Della},
+           giveni={P\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bd719c99d9459420b71d374f38c1c9b7}{%
+           family={Saccuman},
+           familyi={S\bibinitperiod},
+           given={Cristina},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=96709be88d977df89d9b6d9d806df229}{%
+           family={Scifo},
+           familyi={S\bibinitperiod},
+           given={Paola},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5e27bdc24fbf7ddf49e47c6768f3883d}{%
+           family={Vigliocco},
+           familyi={V\bibinitperiod},
+           given={Gabriella},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{c8f215c16ef71ee40ad6a8d556bd072d}
+      \strng{fullhash}{26ddf7f43f50010bdcb8507fbb61cf9a}
+      \strng{bibnamehash}{c8f215c16ef71ee40ad6a8d556bd072d}
+      \strng{authorbibnamehash}{c8f215c16ef71ee40ad6a8d556bd072d}
+      \strng{authornamehash}{c8f215c16ef71ee40ad6a8d556bd072d}
+      \strng{authorfullhash}{26ddf7f43f50010bdcb8507fbb61cf9a}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Grammatical class is a fundamental property of language, and all natural languages distinguish between nouns and verbs. Brain activation studies have provided conflicting evidence concerning the neural substrates of noun and verb processing. A major limitation of many previous imaging studies is that they did not disentangle the impact of grammatical class from the differences in semantic correlates. In order to tease apart the role of semantic and grammatical factors, we performed a functional magnetic resonance imaging study presenting Italian speakers with pictures of events and asked them to name them as 1) Infinitive Verb (e.g., mangiare [to eat]); 2) Inflected Verb (e.g., mangia [she/he eats]); and 3) Action Noun (e.g., mangiata [the eating]). We did not find any verb-specific activation. However, reliable left inferior frontal gyrus (IFG) activations were found when contrasting the Action Noun with the Infinitive Verb condition. A second-level analysis indicated then that activation in left IFG was greatest for Action Nouns, intermediate for Inflected Verbs, and least for Infinitive Verbs. We conclude that, when all other factors are controlled, nouns and verbs are processed by a common neural system. In the present case, differences in left IFG activation emerge as a consequence of increasing linguistic and/or general processing demands.}
+      \field{issn}{1047-3211}
+      \field{journaltitle}{Cerebral Cortex}
+      \field{month}{05}
+      \field{number}{1}
+      \field{title}{The Neural Substrate of Naming Events: Effects of Processing Demands but not of Grammatical Class}
+      \field{volume}{18}
+      \field{year}{2007}
+      \field{pages}{171\bibrangedash 177}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1093/cercor/bhm043
+      \endverb
+      \verb{eprint}
+      \verb https://academic.oup.com/cercor/article-pdf/18/1/171/915307/bhm043.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1093/cercor/bhm043
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1093/cercor/bhm043
+      \endverb
+    \endentry
     \entry{tuckute_driving_2024}{article}{}
       \name{author}{8}{}{%
         {{un=0,uniquepart=base,hash=c100bb0b90e1c209addb45ded07de9fc}{%
@@ -846,6 +1575,77 @@
       \verb 10.1038/s41562-023-01783-7
       \endverb
       \keyw{Brain,Brain Mapping,Comprehension,Humans,Language,Linguistics}
+    \endentry
+    \entry{tyler_neural_2004}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=105b7c5e06bfc79969a58f0d1369369d}{%
+           family={Tyler},
+           familyi={T\bibinitperiod},
+           given={L.\bibnamedelimi K},
+           giveni={L\bibinitperiod\bibinitdelim K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0c57cd752d5279901a9732ebffc7a36f}{%
+           family={Bright},
+           familyi={B\bibinitperiod},
+           given={P},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1901c2d7b5f3464cb805ae78d963f7a5}{%
+           family={Fletcher},
+           familyi={F\bibinitperiod},
+           given={P},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cbd1a34d49d0efe34d16821ebd9a1b43}{%
+           family={Stamatakis},
+           familyi={S\bibinitperiod},
+           given={E.\bibnamedelimi A},
+           giveni={E\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{fe7f0db4749ff4499bda66fb023a1a39}
+      \strng{fullhash}{7c28c631176bbf4a1308eeb7e97f7c97}
+      \strng{bibnamehash}{fe7f0db4749ff4499bda66fb023a1a39}
+      \strng{authorbibnamehash}{fe7f0db4749ff4499bda66fb023a1a39}
+      \strng{authornamehash}{fe7f0db4749ff4499bda66fb023a1a39}
+      \strng{authorfullhash}{7c28c631176bbf4a1308eeb7e97f7c97}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Dissociations of nouns and verbs following brain damage have been interpreted as evidence for distinct neural substrates underlying different aspects of the language system. Some neuroimaging studies have supported this claim by finding neural differentiation for nouns and verbs [Brain 122 (1999) 2337] while others have argued against neural specialisation [Brain 119 (1996) 159; Brain 124 (2001) 1619]. We suggest that one reason why these inconsistencies may have arisen is because the morphological structure of nouns and verbs has been ignored. In an event-related functional magnetic resonance imaging ({fMRI}) study we test the hypothesis that the neural processing of nouns and verbs differs when they are inflected. We contrasted the processing of regularly inflected nouns (dogs) with regularly inflected verbs (hitting), and found that the {LIFG} was more strongly activated in processing regularly inflected verbs compared to regularly inflected nouns. Moreover, regions of {LIFG} that were more active in the {fMRI} study for inflected verbs partially overlapped with the lesions in patients who have particular problems with verb morphology. Taken together with previous studies, these results suggest that noun and verb stems do not differ in terms of their representation, but when verbs are morphologically complex they differentially engage those neural systems which are involved in processes of morpho-phonology and syntax.}
+      \field{day}{1}
+      \field{issn}{0028-3932}
+      \field{journaltitle}{Neuropsychologia}
+      \field{month}{1}
+      \field{number}{4}
+      \field{shortjournal}{Neuropsychologia}
+      \field{shorttitle}{Neural processing of nouns and verbs}
+      \field{title}{Neural processing of nouns and verbs: the role of inflectional morphology}
+      \field{urlday}{19}
+      \field{urlmonth}{2}
+      \field{urlyear}{2026}
+      \field{volume}{42}
+      \field{year}{2004}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{512\bibrangedash 523}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1016/j.neuropsychologia.2003.10.001
+      \endverb
+      \verb{file}
+      \verb ScienceDirect Snapshot:/Users/simoneesposito/Zotero/storage/WXEBKDCR/S0028393203002410.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S0028393203002410
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S0028393203002410
+      \endverb
+      \keyw{{fMRI},Inflection,Nouns,Verbs}
     \endentry
     \entry{vaswani_attention_2023}{misc}{}
       \name{author}{8}{}{%
@@ -1018,6 +1818,104 @@
       \verb https://www.sciencedirect.com/science/article/pii/S0149763410000916
       \endverb
       \keyw{Aphasia,Cognitive neuroscience,Event related potentials,Grammatical class,Imaging,Language,Noun–verb,Transcranial magnetic stimulation}
+    \endentry
+    \entry{yokoyama_cortical_2006}{article}{}
+      \name{author}{10}{}{%
+        {{un=0,uniquepart=base,hash=fe6a5d0367b855c285940ff5cb255212}{%
+           family={Yokoyama},
+           familyi={Y\bibinitperiod},
+           given={Satoru},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6e47a9c2073d341469fa990835ecfb20}{%
+           family={Miyamoto},
+           familyi={M\bibinitperiod},
+           given={Tadao},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=57c2c80b91526c10ef39162eb3ddf575}{%
+           family={Riera},
+           familyi={R\bibinitperiod},
+           given={Jorge},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8c8fa8ebb7f1f544ae92befa78b2a833}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Jungho},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=793ebf20aa83e1e097e464f2efc893c3}{%
+           family={Akitsuki},
+           familyi={A\bibinitperiod},
+           given={Yuko},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6349a0a92ba6b046ed8f21ad8285b58c}{%
+           family={Iwata},
+           familyi={I\bibinitperiod},
+           given={Kazuki},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cc3b22fd22f9d1fedd39d7e68eeef738}{%
+           family={Yoshimoto},
+           familyi={Y\bibinitperiod},
+           given={Kei},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a1d7fd9ce178ed56db8b7663a0893841}{%
+           family={Horie},
+           familyi={H\bibinitperiod},
+           given={Kaoru},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3b1952afc94230d011756aea9b5e04cf}{%
+           family={Sato},
+           familyi={S\bibinitperiod},
+           given={Shigeru},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=09def354f7c5f9f2b6c2c235a6c94170}{%
+           family={Kawashima},
+           familyi={K\bibinitperiod},
+           given={Ryuta},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{c0889e7a620cd9ea222d8e87b483e7e8}
+      \strng{fullhash}{082e99e886de62c4a149ccde17bd8797}
+      \strng{bibnamehash}{c0889e7a620cd9ea222d8e87b483e7e8}
+      \strng{authorbibnamehash}{c0889e7a620cd9ea222d8e87b483e7e8}
+      \strng{authornamehash}{c0889e7a620cd9ea222d8e87b483e7e8}
+      \strng{authorfullhash}{082e99e886de62c4a149ccde17bd8797}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In this study, we investigated two aspects of verb processing: first, whether verbs are processed differently from nouns; and second, how verbal morphology is processed. For this purpose, we used functional magnetic resonance imaging to compare three types of lexical processing in Japanese: the processing of nouns, unmarked active verbs, and inflected passive verbs. Twenty-eight healthy subjects were shown a lexical item and asked to judge whether the presented item was a legal word. Although all three conditions activated the bilateral inferior frontal, occipital, the left middle, and inferior temporal cortices, we found differences in the degree of activation for each condition. Verbs elicited greater activation in the left middle temporal gyrus than nouns, and inflected verbs showed greater activation in the left inferior frontal gyrus than unmarked verbs. This study demonstrates that although verbs are basically processed in the same cortical network as nouns, nouns and verbs elicit different degrees of activation due to the cognitive demands involved in lexical semantic processing. Furthermore, this study also shows that the left inferior frontal cortex is related to the processing of verbal inflectional morphology.}
+      \field{issn}{0898-929X}
+      \field{journaltitle}{Journal of Cognitive Neuroscience}
+      \field{month}{08}
+      \field{number}{8}
+      \field{title}{Cortical Mechanisms Involved in the Processing of Verbs: An fMRI Study}
+      \field{volume}{18}
+      \field{year}{2006}
+      \field{pages}{1304\bibrangedash 1313}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1162/jocn.2006.18.8.1304
+      \endverb
+      \verb{eprint}
+      \verb https://direct.mit.edu/jocn/article-pdf/18/8/1304/1935948/jocn.2006.18.8.1304.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1162/jocn.2006.18.8.1304
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1162/jocn.2006.18.8.1304
+      \endverb
     \endentry
   \enddatalist
 \endrefsection

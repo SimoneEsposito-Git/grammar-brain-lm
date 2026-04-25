@@ -108,7 +108,6 @@ class FlatmapMapper:
         img = (np.nan * np.ones(pixmask.shape)).astype(voxels.dtype)
         mimg = (np.nan * np.ones(badmask.shape)).astype(voxels.dtype)
         mimg[badmask] = (pixmap * voxels.ravel())[badmask].astype(mimg.dtype)
-        return mimg
         img[pixmask] = mimg
         return img.T[::-1]
     
@@ -202,10 +201,7 @@ class ContrastStrategy(ColorStrategy):
     def __init__(self, vmin: float = -0.5, vmax: float = 0.5):
         self.vmin = vmin
         self.vmax = vmax
-        self.cmap = mcolors.LinearSegmentedColormap.from_list(
-            "blue_black_orange",
-            ["#0082FF", "#000000", "#FF8200"]
-        )
+        self.cmap = plt.cm.coolwarm
     
     def __call__(self, flatmaps: List[np.ndarray], background: Optional[np.ndarray] = None, **kwargs) -> np.ndarray:
         contrast = flatmaps[0] - flatmaps[1]
@@ -213,7 +209,7 @@ class ContrastStrategy(ColorStrategy):
         norm = plt.Normalize(vmin=self.vmin, vmax=self.vmax, clip=True)
         rgb = cmap(norm(contrast))[..., :3]
         if background is not None:
-            rgb[np.isnan(contrast)] = background[np.isnan(contrast)]
+            rgb[np.isnan(contrast)] = background[np.isnan(contrast)]*0.7
         return rgb
     
     def get_legend_type(self) -> str:
@@ -630,7 +626,7 @@ class FlatmapPlotter:
             flatmaps = [smooth_flatmap(fm, sigma=self.config.sigma) for fm in flatmaps]
         
         # Generate colors
-        
+        print(flatmaps[0])
         # Generate colors
         background = self.mapper.get_brain_bkg(background_color)
         rgb_map = strategy(flatmaps, background=background, **kwargs)

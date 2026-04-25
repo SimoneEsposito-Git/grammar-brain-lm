@@ -7,7 +7,7 @@ import nibabel as nib
 from data_loading.file_io import load_results
 from data_loading import config
 
-language_rois = ['IFG', 'IFGOrb', 'MFG', 'PTL', 'ATL', 'AG', 'PCC', 'dmPFC']
+language_rois = ['IFG', 'PCC', 'ATL', 'PTL', 'MFG', 'dmPFC', 'AG', 'IFGOrb']
 
 def load_sparse_array(fname, varname):
     """Load a numpy sparse array from an hdf file"""
@@ -26,11 +26,21 @@ def get_significant_voxels(results, mode):
     return sig
 
 def map_data_to_fsaverage(voxels: np.ndarray, map_file: str) -> np.ndarray:
-    """Convert voxel data to flatmap space"""
     pixmap = load_sparse_array(map_file, "voxel_to_fsaverage")
     badmask = np.array(pixmap.sum(1) > 0).ravel()
+    
+    # Replace NaN with 0 before sparse multiply, then restore NaN afterwards
+    voxels_safe = np.nan_to_num(voxels.ravel(), nan=0.0)
+    nan_mask = np.isnan(voxels.ravel())
+    
     mimg = (np.nan * np.ones(badmask.shape)).astype(voxels.dtype)
-    mimg[badmask] = (pixmap * voxels.ravel())[badmask].astype(mimg.dtype)
+    mapped = (pixmap * voxels_safe)[badmask]
+    
+    # Check if any contributing source voxels were NaN; if so, mark destination as NaN
+    nan_spread = (pixmap * nan_mask.astype(float))[badmask] > 0
+    mapped[nan_spread] = np.nan
+    
+    mimg[badmask] = mapped.astype(mimg.dtype)
     return mimg
 
 def get_language_mask(roi: str, return_fs7: bool = True) -> np.ndarray:
@@ -45,34 +55,33 @@ def get_language_mask(roi: str, return_fs7: bool = True) -> np.ndarray:
                     'dmPFC': [69, 62, 72]}
 
     if return_fs7:
-        language_mask = []
         path_to_lh_annot = config.DATA_DIR/'fsaverage'/'lh.HCP-MMP1.annot'
         path_to_rh_annot = config.DATA_DIR/'fsaverage'/'rh.HCP-MMP1.annot'
         lh_annot = nib.freesurfer.io.read_annot(path_to_lh_annot)
         rh_annot = nib.freesurfer.io.read_annot(path_to_rh_annot)
-        language_mask = np.zeros(327684, dtype=bool)
-        # if roi == 'lh':
-        #     language_mask[:163842] = 1
-        #     return language_mask
-        # if roi == 'rh':
-        #     language_mask[163842:] = 1
-        #     return language_mask
-        
+
+        n_lh = len(lh_annot[0])
+        n_rh = len(rh_annot[0])
+        language_mask = np.zeros(n_lh + n_rh, dtype=bool)  # was hardcoded 327684
+
         for index in roi_indices[roi]:
             language_mask[np.where(lh_annot[0] == index)[0]] = 1
-            language_mask[163842+np.where(rh_annot[0] == index)[0]] = 1
+            language_mask[n_lh + np.where(rh_annot[0] == index)[0]] = 1
         return language_mask
-    
+
     path_to_lh = config.DATA_DIR/'fsaverage'/'tpl-fsaverage6_hemi-L_desc-MMP_dseg.label.gii'
     path_to_rh = config.DATA_DIR/'fsaverage'/'tpl-fsaverage6_hemi-R_desc-MMP_dseg.label.gii'
 
     lh = nib.load(path_to_lh)
     rh = nib.load(path_to_rh)
 
-    language_mask = np.zeros(327684, dtype=bool)
+    n_lh = len(lh.darrays[0].data)
+    n_rh = len(rh.darrays[0].data)
+    language_mask = np.zeros(n_lh + n_rh, dtype=bool)  # was hardcoded 327684
+
     for index in roi_indices[roi]:
         language_mask[np.where(lh.darrays[0].data == index)[0]] = 1
-        language_mask[163842+np.where(rh.darrays[0].data == index)[0]] = 1
+        language_mask[n_lh + np.where(rh.darrays[0].data == index)[0]] = 1
 
     return language_mask
 
@@ -91,7 +100,7 @@ def compute_delta(noun: np.ndarray, verb: np.ndarray, baseline: np.ndarray, mask
     dnoun_pos = dnoun[dnoun > 0]
     dverb_pos = dverb[dverb > 0]
 
-    n_valid = max(len(dnoun_pos), len(dverb_pos))
+    n_valid = min(len(dnoun_pos), len(dverb_pos))
 
     dnoun_mean = float(np.nanmean(dnoun_pos)) if len(dnoun_pos) > 0 else np.nan
     dverb_mean = float(np.nanmean(dverb_pos)) if len(dverb_pos) > 0 else np.nan
@@ -112,9 +121,7 @@ def plot_2d_dominance(stats_all: dict, n_subjects: int,
     noun_color = "#4878C8"
     verb_color = "#E07A30"
 
-    combined_rois = set()
-    for mod_stats in stats_all.values():
-        combined_rois.update(mod_stats.keys())
+    combined_rois = [roi for roi in language_rois if any(roi in mod_stats for mod_stats in stats_all.values())]
 
     # ── Build grouped ROI order ──────────────────────────────────────────────
     if roi_groups:
@@ -125,12 +132,27 @@ def plot_2d_dominance(stats_all: dict, n_subjects: int,
             groups_to_plot["Other"] = leftover
     else:
         groups_to_plot = {"": list(combined_rois)}
-
+    
+    def roi_sort_key(roi):
+        """Mean absolute noun-verb gap across all modalities. NaN-safe."""
+        gaps = []
+        for mod_stats in stats_all.values():
+            if roi not in mod_stats:
+                continue
+            entry = mod_stats[roi]
+            dn, dv = entry["dnoun_mean"], entry["dverb_mean"]
+            if not np.isnan(dn) and not np.isnan(dv):
+                gaps.append(abs(dn - dv))
+        return -np.mean(gaps) if gaps else 0.0  # negative so largest gap sorts first
+    
     ordered_rois  = []
     group_headers = {}
-
+    
     for group_label, members in groups_to_plot.items():
-        present = [r for r in members if r in combined_rois]
+        present = sorted(
+            [r for r in members if r in combined_rois],
+            key=roi_sort_key,
+        )
         if not present:
             continue
         if ordered_rois:
@@ -215,8 +237,8 @@ def plot_2d_dominance(stats_all: dict, n_subjects: int,
                             markersize=5, zorder=2)
 
         ax.set_ylim(-0.8, total_height - 0.2)
-        ax.set_xlim(0, 0.08)
-        ax.set_xticks([0, 0.02, 0.04, 0.06, 0.08])
+        ax.set_xlim(0.02, 0.06)
+        ax.set_xticks([0.02, 0.03,0.04,0.05, 0.06])
         ax.invert_yaxis()
         ax.set_xlabel("Δr", fontsize=8)
         ax.set_title(title, fontsize=12, pad=10)
@@ -342,11 +364,11 @@ if __name__ == "__main__":
                 }
                 continue
 
-            roi_stats[roi] = {
+            roi_stats[roi] = roi_stats[roi] = {
                 "dnoun_mean": np.nanmean(values[:, 0]),
-                "dnoun_std":  np.nanstd(values[:, 0]),
+                "dnoun_std":  np.nanstd(values[:, 0]) / np.sqrt(np.sum(~np.isnan(values[:, 0]))),  # SEM
                 "dverb_mean": np.nanmean(values[:, 1]),
-                "dverb_std":  np.nanstd(values[:, 1]),
+                "dverb_std":  np.nanstd(values[:, 1]) / np.sqrt(np.sum(~np.isnan(values[:, 1]))),  # SEM
             }
             print(f"  {modality} | {roi}: dnoun={roi_stats[roi]['dnoun_mean']:.4f} ± {roi_stats[roi]['dnoun_std']:.4f}, "
                   f"dverb={roi_stats[roi]['dverb_mean']:.4f} ± {roi_stats[roi]['dverb_std']:.4f}")

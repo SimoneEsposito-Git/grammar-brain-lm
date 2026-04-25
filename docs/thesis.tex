@@ -11,10 +11,15 @@
 \usepackage[parfill]{parskip}
 \usepackage{amssymb}
 \usepackage{tikz}      
+\usepackage{pdflscape}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tcolorbox}
 \usepackage{bigstrut}
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{layouts}
+\usepackage{todonotes}
 \usepackage[
     style=authoryear, 
     backend=biber, 
@@ -137,7 +142,7 @@
 \vspace{1cm}
 \selectlanguage{english}
 \begin{abstract}
-\noindent This thesis investigates the neural representation of grammatical class (GC) in the human brain, focusing on nouns and verbs. Using voxelwise encoding models (VEM) and contextual embeddings from GPT-2, I examine whether the brain processes nouns and verbs in distinct areas. By applying attention masks to generate noun-masked and verb-masked embeddings, I fit these features to fMRI data collected from subjects listening to and reading naturalistic stories. The results reveal a complex pattern of GC representation that challenges traditional dichotomies and supports a more distributed account of language processing in the brain.
+\noindent This thesis investigates the brain representation of grammatical class (GC) in the human brain, focusing on nouns and verbs. Using voxelwise encoding models (VEM) and contextual embeddings from GPT-2, I examine whether the brain processes nouns and verbs in distinct areas. By applying attention masks to generate noun-masked and verb-masked embeddings, I fit these features to fMRI data collected from subjects listening to and reading naturalistic stories. The results reveal a complex pattern of GC representation that challenges traditional dichotomies and supports a more distributed account of language processing in the brain.
 \end{abstract}
 
 \selectlanguage{german}
@@ -147,91 +152,176 @@
 
 \selectlanguage{english}
 \section*{Introduction}
-Language is a uniquely human capacity, and grammar is its organizing principle. Among the most fundamental categories of grammar are parts of speech (POS) — the distinctions between nouns, verbs, adjectives, and other word classes. 
-In particular, the distinction between nouns and verbs has been a central focus of research in psycholinguistics and cognitive neuroscience. To investigate how the brain represents this distinction, researchers have employed various methodologies, including neuropsychological studies - which examine patients with brain damage - and brain imaging techniques, such as functional magnetic resonance imaging (fMRI). 
+Language is a uniquely human capacity, and grammar is its organizing principle. Among the most fundamental categories of grammar are parts of speech (POS). While these include various word classes such as adjectives and adverbs, the distinction between nouns and verbs has remained the primary focus of research in psycholinguistics and cognitive neuroscience. To investigate the functional organization of this distinction, researchers have historically utilized neuropsychological case studies of lesion-deficit patterns and, more recently, brain imaging techniques such as functional magnetic resonance imaging (fMRI)."
 
 \subsection*{Neuropsychological studies}
 
-Early neuropsychological studies conducted experiments with aphasic patients who had strong impairments in the retrieval and production of nouns and verbs respectively. \textcite{damasio_nouns_1993}, for example, observed impairments in noun retrieval for two patients with damage to the \textit{left anterior and middle temporal lobe}, while the \textit{left premotor cortex} was named as a possible cause of the third patient’s impairment in the retrieval of verbs. This observation gave rise to the \textit{fronto-temporal} dichotomy, suggesting that nouns might be processed in temporal areas while verbs are processed in frontal areas.
+Early neuropsychological studies conducted experiments with aphasic patients who had strong impairments in the retrieval and production of nouns and verbs respectively. \textcite{damasio_nouns_1993}, for example, observed impairments in noun retrieval for two patients with damage to the \textit{left anterior and middle temporal lobe}, while the \textit{left premotor cortex} was named as a possible cause of the third patient's impairment in the retrieval of verbs. This observation gave rise to the \textit{fronto-temporal} dichotomy, suggesting that nouns might be processed in temporal areas while verbs are processed in frontal areas. According to that study, the distinction between nouns and verbs can be attributed to the semantic properties of the two classes, with nouns being more associated with objects and verbs with actions.
 
-However, subsequent studies have found contradicting results, with some patients showing frontal damage without verb deficits and temporal damage without noun deficits \parencite{damasio_neural_2001,de_renzi_sparing_1995}. Additionally, some of the verb deficits could be explained by the difference in imageability of the words \parencite{crepaldi_clustering_2013}.
+However, subsequent studies have found contradicting results, with some patients showing frontal damage without verb deficits and temporal damage without noun deficits \parencite{damasio_neural_2001,de_renzi_sparing_1995}. This led to the examination of other factors that might contribute to the observed dissociation, such as morphological inflection, which is more common in verbs than nouns \parencite{shapiro_representation_2003,tyler_neural_2004} or imageability \parencite{bird_why_2000}. 
 
-\subsection*{Brain Imaging}
+\subsection*{Brain Imaging Studies}
 
-With the advancement of brain imaging techniques, such as fMRI, researchers have started to investigate the neural correlates of GC processing in healthy individuals. The results of these studies can be broadly categorized into three groups. First, some studies have found the neural distinction between nouns and verbs to be mainly driven by the semantic properties of the words, with nouns being more associated with objects and verbs with actions \parencite{vigliocco_nouns_2011}. This view is often associated with the \textbf{emergentist} perspective in psycholinguistics, which posits that GC distinctions emerge from semantic constraints rather than being explicitly represented in the brain. Second, some studies have suggested that the difference can be attributed to grammatical operations like morphological inflection, which are more common in verbs than nouns. This view is often associated with the \textbf{combinatorial} perspective, which posits that GC distinctions are procedural and related to the combinatorial properties of words. Finally, some studies have found no clear distinction between the two classes \parencite{crepaldi_clustering_2013}, pointing to a more \textbf{distributed} representation of GC in the brain.
+With the advancement of brain imaging techniques, such as fMRI, researchers have started to investigate the cortical correlates of noun and verb processing in healthy individuals. The results of these studies can be broadly categorized into three groups. First, some studies have found the distinction between nouns and verbs in the brain to be mainly driven by the semantic properties of the words, with nouns being more associated with objects and verbs with actions \parencite{vigliocco_nouns_2011}. This view is often associated with the \textbf{emergentist} perspective in psycholinguistics, which posits that noun and verb distinctions emerge from semantic constraints rather than being explicitly represented in the brain \parencite{vigliocco_nouns_2011}. 
 
-The main limitation of these studies is that they rely on highly controlled stimuli, such as single words or simple sentences, which may not capture the complexity of natural language processing. 
+Second, some studies have suggested that the difference can be attributed to grammatical operations like morphological inflection, which are more common in verbs than nouns. This view is often associated with the \textbf{combinatorial} perspective, which posits that noun and verb distinctions are procedural and related to the combinatorial properties of words \parencite{siri_neural_2007, yokoyama_cortical_2006,tyler_neural_2004}.
+
+Finally, some some meta-analytical evidence suggests a lack of consistent spatial segregation between nouns and verbs across different experimental tasks \parencite{crepaldi_clustering_2013}, pointing to a more \textbf{distributed} representation of nouns and verbs in the brain \parencite{crepaldi_clustering_2013}.
+
+The main limitation of these studies is that they rely on highly controlled stimuli, such as single words or simple sentences, which may not capture the complexity of natural language processing. \todo{cite and tell which study uses what. this is too general.}
 
 \subsection*{Naturalistic Studies}
-This limitation can be overcome by using Voxelwise Encoding Models (VEM). VEMs allow researchers to predict the BOLD response of individual voxels in the brain based on features extracted from naturalistic stimuli, such as stories or conversations. This approach has been used to investigate various aspects of language processing, including syntax, semantics, and stimulus modality \parencite{huth_natural_2016,deniz_representation_2019}. Particularly with the advancement of large language models (LLMs) such as GPT-2 and their ability to generate contextualized embeddings, VEMs have become a powerful tool to investigate the neural representation of language in the brain.
+To overcome the limitations of controlled stimuli, recent research has shifted toward naturalistic studies. These utilize ecological stimuli such as continuous stories or spontaneous speech, which better reflect real-world language processing \parencite{huth_natural_2016}. To analyze the complex brain responses elicited by such stimuli, Voxelwise Encoding Models (VEM) have emerged as a primary methodological framework. VEMs allow researchers to predict the BOLD response of individual voxels in the brain based on features extracted from naturalistic stimuli, such as stories or conversations. This approach has been used to investigate various aspects of language processing, including syntax, semantics, and stimulus modality \parencite{huth_natural_2016,deniz_representation_2019}. Particularly with the advancement of large language models (LLMs) such as GPT-2 and their ability to generate contextualized embeddings, VEMs have become a powerful tool to investigate the cortical representation of language in the brain.
 
-I used VEMs to investigate the neural representation of nouns and verbs in the brain. After masking the attention of GPT-2 to either nouns or verbs during the generation of contextualized embeddings, I was able to create information-restricted feature-spaces. I then fit these feature spaces to the BOLD responses of 9 subjects who listened to and read naturalistic stories. Finally, I compared the performance of the noun-masked and the verb-masked model across the brain, to identify areas that were more sensitive to nouns and verbs respectively.
+I used VEMs to investigate the representation of nouns and verbs in the brain. After masking the attention of GPT-2 to either nouns or verbs during the generation of contextualized embeddings, I was able to create information-restricted feature-spaces. I then fit these feature spaces to the BOLD responses of 9 subjects who listened to and read naturalistic stories. Finally, I compared the performance of the noun-masked and the verb-masked model across the brain, to identify areas that were more sensitive to nouns and verbs respectively. \todo{there is not enough content or intro given yet to be able to understand this.}
 
 The central question of this thesis is whether the brain represents nouns and verbs in distinct areas, and if so, which of the three theoretical accounts — emergentist, combinatorial, or distributed — best characterises the observed pattern.
+
+\begin{table}[ht]
+\centering
+\caption{Theoretical accounts of grammatical class representation: predicted patterns versus observed results.}
+\label{tab:theoretical_accounts}
+\small
+\begin{tabularx}{\textwidth}{@{} X X X @{}}
+\toprule
+\textbf{Theoretical account} & \textbf{Predicted pattern} & \textbf{Observed pattern} \\
+\midrule
+
+\textbf{Fronto-Temporal View} \newline
+\textit{\footnotesize Neuropsychological}\newline
+\parencite{damasio_nouns_1993}
+&
+V$>$N in frontal regions; N$>$V in temporal regions
+&
+V$>$N in temporal regions (ATL, PTL); no clean frontal/temporal split. \\
+
+\addlinespace
+
+\textbf{Emergentist View} \newline
+\textit{\footnotesize Object-Action, Imageability}\newline
+\parencite{bird_why_2000,vigliocco_nouns_2011}
+&
+V $>$ N in frontal and parietal regions; N $>$ V in inferior temporal regions.
+&
+N $>$ V near visual areas; Similar sensitivity in frontal regions. \\
+
+\addlinespace
+
+\textbf{Combinatorial} \newline
+\textit{\footnotesize Morphology/inflection}\newline
+\parencite{tyler_neural_2004,shapiro_dissociating_2005}
+&
+N $=$ V broadly, with V $>$ N specifically in IFG for morphological composition.
+&
+Slight V $>$ N in IFG; N $>$ V in IFGOrb. \\
+
+\addlinespace
+
+\textbf{Distributed} \newline
+\textit{\footnotesize Shared network}\newline
+\parencite{crepaldi_clustering_2013,caucheteux_disentangling_2021}
+&
+Noun and verb circuits distributed across frontal, parietal, and temporal regions.
+&
+Smaller clusters of noun and verb sensitive voxels across the brain. \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%\begin{landscape}
+%\begin{table}[ht]
+%\centering
+%\caption{Theoretical accounts of grammatical class %representation: predicted patterns versus observed %results.}
+%\label{tab:theoretical_accounts}
+%\small
+%\begin{tabularx}{\linewidth}{@{} X X X X p{1.6cm} @{}}
+%\toprule
+%\textbf{Theoretical account} & \textbf{Predicted %pattern} & \textbf{Listening result} & \textbf%{Reading result} & \textbf{Verdict} \\
+%\midrule
+%
+%\textbf{Classic fronto-temporal} \newline
+%\textit{\footnotesize Neuropsychological}\newline
+%\parencite{damasio_nouns_1993,cappa_neural_2003}
+%&
+%Strict spatial segregation: V $>$ N in frontal (MFG, %IFG), N $>$ V in temporal (ATL, PTL). No overlap.
+%&
+%Both conditions elevated across all ROIs; no clean %frontal/temporal split.
+%&
+%Same pattern; IFGOrb shows V $>$ N but other frontal %ROIs do not.
+%&
+%Against \\
+%
+%\addlinespace
+%
+%\textbf{Semantic} \newline
+%\textit{\footnotesize Object-action}\newline
+%\parencite{bird2000,vigliocco_nouns_2011}
+%&
+%N $>$ V in ATL and AG (entity/visual semantics); V %$>$ N in MFG and PTL (action semantics).
+%&
+%ATL and AG show V $>$ N, opposite to prediction. PTL %consistent.
+%&
+%ATL near-equal; AG shows V $>$ N. MFG consistent.
+%&
+%Partial \\
+%
+%\addlinespace
+%
+%\textbf{Combinatorial} \newline
+%\textit{\footnotesize Morphology/inflection}\newline
+%\parencite{tyler2004,shapiro_dissociating_2005}
+%&
+%N $=$ V broadly, with N $>$ V specifically in IFG for %morphological composition.
+%&
+%IFG shows V $>$ N, opposite to prediction.
+%&
+%IFG shows V $>$ N; IFGOrb shows strong N $>$ V.
+%&
+%Against \\
+%
+%\addlinespace
+%
+%\textbf{Distributed} \newline
+%\textit{\footnotesize Shared network}\newline
+%\parencite{crepaldi_clustering_2013,%caucheteux_disentangling_2021}
+%&
+%Both POS classes broadly represented across all ROIs; %differences in degree, not in kind.
+%&
+%All ROIs show positive $\Delta r$ for both %conditions; differences small and overlapping.
+%&
+%Same pattern across modalities; no ROI drops to zero %for either class.
+%&
+%Supports \\
+%
+%\bottomrule
+%\end{tabularx}
+%\end{table}
+%\end{landscape}
 
 \section*{Materials and Methods} 
 
 \subsection*{Stimuli} 
+The speech stimuli consist of 11 short stories taken from \textbf{The Moth Radio Hour}, a storytelling program where true autobiographical stories are told in front of a live audience. These were used in previous papers (Huth et al., 2016), including the one where the response data was gathered (Deniz et al., 2019) providing a naturalistic stimulus. \todo{mention that this is fmri data, taken from this study. modalities, number of people....}
 
-The speech stimuli consist of 11 short stories taken from \textbf{The Moth Radio Hour}, a storytelling program where true autobiographical stories are told in front of a live audience. These were used in previous papers (Huth et al., 2016), including the one where the response data was gathered (Deniz et al., 2019) providing a naturalistic stimulus.
+Out of these 11 stories, 10 were used as training data while one 10-minute story was used as validation data. The latter was played two times during the experiment (in two separate runs) to which the responses were finally averaged across the two runs. \todo{fix sentence structure}
 
-Out of these 11 stories, 10 were used as training data while one 10-minute story was used as validation data. The latter was played two times during the experiment (in two separate scans) to which the responses were finally averaged across the two runs. 
+\subsection*{fMRI Data}
+The fMRI data used in this thesis were originally collected and preprocessed by \textcite{deniz_representation_2019}. The dataset consists of brain responses from 9 subjects who both listened to and read the stimuli in separate sessions. Each spoken (and written) story was presented during a separate fMRI scan. The sampling rate was 2 seconds, so $1 \text{ Repetition Time (TR)} = 2 \text{ s}$. Each scan included 10 seconds (5 TR) of silence both before and after the story. These data were collected during two 3-hour scan sessions that were performed on different days. MRI data were collected on a 3T Siemens TIM Trio scanner at the UC Berkeley Brain Imaging Center.  
 
-\subsection*{fMRI Data Collection and Preprocessing} 
-
-Each spoken (and written) story was presented during a separate fMRI scan. The length of each scan was the same as the story. The sampling rate was 2 seconds, so $1 \text{ TR} = 2 \text{ s}$. Each scan included 10 seconds (5 TR) of silence both before and after the story. These data were collected during two 3-hour scan sessions that were performed on different days. MRI data were collected on a 3T Siemens TIM Trio scanner at the UC Berkeley Brain Imaging Center.  
-
-Each functional run was motion-corrected using the FMRIB Linear Image Registration Tool (FLIRT) from FSL 5.0 (Jenkinson and Smith, 2001; Jenkinson et al., 2002). All volumes in the run were then averaged over time to obtain a high-quality template volume. FLIRT was also used to automatically align the template volume for each run with the overall template, which was chosen to be the temporal average of the first functional run for each participant.  
-
-\subsection*{Voxelwise Encoding Model Framework}
-Voxelwise encoding models (VEM) aim to predict the BOLD response for each individual voxel $v$ from the stimulus $S$.
-This is usually done by first extracting one or more sets of features (called feature spaces) from the stimulus,
-then modeling the brain response as a linear combination of those feature spaces.
-
-This corresponds to approximating the function $f(S) = g(S)\beta$ where $g$ transforms the $N$-length stimulus
-into an $N\times P$ feature space with $\beta$ as the $P\times V$ weights, $V$ being the number of voxels.
-This can be accomplished by fitting the feature spaces $g(S_{\text{train}})$ to the responses $R_{\text{train}}$
-of a training dataset, yielding a model $\hat{f}$.
-The hemodynamic delay is accounted for by including delays of 0, 4, 8, and 16 seconds for each feature,
-resulting in a finite impulse response (FIR) model.
- 
-Finally, the model accuracy is calculated as the per-voxel Pearson's correlation $r_v$ between the model
-predictions on a validation dataset $\hat{R}_{\text{test}} = \hat{f}(S)$ and the actual responses $R_{\text{test}}$.
- 
-The value of $r_v$ can then be interpreted as the extent to which voxel $v$'s response to the stimulus can be
-explained by the given feature space. Projecting $r_v$ onto the cortical surface then yields a sensitivity map
-to the specific feature space. This shifts the focus from experimental design to the choice of features,
-allowing researchers to test different hypotheses utilizing the same dataset by varying the feature space.
- 
-\textit{Banded Ridge Regression}
- 
-To fit the multiple feature spaces to the BOLD responses I used Banded Ridge Regression (BRR), which is based
-on Ridge Regression, a linear regression method that augments the least-squares objective with an $\ell_2$
-penalty to reduce overfitting to the training data. This corresponds to finding the weight vector
- 
-\begin{equation*}
-    \hat{\beta} = \argmin_{\beta} \lVert X\beta - y \rVert^2_2 + \alpha \lVert \beta \rVert^2_2
-\end{equation*}
- 
-with $\alpha $>$ 0$ being the regularization parameter, which is typically selected through grid search or
-random search with cross-validation.
- 
-BRR extends Ridge Regression by assigning a separate regularization parameter $\alpha_i$ to each feature
-space $X_i$ \parencite{nunez_voxelwise_2019}.
- 
-\begin{equation*}
-    \hat{\beta} = \argmin_{\beta} \left\lVert \sum^{m}_{i=1} X_i \beta_i - y \right\rVert^2_2
-    + \sum^{m}_{i=1} \alpha_i \lVert \beta_i \rVert^2_2
-\end{equation*}
- 
-This is important since the feature spaces can vary greatly in size and signal-to-noise ratio and thus
-need different levels of regularization.
+Each functional run was motion-corrected using the FMRIB Linear Image Registration Tool (FLIRT) from FSL 5.0 (Jenkinson and Smith, 2001; Jenkinson et al., 2002). All volumes in the run were then averaged over time to obtain a high-quality template volume. FLIRT was also used to automatically align the template volume for each run with the overall template, which was chosen to be the temporal average of the first functional run for each participant. 
  
 \subsection*{Features} 
+Semantic features from English1000 and several low level features from \textcite{deniz_representation_2019} were used. Additionally, embeddings from an LLM were created.
 
-To reproduce the original study, the 985-dimensional Eng1000 features were provided. 
+\textit{English1000}
 
-To account for response variance caused by various modality-dependent nuisances, several additional features were provided. 
+The English1000 feature space is a 985-dimensional semantic model based on word co-occurrence statistics \parencite{deerwester_indexing_1990, lund_producing_1996, mitchell_predicting_2008, huth_natural_2016}. A co-occurrence matrix $M$ was constructed with 985 rows corresponding to basic English words (drawn from Wikipedia's List of 1000 Basic Words) and the columns corresponding to the words selected from a large text corpus comprising Moth Radio Hour transcripts, books from Project Gutenberg, Wikipedia articles, and Reddit comments \parencite{huth_natural_2016}. 
+
+Each entry $M_{ij}$ in the matrix represents the number of times the $i$-th basic word co-occurs with the $j$-th word in the corpus within a 15-word window. Counts were then log-transformed as $\log(1 + M_{ij})$, and rows and columns were each z-scored to correct for differences in word frequency. 
+
+The feature vector for a given word $w$ is then obtained by looking up the corresponding column in the matrix, yielding a 985-dimensional vector that captures the semantic relationships of $w$ with the basic English words. These features were used when fitting the model to the listening data. For more details on the construction of the English1000 feature space, see \textcite{deniz_representation_2019} and \textcite{huth_natural_2016}.
+
 
 \textit{Phonemes}  
 
@@ -239,7 +329,7 @@ A list of phoneme-time pairs was constructed for each of the 39 English phonemes
 
 \textit{Letters} 
 
-Similar to the phonemes, a 26-parameter model was created to represent the frequency of each of the 26 letters in the English alphabet that appeared in the written stories. This was also down-sampled to the sampling rate, resulting in a $(26 \times N_{TR})$ array. 
+Similar to the phonemes, a 26-parameter model was created to represent the frequency of each of the 26 letters in the English alphabet that appeared in the written stories. This was also down-sampled to the sampling rate, resulting in a $(26 \times N_{TR})$ array. \todo{mention all low level together, tell which are specific to which modality.}
 
 \textit{Additional Features} 
 
@@ -247,52 +337,31 @@ To account for the highly variable speech rate both within and across stories, s
 
 \subsubsection*{Contextual Embeddings}
  
-The largest issue with the lexical \textit{English1000} embeddings is the lack of contextual
-information in the feature space. Put differently, the same word will be mapped to the same
-feature vector regardless of the context it appears in. For example, the word \textit{fine}
-has a very different meaning in the sentences ``I am fine'' and ``I paid a fine''.
+The largest issue with the lexical \textit{English1000} embeddings is the lack of contextual information in the feature space. Put differently, the same word will be mapped to the same feature vector regardless of the context it appears in. For example, the word \textit{fine} has a very different meaning in the sentences ``I am fine'' and ``I paid a fine''.
  
-To account for this, I made use of \textit{contextual embeddings}, which, as the name suggests,
-aim to include contextual information in the word embeddings. Such embeddings were introduced by
-the Long Short-Term Memory (LSTM) network ELMo \parencite{peters_deep_2018} and refined by the
-transformer model BERT \parencite{devlin_bert_2019}.
+To account for this, I made use of \textit{contextual embeddings}, which, as the name suggests, aim to include contextual information in the word embeddings.Such embeddings were introduced by the Long Short-Term Memory (LSTM) network ELMo \parencite{peters_deep_2018} and refined by the transformer model BERT \parencite{devlin_bert_2019}.
  
-Contextual embeddings play a fundamental role in all modern Language Models (LM), and for this
-thesis I decided to use GPT-2's embeddings, as it is commonly used in related
-literature \parencite{schrimpf_neural_2021, tuckute_driving_2024}.
+Contextual embeddings play a fundamental role in all modern Language Models (LM), and for this thesis I decided to use GPT-2's embeddings, as it is commonly used in related literature \parencite{schrimpf_neural_2021, tuckute_driving_2024}.
  
-Given an input sequence comprised of the $i$-th word of a story $w_{i}$ and its $k$-length
-context $C_{i} = (w_s, \ldots, w_{i-1})$ with $s = \max(0, i-k)$, I can generate the contextual
-embeddings through the following steps.
+Given an input sequence comprised of the $i$-th word of a story $w_{i}$ and its $k$-length context $C_{i} = (w_s, \ldots, w_{i-1})$ with $s = \max(0, i-k)$, I can generate the contextual embeddings through the following steps.
  
 \textit{Tokenization}
  
-Before a sentence or word can be embedded into vectors, it needs to be broken up into a set of
-token IDs. This turns the input sequence into a sequence of tokens
-$(t_1, \ldots, t_L) \in \mathbb{N}^L$.
+Before a sentence or word can be embedded into vectors, it needs to be broken up into a set of token IDs. This turns the input sequence into a sequence of tokens $(t_1, \ldots, t_L) \in \mathbb{N}^L$.
  
 \textit{Initial Embeddings}
  
-Upon receiving the token sequence, GPT-2 first converts the tokens into embedding vectors via a
-\textit{lookup table} with a fixed embedding size $d_{\text{model}} = 768$, then adds positional
-encodings to generate the initial embeddings. These initial embeddings are non-contextual.
+Upon receiving the token sequence, GPT-2 first converts the tokens into embedding vectors via a \textit{lookup table} with a fixed embedding size $d_{\text{model}} = 768$, then adds positional encodings to generate the initial embeddings. These initial embeddings are non-contextual.
  
 \textit{Hidden Layers}
  
-The initial embeddings then go through a sequence of layers where they are first weighted using
-the attention mechanism \parencite{vaswani_attention_2023}, then passed through a feed-forward
-network to enrich them with contextual information from surrounding tokens. This yields a new
-contextualized embedding of the same dimensionality $d_{\text{model}}$.
+The initial embeddings then go through a sequence of layers where they are first weighted using the attention mechanism \parencite{vaswani_attention_2023}, then passed through a feed-forward network to enrich them with contextual information from surrounding tokens. This yields a new contextualized embedding of the same dimensionality $d_{\text{model}}$.
  
-Previous studies have found that the middle layers, e.g., Layer~8 for GPT-2 small, are best at
-predicting brain activity in VEMs \parencite{schrimpf_neural_2021, jain_incorporating_2018}, and
-Layer~8 is therefore used throughout this work.
+Previous studies have found that the middle layers, e.g., Layer~8 for GPT-2 small, are best at predicting brain activity in VEMs \parencite{schrimpf_neural_2021, jain_incorporating_2018}, and Layer~8 is therefore used throughout this work.
  
-\textit{Averaging}
+\textit{Embedding Pooling}
  
-The hidden state $H_8 \in \mathbb{R}^{L \times 768}$ contains the contextualized embeddings for
-every token in the input sequence. These tokens are then averaged to return $w$'s contextualized
-embedding $e_w$:
+The hidden state $H_8 \in \mathbb{R}^{L \times 768}$ contains the contextualized embeddings for every token in the input sequence. These tokens are then averaged to return $w$'s contextualized embedding $e_w$:
  
 \begin{equation*}
     e_w = \frac{1}{L} \sum_{i=1}^{L} h_8^{(i)}
@@ -300,26 +369,21 @@ embedding $e_w$:
  
 \textit{Downsampling}
  
-After repeating this process for each word in each story, I have an embedding matrix
-$E_j \in \mathbb{R}^{N_j \times 768}$ with $N_j = \lvert S_j \rvert$ being the number of words
-in the $j$-th story. To fit the features to the fMRI data, the contextual embeddings are
-downsampled onto a feature space $F_j \in \mathbb{R}^{K_j \times 768}$ via a Lanczos filter,
-with $K_j$ being the number of sample points (TRs) of the $j$-th story.
+After repeating this process for each word in each story, I have an embedding matrix $E_j \in \mathbb{R}^{N_j \times 768}$ with $N_j = \lvert S_j \rvert$ being the number of words in the $j$-th story. To fit the features to the fMRI data, the contextual embeddings are downsampled onto a feature space $F_j \in \mathbb{R}^{K_j \times 768}$ via a Lanczos filter set to the fMRI Nyquist rate (0.25 Hz) with $K_j$ being the number of sample points (TRs) of the $j$-th story.
  
-The baseline contextualized embeddings are generated using a context length of 20 words for each
-word in each story.
+The baseline contextualized embeddings are generated using a context length of 20 words for each word in each story.
  
-% -----------------------------------------------------------------------
+\begin{figure}
+    \includegraphics{figures/Fig1/Fig1_alternative.pdf}
+    \centering
+    \caption{\textbf{Contextual embedding pipeline with POS attention masking.} A stimulus sentence is passed through a noun filter, which uses spaCy POS tags to generate an attention mask (green: unmasked; red: masked). The masked input is fed into GPT-2, whose hidden state at Layer 8, $H_8\in \mathbb{R}^{L \times 768}$, is then averaged over unmasked tokens to produce a single contextualized embedding $e_w \in \mathbb{R}^{768}$ for the target word.}
+    \label{fig:embedding_pipeline}
+\end{figure}
+
+\subsubsection*{Information Restricted LLMs}
+The masking of Parts of Speech (POS) was performed automatically using Python's \texttt{spaCy} library. This library first splits an input sequence into a series of word-like tokens based on language-specific rules. For example, \textit{don't} is split into two tokens \textit{do} and \textit{n't}. These tokens are then assigned a POS tag that takes their context into consideration.
  
-\subsection*{Context Masking}
- 
-The masking of Parts of Speech (POS) was performed automatically using Python's \texttt{spaCy}
-library. This library first splits an input sequence into a series of word-like tokens based on
-language-specific rules. For example, \textit{don't} is split into two tokens \textit{do} and
-\textit{n't}. These tokens are then assigned a POS tag that takes their context into
-consideration.
- 
-Given a set of POS tags $P$, I can generate a boolean mask for each story:
+Given a set of POS tags $P$, I can generate a boolean mask for each story. (Fig \ref{fig:embedding_pipeline})
  
 \begin{equation*}
     M_j = \bigl(f_{\text{mask}}(t_{j,1}),\, \ldots,\, f_{\text{mask}}(t_{j,n})\bigr)
@@ -331,49 +395,17 @@ Given a set of POS tags $P$, I can generate a boolean mask for each story:
     \end{cases}
 \end{equation*}
  
-Since proper nouns and auxiliary verbs perform similar functions to nouns and verbs respectively,
-they are included in the noun and verb POS categories accordingly.
+Since proper nouns and auxiliary verbs perform similar functions to nouns and verbs respectively, they are included in the noun and verb POS categories accordingly.
  
 \textit{Attention Mask}
  
-To apply the POS masks during the generation of contextual embeddings for a word $w$, the mask
-values for $w$ and its context $C$ are first mapped to the GPT-2 tokens, yielding $M'_w$. They
-are then used as \textit{attention masks}, indicating which tokens the model should attend to and
-which should not. The resulting contextual embedding is calculated by averaging only the unmasked
-hidden states:
- 
+To apply the POS masks during the generation of contextual embeddings for a word $w$, the mask values for $w$ and its context $C$ are first mapped to the GPT-2 tokens, yielding $M'_w$. They are then used as \textit{attention masks}, indicating which tokens the model should attend to and which should not. The resulting contextual embedding is calculated by averaging only the unmasked hidden states:
+
 \begin{equation*}
     \bar{e}_w = \frac{1}{L'} \sum_{i=1}^{L} m_w^{\prime(i)}\, h_8^{(i)}
     \qquad
     L' = \sum_{i=1}^{L} m_w^{\prime(i)}
 \end{equation*}
- 
-Rather than removing masked tokens from the input sequence --- which would alter positional
-encodings and shift the attention context of remaining tokens --- attention masking preserves the
-original sequence structure while selectively excluding the target POS category from the model's
-attention computation.
-
-\begin{figure}
-    \includegraphics{figures/Fig1/Fig1_alternative.pdf}
-    \centering
-    \caption{\textbf{Contextual embedding pipeline with POS attention masking.} A stimulus sentence is passed through a noun filter, which uses spaCy POS tags to generate an attention mask (green: unmasked; red: masked). The masked input is fed into GPT-2, whose hidden state at Layer 8, $H_8\in \mathbb{R}^{L \times 768}$, is then averaged over unmasked tokens to produce a single contextualized embedding $e_w \in \mathbb{R}^{768}$ for the target word.}
-\end{figure}
-
-\newpage
-\section*{Results} 
-The goal of this thesis was to determine whether the brain represents nouns and verbs in distinct areas, and if so, which of the three theoretical accounts — emergentist, combinatorial, or distributed — best characterises the observed pattern. To answer this question, I generated noun-masked and verb-masked contextual embeddings by applying attention masks to the input of GPT-2 during the generation of contextualized embeddings for the words in the 11 stories taken from \textit{The Moth Radio Hour}. I then fit these features, in addition to acoustic, phonetic and [what] features to the BOLD responses of 9 subjects who listened to and read the stories, using Banded Ridge Regression. Finally, I compared the performance of the noun-masked and verb-masked model across the brain, to identify areas that were more sensitive to nouns and verbs respectively.
-
-\subsection*{Baseline Performance}
-To ensure that the contextual embeddings were successfully able to predict brain activity, I first fit the unmasked contextual embeddings to the responses. After fitting the model, I calculated the per-voxel Pearson's correlation $r_v$ between the model predictions on the validation dataset and the actual responses. The resulting $r_v$ values were then projected onto the cortical surface to yield a sensitivity map to the contextual embeddings.
-The contextual embeddings were able to predict brain activity in a large portion of the cortex, with the highest sensitivity in the temporal and frontal areas, which is consistent with previous studies \parencite{schrimpf_neural_2021, jain_incorporating_2018}. The average $r_v$ across the cortex was 0.21 for the listening modality and 0.20 for the reading modality, with some voxels reaching values as high as 0.65.
-This confirms the validity of the contextual embeddings as a feature space for predicting brain activity in response to naturalistic language stimuli.
-
-\subsection*{POS-Masked Features}
-Before focusing on the noun-masked and verb-masked models, I first looked at the performance of a multitude of POS-masked features, including adjectives, adverbs, pronouns and interjections. For each POS-masked model, I calculated the drop in performance compared to the baseline unmasked model by subtracting the $r_v$ values of the masked model from the $r_v$ values of the baseline model. I then ranked the drop in performance for each POS category for each voxel individually and plotted the greatest drop on the flatmap in the respective color. This allowed me to identify which areas of the brain were more sensitive to each POS category (Fig \ref{fig:pos_sensitivity}a,b).
-
-The results showed clear clusters of POS sensitivity across the brain with nouns being more prevalent in the Medial Parietal Cortex (MPC), while verbs were consistently present in the Temporo-Parietal Junction (TPJ). Nouns and verbs resulted in the greatest drop in performance, followed by pronouns and adverbs, while adjectives and interjections had the least impact on the model performance. 
-
-The distribution of POS tags in the training stories and the validation story was also analyzed, to verify that the validation story is a representative sample of the training data and that any differences in model accuracy between POS categories reflect the brain's sensitivity to grammatical class rather than an artifact of unequal stimulus composition. (Fig \ref{fig:pos_sensitivity}c).
 
 \begin{figure}
     \begin{subfigure}{\textwidth}
@@ -398,7 +430,7 @@ The distribution of POS tags in the training stories and the validation story wa
     \centering
     \caption{\textbf{Parts of Speech sensitivity across the brain using all POS}: nouns, verbs, adjectives, adverbs, pronouns and interjections.
     \textbf{a} Voxelwise model r values in the listening modality using POS-masked contextual embeddings were subtracted from the r values of the baseline contextual model to 
-    get the drop in accuracy. The drop in accuracy for each POS was then ranked for each voxel individually and the greatest drop was plotted on the flatmap in the respective color
+    get the drop in accuracy. The drop in accuracy for each POS was then ranked for each voxel individually and the greatest drop was plotted on the flatmap in the respective color 
     \textbf{b} Voxels are colored using the same procedure as in \textbf{a} but for the reading modality. 
     \textbf{c} Distribution of POS tags in the training stories and the validation story. 
     The percentage of each POS tag was calculated by counting the number of words with that tag and dividing it by the total number of words in the story. 
@@ -406,10 +438,49 @@ The distribution of POS tags in the training stories and the validation story wa
     \label{fig:pos_sensitivity}
 \end{figure}
 
-\subsection*{Noun and Verb Sensitivity}
-To investigate the sensitivity to nouns and verbs in more detail, I focused on the noun-masked and verb-masked models. For each voxel, I calculated the drop in performance compared to the baseline unmasked model for both the noun-masked and verb-masked models. I then plotted the respective drops in performance for each voxel on the flatmap using a bivariate color map, where the x-axis (orange) represents the drop in performance for the noun-masked model and the y-axis (blue) represents the drop in performance for the verb-masked model. This allowed me to identify areas of the brain that were more sensitive to nouns (points above the diagonal) and areas that were more sensitive to verbs (points below the diagonal), as well as areas that were sensitive to both (points on the diagonal) (Fig \ref{fig:noun_verb}). The results showed a clear separation between noun-sensitive and verb-sensitive areas. Moreover, the greatest drops for both nouns and verbs were observed in high-level processing areas, such as the MPC, TPJ and frontal areas, while early sensory areas like the primary auditory cortex and the primary visual cortex were less affected by the masking of nouns and verbs.
+Rather than removing masked tokens from the input sequence --- which would alter positional encodings and shift the attention context of remaining tokens --- attention masking preserves the original sequence structure while selectively excluding the target POS category from the model's attention computation.
 
-\subsection*{}
+\subsection*{Voxelwise Encoding Model Framework}
+Voxelwise encoding models (VEM) aim to predict the BOLD response for each individual voxel $v$ from the stimulus $S$. This is usually done by first extracting one or more sets of features (called feature spaces) from the stimulus, then modeling the brain response as a linear combination of those feature spaces.
+
+This corresponds to approximating the function $f(S) = g(S)\beta$ where $g$ transforms the $N$-length stimulus into an $N\times P$ feature space with $\beta$ as the $P\times V$ weights, $V$ being the number of voxels. This can be accomplished by fitting the feature spaces $g(S_{\text{train}})$ to the responses $R_{\text{train}}$ of a training dataset, yielding a model $\hat{f}$. The hemodynamic delay is accounted for by including delays of 0, 4, 8, and 16 seconds for each feature, resulting in a finite impulse response (FIR) model.
+ 
+Finally, the model accuracy is calculated as the per-voxel Pearson's correlation $r_v$ between the model predictions on a validation dataset $\hat{R}_{\text{test}} = \hat{f}(S)$ and the actual responses $R_{\text{test}}$.
+ 
+The value of $r_v$ can then be interpreted as the extent to which voxel $v$'s response to the stimulus can be explained by the given feature space. Projecting $r_v$ onto the cortical surface then yields a sensitivity map to the specific feature space. This shifts the focus from experimental design to the choice of features, allowing researchers to test different hypotheses utilizing the same dataset by varying the feature space.
+ 
+\textit{Banded Ridge Regression}
+ 
+To fit the multiple feature spaces to the BOLD responses I used banded ridge regression (BRR), which is based on Ridge Regression, a linear regression method that augments the least-squares objective with an $\ell_2$ penalty to reduce overfitting to the training data. This corresponds to finding the weight vector
+ 
+\begin{equation*}
+    \hat{\beta} = \argmin_{\beta} \lVert X\beta - y \rVert^2_2 + \alpha \lVert \beta \rVert^2_2
+\end{equation*}
+ 
+with $\alpha > 0$ being the regularization parameter, which is typically selected through grid search or random search with cross-validation.
+ 
+BRR extends Ridge Regression by assigning a separate regularization parameter $\alpha_i$ to each feature space $X_i$ \parencite{nunez_voxelwise_2019}.
+ 
+\begin{equation*}
+    \hat{\beta} = \argmin_{\beta} \left\lVert \sum^{m}_{i=1} X_i \beta_i - y \right\rVert^2_2
+    + \sum^{m}_{i=1} \alpha_i \lVert \beta_i \rVert^2_2
+\end{equation*}
+ 
+This is important since the feature spaces can vary greatly in dimensionality and predictive power and thus need different levels of regularization.
+
+\section*{Results} 
+The goal of this thesis was to determine whether the brain represents nouns and verbs in distinct areas, and which theoretical account best characterises the observed pattern. To answer this question, I generated noun-masked and verb-masked contextual embeddings from 11 stories taken from \textit{The Moth Radio Hour}. These embeddings were obtained by applying attention masks to the GPT-2 input during contextualized embedding generation, selectively suppressing either noun or verb tokens. I then fit these features, in addition to acoustic, phonetic and [what] features to the BOLD responses of 9 subjects who listened to and read the stories, using banded ridge regression. Finally, I compared the performance of the noun-masked and verb-masked model across the brain, to identify areas that were more sensitive to nouns and verbs respectively.
+
+\subsection*{Contextual embeddings predict brain activity across the cortex}
+To ensure that the contextual embeddings were successfully able to predict brain activity, I first fit the unmasked contextual embeddings to the responses. After fitting the model, I calculated the per-voxel Pearson's correlation $r_v$ between the model predictions on the validation dataset and the actual responses. The resulting $r_v$ values were then projected onto the cortical surface to yield a sensitivity map to the contextual embeddings.
+The contextual embeddings were able to predict brain activity in a large portion of the cortex. The average $r_v$ across the cortex was 0.21 for the listening modality and 0.20 for the reading modality, with some voxels reaching values as high as 0.65. The standard error of the mean (SEM) across subjects was 0.0028 for the listening modality and 0.0021 for the reading modality, indicating that the results were consistent across subjects. This confirms the validity of the contextual embeddings as a feature space for predicting brain activity in response to naturalistic language stimuli.
+
+\subsection*{POS-masked contextual embeddings reveal clusters of POS sensitivity across the brain}
+Before focusing on the noun-masked and verb-masked models, I first looked at the performance of a multitude of POS-masked features, including adjectives, adverbs, pronouns and interjections. For each POS-masked model, I calculated the drop in performance compared to the baseline unmasked model by subtracting the $r_v$ values of the masked model from the $r_v$ values of the baseline model. I then ranked the drop in performance for each POS category for each voxel individually and plotted the greatest drop on the flatmap in the respective color. This allowed me to identify which areas of the brain were more sensitive to each POS category (Fig \ref{fig:pos_sensitivity}a,b).
+
+The results showed clear clusters of POS sensitivity across the brain with nouns being more prevalent in the Medial Parietal Cortex (MPC), while verbs were consistently present in the Temporo-Parietal Junction (TPJ). Nouns and verbs resulted in the greatest drop in performance, followed by pronouns and adverbs, while adjectives and interjections had the least impact on the encoding performance. 
+
+The distribution of POS tags in the training stories and the validation story was also analyzed, to verify that the validation story is a representative sample of the training data and that any differences in model accuracy between POS categories reflect the brain's sensitivity to grammatical class rather than an artifact of unequal stimulus composition. (Fig \ref{fig:pos_sensitivity}c).
 
 
 \begin{figure}
@@ -423,48 +494,55 @@ To investigate the sensitivity to nouns and verbs in more detail, I focused on t
     \caption{\textbf{Noun and verb sensitivity across subjects in the listening modality.} Voxelwise model r values in the listening modality for noun-masked and verb-masked contextual embeddings were subtracted from the r values of the baseline contextual model to get the drop in accuracy, then plotted using a bivariate color map. Blue points indicate a greater drop in performance for the noun-masked model while orange points indicate a greater drop for the verb-masked model. Grayscale points indicate a similar drop for both models. The large panel \textbf{a} shows the results for subject 07, while the smaller panels \textbf{b} show the results for the remaining subjects.}
     \label{fig:noun_verb}
 \end{figure}
+
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figures/Fig4/roi_dominance.pdf}
-    \caption{\textbf{Noun and Verb sensitivity across Regions of Interest (ROIs).} Points indicate the average drop in performance $\Delta r = r_\text{baseline}-r_\text{masked}$ for the noun-masked model (blue) and the verb-masked model (orange) across voxels within each ROI. Values are computed by first averaging the positive drops in performance within each ROI for each subject, then averaging across the cohort. Error bars represent ± 1 standard deviation across subjects.}
+    \includegraphics[width=\textwidth]{figures/Fig4/roi_dominance_2d.pdf}
+    \caption{\textbf{Noun and verb sensitivity across language ROIs.} Each point indicates the mean drop in predictive performance $\Delta r = r_{\text{baseline}} - r_{\text{masked}}$ for the noun-masked (blue) and verb-masked (orange) models, averaged across subjects within each ROI. For each subject, $\Delta r$ was computed as the mean positive drop across voxels within the ROI that survived FDR correction. Error bars represent $\pm 1$ SEM across subjects. ROIs are ordered by their mean $\Delta r$ in the listening modality.}
+    \label{fig:roi_dominance}
 \end{figure}
 
+\subsection*{Nouns and verbs show distinct patterns of sensitivity across the brain}
+To investigate the sensitivity to nouns and verbs in more detail, I focused on the noun-masked and verb-masked models. For each voxel, I calculated the drop in performance compared to the baseline unmasked model for both the noun-masked and verb-masked models. I then plotted the respective drops in performance for each voxel on the flatmap using a bivariate color map, where the x-axis (orange) represents the drop in performance for the noun-masked model and the y-axis (blue) represents the drop in performance for the verb-masked model. This allowed me to identify areas of the brain that were more sensitive to nouns (points above the diagonal) and areas that were more sensitive to verbs (points below the diagonal), as well as areas that were sensitive to both (points on the diagonal) (Fig \ref{fig:noun_verb}). The results showed a clear separation between noun-sensitive and verb-sensitive areas. Moreover, the greatest drops for both nouns and verbs were observed in high-level processing areas, such as the MPC, TPJ and frontal areas.
 
-\newpage
+Noun sensitive voxels seem to be especially concentrated around the Medial and Inferior Parietal Cortex (MCP and IPC), while verb sensitive voxels are more prevalent in the Temporo-Parietal Junction (TPJ). In the frontal region, the clusters appear to be smaller and more interleaved. The distribution of noun-sensitive and verb-sensitive voxels was consistent across subjects and modality, with some variability in the exact location and extent of the clusters. 
+
+\subsection*{Verb sensitivity is more prevalent across language ROIs}
+To further quantify the sensitivity to nouns and verbs across different brain regions, I used a set of Regions of Interest (ROIs) based on regions that are known to be involved in language processing \parencite{negi_optimizing_2025,fedorenko_new_2010}. I first mapped each subject to FreeSurfer's fsaverage template \parencite{fischl_high-resolution_1999}. Then, I used the following ROIs: Middle Frontal Gyrus (MFG), Posterior Temporal Lobe (PTL), Angular Gyrus (AG), Anterior Temporal Lobe (ATL), Inferior Frontal Gyrus (IFG), Dorsomedial Prefrontal Cortex (dmPFC), Posterior Cingulate Cortex (PCC), and Inferior Frontal Gyrus, Orbital portion (IFGOrb). For each ROI, I then calculated the drop in performance for the noun-masked and verb-masked models $\Delta r = r_\text{baseline}-r_\text{masked}$ ($\Delta r \geq 0$) across across voxels within the ROI where the drop was positive and calculated the average drop for each subject. Finally, I calculated the mean and standard error of the mean across subjects. 
+
+The results showed a consistent tendency toward greater verb sensitivity across ROIs, with the mean drop in performance ranging from 0.03 to 0.06 across both nouns and verbs for both listening and reading. The MFG and PTL showed a consistently larger drop for the verb-masked model across both modalities, suggesting that these regions rely more heavily on verb-specific contextual information. A greater drop in performance for the verb-masked model was also observed in the AG in the reading modality and in the ATL for the listening modality (Fig \ref{fig:roi_dominance}).
+
 \section*{Discussion} 
-\begin{table*}[htbp]
-\centering
-\caption{Theoretical Accounts of Cortical Sensitivity to Nouns and Verbs}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}llccccc@{}}
-\toprule
-\textbf{Theoretical Account} & \textbf{Key Evidence} & \textbf{L-IFG / Premotor} & \textbf{L-MTG / STG} & \textbf{L-Fusiform / ITG} & \textbf{L-Parietal} & \textbf{R-Hemisphere} \\ \midrule
+In this thesis, I aimed to investigate the representation of Parts of Speech (POS) in the human brain, focussing on nouns and verbs. Using voxelwise encoding models (VEM) and POS-masked contextual embeddings from GPT-2, I was able to create a sensitivity map for nouns and verbs across the brain. The results revealed a pattern of segregated but distributed representations of nouns and verbs that challenges traditional dichotomies and supports a more distributed account of language processing in the brain.
 
-\textbf{Classic Fronto-Temporal} & Damasio \& Tranel (1993) & V $>$ N & N $>$ V & N $>$ V & -- & -- \\
-\textit{(Category-specific loci)} & Cappa (2003) & (Action/Motor) & (Entities) & & & \\ \addlinespace
+The observed pattern of noun and verb sensitivity across the brain can be evaluated against the three theoretical accounts: the classic fronto-temporal account, the semantic account, the combinatorial account, and the distributed account.
 
-\textbf{Semantic } & Mestres-Missé (2010) & V $>$ N & V $>$ N & N $>$ V & V $>$ N & -- \\
-\textit{(Object-Action)} & Bird et al. (2000) & (Competition) & (Action/Relational) & (Concrete/Visual) & (Tool use) & \\ \addlinespace
+The fronto-temporal dichotomy stems primarily from neuropsychological studies of aphasic patients and suggests that nouns are processed in temporal areas while verbs are processed in frontal areas. However, the results of this thesis show a higher sensitivity to verbs in temporal areas such as the ATL and AG, which is in direct contradiction to the fronto-temporal account. Moreover, frontal areas such as the IFG, dmPFC and IFGOrbs do not show a clear preference for verbs over nouns, instead showing a mixed pattern of sensitivity. Therefore, the results of this thesis do not support the classic fronto-temporal account of noun and verb representation.
 
-\textbf{Combinatorial} & Tyler et al. (2004) & V $>$ N & N = V & -- & -- & N $>$ V \\
-\textit{(Morphology/Inflection)} & Shapiro et al. (2005) & (Verb inflection) & (Shared stems) & & & (Concrete Ns) \\ \addlinespace
+This discrepancy can be mainly attributed to the difference in methodology. Neuropsychological studies rely on patients with brain damage, which usually extends over large areas and can affect multiple cognitive functions, making it difficult to isolate the specific contribution of a given area to noun and verb processing \parencite{crepaldi_clustering_2013}. In contrast, VEMs allow for a more fine-grained analysis of the cortical representation of language by fitting specific features to the BOLD response of individual voxels, thus providing a more direct measure of the sensitivity to nouns and verbs across the brain.
 
-\textbf{Distributed Account} & Crepaldi et al. (2013) & N = V & N = V & N = V & N = V & N = V \\
-\textit{(Shared network)} & Caucheteux (2021) & \multicolumn{5}{c}{(Strict spatial segregation is rejected; highly interleaved network)} \\ \bottomrule
-\end{tabular}%
-}
-\label{tab:noun_verb_theories}
-\end{table*}
+The semantic account posits that the distinction between nouns and verbs is mainly driven by the semantic properties of the words, with nouns being more associated with objects and verbs with actions. 
+
+The combinatorial account posits that the difference can be attributed to grammatical operations like morphological inflection, which are more common in verbs than nouns. Indeed, a slightly greater verb sensitivity observed in the IFG (Fig \ref{fig:roi_dominance}) could be consistent with this account, as the IFG has been implicated in morphological processing \parencite{siri_neural_2007, yokoyama_cortical_2006,tyler_neural_2004}. This account, however fails to explain the greater verb sensitivity observed in the ATL and AG, which are not typically associated with morphological processing. Moreover, my methodology does not specifically test for morphological processing, as the contextual embeddings capture a wide range of linguistic information beyond morphology, including semantics and syntax. 
+
+The distributed account posits that both nouns and verbs are broadly represented across frontal, parietal and temporal areas \parencite{crepaldi_clustering_2013}. The results of this thesis are consistent with this account, as both noun-sensitive and verb-sensitive areas were observed across the brain. Particularly in the frontal region, the clusters of noun and verb sensitivity appear to be smaller and more interleaved, which is consistent with a distributed representation. However, the strong separation between noun-sensitive and verb-sensitive areas observed in the parietal and temporal regions challenges a purely distributed account and suggests that there might be some degree of functional specialization for nouns and verbs in these areas. Therefore, the results of this thesis support a more nuanced version of the distributed account, where both nouns and verbs are broadly represented across the brain but with some degree of segregation in certain regions.
+
+The contradictions between the results of this thesis and brain imaging studies can again be attributed to the difference in methodology. The use of naturalistic stimuli and VEMs allows for a more ecologically valid investigation of language processing in the brain, which may reveal patterns that are not apparent in highly controlled experimental settings like with block designs or task-based paradigms. In these controlled settings, participants are often required to perform specific tasks that may not reflect natural language processing, and the stimuli are usually limited to single words or simple sentences.
+
+In conclusion, this thesis provides evidence for a complex representation of nouns and verbs in the human brain, with some degree of segregation in certain regions. This challenges traditional dichotomies and supports a more nuanced view of language processing in the brain that takes into account both distributed representations and functional specialization.
+
+\section*{Limitations and Future Directions}
 \printbibliography
-\section*{Additional Figures}
+\newpage
+\section*{Supplementary Material}
 \begin{figure}
-    \subjectfigure{figures/Fig3}
+    \subjectfigure{figures/Sup1}
                     {subject07-reading}
                     {subject08-reading}
                     {subject09-reading}
                     {subject01-reading, subject02-reading,  subject05-reading,
                      subject03-reading, subject04-reading,  subject06-reading}
     \centering
-    \caption{\textbf{Noun and verb sensitivity across subjects.} Each point represents}
+    \caption{\textbf{Noun and verb sensitivity across subjects in the reading modality.} See Fig \ref{fig:noun_verb} for details.}
 \end{figure}
 \end{document}

@@ -10,3 +10,8 @@ seaborn
 PyQT5
 nibabel
 pycortex
+numpy
+matplotlib
+scipy
+pandas
+scikit-learn

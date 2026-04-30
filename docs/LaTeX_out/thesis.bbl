@@ -231,12 +231,12 @@
     \endentry
     \entry{damasio_nouns_1993}{article}{}
       \name{author}{2}{}{%
-        {{un=1,uniquepart=given,hash=2ea5e766a457c8f220657ad967b493b1}{%
+        {{un=0,uniquepart=base,hash=2ea5e766a457c8f220657ad967b493b1}{%
            family={Damasio},
            familyi={D\bibinitperiod},
            given={A\bibnamedelima R},
            giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod},
-           givenun=1}}%
+           givenun=0}}%
         {{un=0,uniquepart=base,hash=f7493b20d816dddfdd893b517a0033ae}{%
            family={Tranel},
            familyi={T\bibinitperiod},
@@ -285,121 +285,6 @@
       \verb{url}
       \verb https://www.pnas.org/doi/abs/10.1073/pnas.90.11.4957
       \endverb
-    \endentry
-    \entry{damasio_neural_2001}{article}{}
-      \name{author}{6}{}{%
-        {{un=1,uniquepart=given,hash=90d18565624a545105cb1ab485254aae}{%
-           family={Damasio},
-           familyi={D\bibinitperiod},
-           given={H.},
-           giveni={H\bibinitperiod},
-           givenun=1}}%
-        {{un=0,uniquepart=base,hash=0024100aada99a099fd1fa9e42ee1207}{%
-           family={Grabowski},
-           familyi={G\bibinitperiod},
-           given={T.\bibnamedelimi J.},
-           giveni={T\bibinitperiod\bibinitdelim J\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=f7493b20d816dddfdd893b517a0033ae}{%
-           family={Tranel},
-           familyi={T\bibinitperiod},
-           given={D.},
-           giveni={D\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=5a336ba53b28695c7148a89966a72cb3}{%
-           family={Ponto},
-           familyi={P\bibinitperiod},
-           given={L.\bibnamedelimi L.},
-           giveni={L\bibinitperiod\bibinitdelim L\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=80300da565c5b0fd90cb271148bf7169}{%
-           family={Hichwa},
-           familyi={H\bibinitperiod},
-           given={R.\bibnamedelimi D.},
-           giveni={R\bibinitperiod\bibinitdelim D\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=2ea5e766a457c8f220657ad967b493b1}{%
-           family={Damasio},
-           familyi={D\bibinitperiod},
-           given={A.\bibnamedelimi R.},
-           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{2321b3ef25570f76ce93325ad7636e33}
-      \strng{fullhash}{1ea1decad8a114eabfd74172d5452cf3}
-      \strng{bibnamehash}{2321b3ef25570f76ce93325ad7636e33}
-      \strng{authorbibnamehash}{2321b3ef25570f76ce93325ad7636e33}
-      \strng{authornamehash}{2321b3ef25570f76ce93325ad7636e33}
-      \strng{authorfullhash}{1ea1decad8a114eabfd74172d5452cf3}
-      \field{sortinit}{D}
-      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{Ina [(15)O] water {PET} experiment, 10 normal subjects retrieved words denoting actions (performed with or without an implement), and another 10 normal subjects retrieved words denoting the spatial relations between objects. Our objective was to test the following hypothesis: that the salient neural activity associated with naming actions and spatial relations occurs in left frontal operculum and left parietal association cortices, but not in the left inferotemporal cortices ({IT}) or in the right parietal association cortices. There were two control tasks, one requiring a decision on the orientation of unknown faces (a standard control task in our laboratory) and another requiring the retrieval of words denoting the concrete entities used in the action and spatial relations tasks. In accordance with the hypothesis, both naming actions and spatial relations (using the face orientation task as control activated the left frontal operculum; naming actions also activated the left parietal lobe. However, sectors of the left posterior {IT} were also engaged in both naming actions and spatial relations. When the naming of concrete entities was subtracted from the naming of actions performed with such entities, area {MT} in the posterior temporo-occipital region was activated bilaterally. On the other hand, when naming of the concrete entities was subtracted from the naming of spatial relations, left parietal activation was found, and when two tasks of naming spatial relations were contrasted to each other bilateral parietal activation was seen, right when abstract stimuli were used and left when concrete objects were used. The activity in posterior {IT} is thought to be related to object processing and possibly name retrieval at a subconscious level.}
-      \field{issn}{1053-8119}
-      \field{journaltitle}{{NeuroImage}}
-      \field{month}{6}
-      \field{number}{6}
-      \field{shortjournal}{Neuroimage}
-      \field{title}{Neural correlates of naming actions and of naming spatial relations}
-      \field{volume}{13}
-      \field{year}{2001}
-      \field{dateera}{ce}
-      \field{pages}{1053\bibrangedash 1064}
-      \range{pages}{12}
-      \verb{doi}
-      \verb 10.1006/nimg.2001.0775
-      \endverb
-      \keyw{Adult,Brain Mapping,Cerebral Cortex,Cohort Studies,Dominance,Cerebral,Female,Humans,Male,Mental Recall,Orientation,Pattern Recognition,Visual,Psycholinguistics,Reference Values,Semantics,Tomography,Emission-Computed,Verbal Behavior,Verbal Learning}
-    \endentry
-    \entry{de_renzi_sparing_1995}{article}{}
-      \name{author}{2}{}{%
-        {{un=0,uniquepart=base,hash=b1cfac5348ac5e29601395ffe0fecbfa}{%
-           family={De\bibnamedelima Renzi},
-           familyi={D\bibinitperiod\bibinitdelim R\bibinitperiod},
-           given={E.},
-           giveni={E\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=e2f564cf17808b00eca441924dd69fc5}{%
-           family={Pellegrino},
-           familyi={P\bibinitperiod},
-           given={G.},
-           giveni={G\bibinitperiod},
-           givenun=0,
-           prefix={di},
-           prefixi={d\bibinitperiod},
-           prefixun=0}}%
-      }
-      \strng{namehash}{005f509a789517858c35e697932c0784}
-      \strng{fullhash}{005f509a789517858c35e697932c0784}
-      \strng{bibnamehash}{005f509a789517858c35e697932c0784}
-      \strng{authorbibnamehash}{005f509a789517858c35e697932c0784}
-      \strng{authornamehash}{005f509a789517858c35e697932c0784}
-      \strng{authorfullhash}{005f509a789517858c35e697932c0784}
-      \field{sortinit}{D}
-      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{We report a patient who, following a left fronto-temporal lesion, showed a complete sparing of the semantic store and a deficit of word production characterized by two types of dissociations. First, oral and written output was severely disrupted in naming and partially impaired in repetition, writing to dictation and oral spelling, with the exception of verbs, which were normally produced in every modality and condition of stimulation. Second, reading was normal for all type of words as well as non-words. This pattern of deficits suggests two functional lesions, one affecting the connections between the semantic store and the phonological lexicon and the other damaging the sublexical route that converts sound to sound and sound to print. It also implies that words are independently organized in the phonological lexicon, based on their grammatical class and have discrete connections with the semantic store. However, {CT} scan evidence does not support the hypothesis that this functional dissociation finds its anatomical correlate in the specialization of the frontal premotor cortex for verbs and the antero-medial temporal cortex for nouns. In spite of his normal reading performance, both in terms of comprehension and of accuracy and speed in word production, the patient complained that he met with great difficulty in reading newspapers and books, to the point that he had to renounce to this previously favourite activity. It was found that it took him time and effort to grasp the meaning of complex sentences and passages and it was speculated that, contrary to single words and elementary sentences, comprehension of this type of material cannot be achieved by the mere access of orthographic stimuli to semantics, but requires the retrieval of word-forms. It would appear that a patient, whose lexical route is blocked, can only read passages, by first converting print to sound via the sublexical route and then re-entering the semantic store with oral input.}
-      \field{issn}{0010-9452}
-      \field{journaltitle}{Cortex; a Journal Devoted to the Study of the Nervous System and Behavior}
-      \field{month}{12}
-      \field{number}{4}
-      \field{shortjournal}{Cortex}
-      \field{title}{Sparing of verbs and preserved, but ineffectual reading in a patient with impaired word production}
-      \field{volume}{31}
-      \field{year}{1995}
-      \field{dateera}{ce}
-      \field{pages}{619\bibrangedash 636}
-      \range{pages}{18}
-      \verb{doi}
-      \verb 10.1016/s0010-9452(13)80016-0
-      \endverb
-      \keyw{Adult,Brain Damage,Chronic,Humans,Intracranial Aneurysm,Language Disorders,Language Tests,Male,Mental Recall,Reading,Semantics,Speech Disorders,Speech Production Measurement,Verbal Behavior}
     \endentry
     \entry{deerwester_indexing_1990}{article}{}
       \name{author}{5}{}{%
@@ -613,6 +498,46 @@
       \endverb
       \keyw{Computer Science - Computation and Language}
     \endentry
+    \entry{elman_alternative_2004}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d5a20a1ebd7891ecfcfd79254de20395}{%
+           family={Elman},
+           familyi={E\bibinitperiod},
+           given={Jeffrey\bibnamedelima L},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d5a20a1ebd7891ecfcfd79254de20395}
+      \strng{fullhash}{d5a20a1ebd7891ecfcfd79254de20395}
+      \strng{bibnamehash}{d5a20a1ebd7891ecfcfd79254de20395}
+      \strng{authorbibnamehash}{d5a20a1ebd7891ecfcfd79254de20395}
+      \strng{authornamehash}{d5a20a1ebd7891ecfcfd79254de20395}
+      \strng{authorfullhash}{d5a20a1ebd7891ecfcfd79254de20395}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{An essential aspect of knowing language is knowing the words of that language. This knowledge is usually thought to reside in the mental lexicon, a kind of dictionary that contains information regarding a word's meaning, pronunciation, syntactic characteristics, and so on. In this article, a very different view is presented. In this view, words are understood as stimuli that operate directly on mental states. The phonological, syntactic and semantic properties of a word are revealed by the effects it has on those states.}
+      \field{issn}{1364-6613}
+      \field{journaltitle}{Trends in Cognitive Sciences}
+      \field{number}{7}
+      \field{title}{An alternative view of the mental lexicon}
+      \field{volume}{8}
+      \field{year}{2004}
+      \field{pages}{301\bibrangedash 306}
+      \range{pages}{6}
+      \verb{doi}
+      \verb https://doi.org/10.1016/j.tics.2004.05.003
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S1364661304001366
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S1364661304001366
+      \endverb
+    \endentry
     \entry{fedorenko_new_2010}{article}{}
       \name{author}{5}{}{%
         {{un=0,uniquepart=base,hash=461c2b9b36ddc2caa9f63ed4c6e53851}{%
@@ -724,6 +649,68 @@
       \verb https://onlinelibrary.wiley.com/doi/abs/10.1002/%28SICI%291097-0193%281999%298%3A4%3C272%3A%3AAID-HBM10%3E3.0.CO%3B2-4
       \endverb
       \keyw{intersubject averaging,coordinate systems,atlas}
+    \endentry
+    \entry{garrett_organization_1984}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=1abd03a280b8ffd1cc5e0f3c44ef5cf9}{%
+           family={Garrett},
+           familyi={G\bibinitperiod},
+           given={Merill\bibnamedelima F.},
+           giveni={M\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0}}%
+      }
+      \name{editor}{3}{}{%
+        {{hash=d02bb6ff25883672ea8de9faaf33e7a6}{%
+           family={Caplan},
+           familyi={C\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=adb7914b14d78d3276f1e0f3de868c9e}{%
+           family={Lecours},
+           familyi={L\bibinitperiod},
+           given={Andre\bibnamedelima Roch},
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=556c8dba145b472e6a8598d506f7cbe2}{%
+           family={Smith},
+           familyi={S\bibinitperiod},
+           given={Alan},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {The MIT Press}%
+      }
+      \strng{namehash}{1abd03a280b8ffd1cc5e0f3c44ef5cf9}
+      \strng{fullhash}{1abd03a280b8ffd1cc5e0f3c44ef5cf9}
+      \strng{bibnamehash}{1abd03a280b8ffd1cc5e0f3c44ef5cf9}
+      \strng{authorbibnamehash}{1abd03a280b8ffd1cc5e0f3c44ef5cf9}
+      \strng{authornamehash}{1abd03a280b8ffd1cc5e0f3c44ef5cf9}
+      \strng{authorfullhash}{1abd03a280b8ffd1cc5e0f3c44ef5cf9}
+      \strng{editorbibnamehash}{b23e445b9c2f747465ec35a9cc1bcdf5}
+      \strng{editornamehash}{9b9e18b6d9008e8e3ebe473efe8cf350}
+      \strng{editorfullhash}{b23e445b9c2f747465ec35a9cc1bcdf5}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Biological Perspectives on Language}
+      \field{isbn}{9780262315784}
+      \field{month}{07}
+      \field{title}{The Organization of Processing Structure for Language Production: Applications to Aphasic Speech}
+      \field{year}{1984}
+      \verb{doi}
+      \verb 10.7551/mitpress/1615.003.0016
+      \endverb
+      \verb{eprint}
+      \verb https://direct.mit.edu/book/chapter-pdf/2049040/c010028_9780262315784.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.7551/mitpress/1615.003.0016
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.7551/mitpress/1615.003.0016
+      \endverb
     \endentry
     \entry{huth_natural_2016}{article}{}
       \name{author}{5}{}{%
@@ -1646,6 +1633,86 @@
       \verb https://www.sciencedirect.com/science/article/pii/S0028393203002410
       \endverb
       \keyw{{fMRI},Inflection,Nouns,Verbs}
+    \endentry
+    \entry{ullman_dictionary_1997}{article}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=6db9eff0208c6a1f77b8f3690c81922b}{%
+           family={Ullman},
+           familyi={U\bibinitperiod},
+           given={Michael\bibnamedelima T.},
+           giveni={M\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=aec138bafa09d8f20d75aa49d521319d}{%
+           family={Corkin},
+           familyi={C\bibinitperiod},
+           given={Suzanne},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ac848504c8dfad2dd0b3e347213c56ba}{%
+           family={Coppola},
+           familyi={C\bibinitperiod},
+           given={Marie},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e9152f2cf1371efda584fd5586458bc6}{%
+           family={Hickok},
+           familyi={H\bibinitperiod},
+           given={Gregory},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=20648f253c91e5ae3a0411cfa1e566c1}{%
+           family={Growdon},
+           familyi={G\bibinitperiod},
+           given={John\bibnamedelima H.},
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bc8c2465572f213e3524e0da75ac8896}{%
+           family={Koroshetz},
+           familyi={K\bibinitperiod},
+           given={Walter\bibnamedelima J.},
+           giveni={W\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=026a9bbaeb03e57886733eb6c1f1be1c}{%
+           family={Pinker},
+           familyi={P\bibinitperiod},
+           given={Steven},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{4c063b9b8136c2593990a345b05c3c58}
+      \strng{fullhash}{7ef404c20ad42b58e16fa596a507c0ae}
+      \strng{bibnamehash}{4c063b9b8136c2593990a345b05c3c58}
+      \strng{authorbibnamehash}{4c063b9b8136c2593990a345b05c3c58}
+      \strng{authornamehash}{4c063b9b8136c2593990a345b05c3c58}
+      \strng{authorfullhash}{7ef404c20ad42b58e16fa596a507c0ae}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Language comprises a lexicon for storing words and a grammar for generating rule-governed forms. Evidence is presented that the lexicon is part of a temporal-parietalhnedial-temporal “declarative memory” system and that granlmatical rules are processed by a frontamasal-ganglia “procedural” system. Patients produced past tenses of regular and novel verbs (looked and plagged), which require an -ed-suffixation rule, and irregular verbs (dug), which are retrieved from memory. Word-finding difficulties in posterior aphasia, and the general declarative memory impairment in Alzheimer's disease, led to more errors with irregular than regular and novel verbs. Grammatical difficulties in anterior aphasia, and the general impairment of procedures in Parkinson's disease, led to the opposite pattern. In contrast to the Parkinson's patients, who showed sup pressed motor activity and rule use, Huntington's disease patients showed excess motor activity and rule use, underscoring a role for the basal ganglia in grammatical processing.}
+      \field{issn}{0898-929X}
+      \field{journaltitle}{Journal of Cognitive Neuroscience}
+      \field{month}{03}
+      \field{number}{2}
+      \field{title}{A Neural Dissociation within Language: Evidence that the Mental Dictionary Is Part of Declarative Memory, and that Grammatical Rules Are Processed by the Procedural System}
+      \field{volume}{9}
+      \field{year}{1997}
+      \field{pages}{266\bibrangedash 276}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1162/jocn.1997.9.2.266
+      \endverb
+      \verb{eprint}
+      \verb https://direct.mit.edu/jocn/article-pdf/9/2/266/1932748/jocn.1997.9.2.266.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1162/jocn.1997.9.2.266
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1162/jocn.1997.9.2.266
+      \endverb
     \endentry
     \entry{vaswani_attention_2023}{misc}{}
       \name{author}{8}{}{%

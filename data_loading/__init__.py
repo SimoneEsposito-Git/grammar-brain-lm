@@ -5,7 +5,7 @@ import warnings
 
 from .embedding_manager import EmbeddingManager
 from .context_manager import ContextManager
-#from .data_sequence import DataSequence
+from .data_sequence import DataSequence
 from .tr_file import TRFile
 
 from .file_io import (

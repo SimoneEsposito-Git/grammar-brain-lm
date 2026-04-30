@@ -67,10 +67,16 @@ def _overlay_flatmap_rois(rgb_map, map_file, roi_index=0):
     overlay = np.rot90(overlay, k=1)
 
     roi_mask = overlay > 0
-    rgb_map[roi_mask, 0] = 0.8
-    rgb_map[roi_mask, 1] = 0.8
-    rgb_map[roi_mask, 2] = 0.8
-    rgb_map[roi_mask, 3] = 1.0
+    # Some mapper files differ by one pixel from rendered flatmaps; overlay only
+    # on the shared region to avoid boolean-index shape mismatches.
+    h = min(roi_mask.shape[0], rgb_map.shape[0])
+    w = min(roi_mask.shape[1], rgb_map.shape[1])
+    roi_mask = roi_mask[:h, :w]
+    rgb_view = rgb_map[:h, :w]
+    rgb_view[roi_mask, 0] = 0.8
+    rgb_view[roi_mask, 1] = 0.8
+    rgb_view[roi_mask, 2] = 0.8
+    rgb_view[roi_mask, 3] = 1.0
 
 # endregion
 # ============================================================================
@@ -391,15 +397,16 @@ class SinglePanelBuilder(FigureBuilder):
         ax.set_facecolor('none')
         fig.patch.set_alpha(0)
         ax.axis("off")
+        show_legend = kwargs.get('show_legend', True)
         
         # Use suptitle for consistent positioning
         if title:
             fig.suptitle(title, fontsize=12, y=0.95)
         if subject:
-            fig.text(0.5, 0.75, subject, ha='center', fontsize=12)
+            fig.text(0.5, 0.75, subject, ha='center', fontsize=8)
         
         # Auto-generate colorbar for single correlation in fixed legend area
-        if strategy is not None and strategy.get_legend_type() == 'colorbar':
+        if show_legend and strategy is not None and strategy.get_legend_type() == 'colorbar':
             legend_data = strategy.get_legend_data()
             vmin = legend_data.get('vmin', 0)
             vmax = legend_data.get('vmax', 0.5)
@@ -423,8 +430,8 @@ class SinglePanelBuilder(FigureBuilder):
             cbar.set_label(label, fontsize=8)
         
         # Fallback for explicit colorbar_data
-        elif colorbar_data is not None:
-            flatmap, norm, cmap = colorbar_data
+        elif show_legend and colorbar_data is not None:
+            _, norm, cmap = colorbar_data
             sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
             sm.set_array([])
             legend_inner_bottom = self.config.legend_padding
@@ -510,7 +517,7 @@ class BivariateLegendBuilder(SinglePanelBuilder):
         if title:
             fig.suptitle(title, fontsize=12, y=0.95)
         if subject:
-            fig.text(0.5, 0.75, subject, ha='center', fontsize=12)
+            fig.text(0.5, 0.75, subject, ha='center', fontsize=8)
             
         if not kwargs.get('show_legend', True):
             return 

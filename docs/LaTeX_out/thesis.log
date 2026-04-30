@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.25)  24 APR 2026 21:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.25)  30 APR 2026 17:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -716,10 +716,12 @@ Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
 \c@@todonotes@numberoftodonotes=\count388
-) (/usr/local/texlive/2024/texmf-dist/tex/latex/biblatex/biblatex.sty
+) (/usr/local/texlive/2024/texmf-dist/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
+)
+(/usr/local/texlive/2024/texmf-dist/tex/latex/biblatex/biblatex.sty
 Package: biblatex 2023/03/05 v3.19 programmable bibliographies (PK/MW)
-
-(/usr/local/texlive/2024/texmf-dist/tex/latex/logreq/logreq.sty
+ (/usr/local/texlive/2024/texmf-dist/tex/latex/logreq/logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
 \lrq@indent=\count389
  (/usr/local/texlive/2024/texmf-dist/tex/latex/logreq/logreq.def
@@ -989,24 +991,24 @@ Package biblatex Warning: 'babel/polyglossia' detected but 'csquotes' missing.
 (LaTeX_out/thesis.aux)
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 110.
-LaTeX Font Info:    ... okay on input line 110.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
  (/usr/local/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count521
@@ -1037,14 +1039,14 @@ Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count527
-Package hyperref Info: Link coloring OFF on input line 110.
+Package hyperref Info: Link coloring OFF on input line 114.
  (LaTeX_out/thesis.out) (LaTeX_out/thesis.out)
 \@outlinefile=\write5
 \openout5 = `thesis.out'.
 
 
 
-Package layouts Warning: Layout scale set to 0.5 on input line 110.
+Package layouts Warning: Layout scale set to 0.5 on input line 114.
 
 Package biblatex Info: Trying to load language 'german'...
 Package biblatex Info: ... file 'german.lbx' found.
@@ -1064,191 +1066,137 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'thesis.bbl' found.
  (LaTeX_out/thesis.bbl)
-Package biblatex Info: Reference section=0 on input line 110.
-Package biblatex Info: Reference segment=0 on input line 110.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 128.
+Package biblatex Info: Reference section=0 on input line 114.
+Package biblatex Info: Reference segment=0 on input line 114.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 132.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 128.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 132.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input line 171.
+Underfull \hbox (badness 10000) in paragraph at lines 236--236
+\OT1/cmr/m/n/9 (Damasio and Tranel
+ []
 
-Underfull \hbox (badness 1466) in paragraph at lines 229--229
+
+Underfull \hbox (badness 1466) in paragraph at lines 236--236
 []|\OT1/cmr/m/n/9 V$\OML/cmm/m/it/9 >$\OT1/cmr/m/n/9 N in frontal re-gions;
  []
 
 
-Underfull \hbox (badness 5607) in paragraph at lines 229--229
+Underfull \hbox (badness 5607) in paragraph at lines 236--236
 \OT1/cmr/m/n/9 (ATL, PTL); no clean
  []
 
 
-Underfull \hbox (badness 1325) in paragraph at lines 229--229
+Underfull \hbox (badness 1325) in paragraph at lines 236--236
 []|\OT1/cmr/m/n/9 N $\OML/cmm/m/it/9 >$ \OT1/cmr/m/n/9 V near vi-sual ar-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 229--229
+Underfull \hbox (badness 10000) in paragraph at lines 236--236
 \OT1/cmr/m/n/9 (Crepaldi et al. []2013[];
  []
 
 
-Underfull \hbox (badness 2856) in paragraph at lines 229--229
+Underfull \hbox (badness 2856) in paragraph at lines 236--236
 []|\OT1/cmr/m/n/9 Noun and verb cir-cuits
  []
 
-[3] [4]
-Overfull \hbox (3.3328pt too wide) in paragraph at lines 328--329
-[]\OT1/cmr/m/n/10 A list of phoneme-time pairs was con-structed for each of the 39 En-glish phonemes.
- []
-
-[5] [6]
+[3] [4] [5] [6]
 
 pdfTeX warning: pdflatex (file ./figures/Fig1/Fig1_alternative.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<figures/Fig1/Fig1_alternative.pdf, id=140, 193.91847pt x 216.0853pt>
+<figures/Fig1/Fig1_alternative.pdf, id=137, 193.91847pt x 216.0853pt>
 File: figures/Fig1/Fig1_alternative.pdf Graphic file (type pdf)
 <use figures/Fig1/Fig1_alternative.pdf>
-Package pdftex.def Info: figures/Fig1/Fig1_alternative.pdf  used on input line 377.
+Package pdftex.def Info: figures/Fig1/Fig1_alternative.pdf  used on input line 382.
 (pdftex.def)             Requested size: 193.91798pt x 216.08476pt.
-[7 <./figures/Fig1/Fig1_alternative.pdf>]
-<figures/Fig2/subject07-listening-all.pdf, id=197, 240.29774pt x 137.13919pt>
+[7 <./figures/Fig1/Fig1_alternative.pdf>] [8]
+<figures/Fig2/subject07-listening-all.pdf, id=201, 240.29774pt x 137.13919pt>
 File: figures/Fig2/subject07-listening-all.pdf Graphic file (type pdf)
 <use figures/Fig2/subject07-listening-all.pdf>
-Package pdftex.def Info: figures/Fig2/subject07-listening-all.pdf  used on input line 415.
+Package pdftex.def Info: figures/Fig2/subject07-listening-all.pdf  used on input line 457.
 (pdftex.def)             Requested size: 240.29715pt x 137.13884pt.
-<figures/Fig2/subject07-reading-all.pdf, id=198, 240.29774pt x 161.2148pt>
+<figures/Fig2/subject07-reading-all.pdf, id=202, 240.29774pt x 161.2148pt>
 File: figures/Fig2/subject07-reading-all.pdf Graphic file (type pdf)
 <use figures/Fig2/subject07-reading-all.pdf>
-Package pdftex.def Info: figures/Fig2/subject07-reading-all.pdf  used on input line 421.
+Package pdftex.def Info: figures/Fig2/subject07-reading-all.pdf  used on input line 463.
 (pdftex.def)             Requested size: 240.29715pt x 161.2144pt.
-<figures/Fig2/pos_distribution.pdf, id=199, 243.27074pt x 142.69331pt>
+<figures/Fig2/pos_distribution.pdf, id=203, 243.27074pt x 142.69331pt>
 File: figures/Fig2/pos_distribution.pdf Graphic file (type pdf)
 <use figures/Fig2/pos_distribution.pdf>
-Package pdftex.def Info: figures/Fig2/pos_distribution.pdf  used on input line 427.
+Package pdftex.def Info: figures/Fig2/pos_distribution.pdf  used on input line 469.
 (pdftex.def)             Requested size: 243.27013pt x 142.69296pt.
- [8] [9 <./figures/Fig2/subject07-listening-all.pdf> <./figures/Fig2/subject07-reading-all.pdf> <./figures/Fig2/pos_distribution.pdf>] [10]
-<figures/Fig3/subject07-listening.pdf, id=320, 240.29774pt x 165.0165pt>
-File: figures/Fig3/subject07-listening.pdf Graphic file (type pdf)
-<use figures/Fig3/subject07-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject07-listening.pdf  used on input line 492.
-(pdftex.def)             Requested size: 224.2479pt x 153.9925pt.
+ [9] [10 <./figures/Fig2/subject07-listening-all.pdf> <./figures/Fig2/subject07-reading-all.pdf> <./figures/Fig2/pos_distribution.pdf>]
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 492--492
-[] 
+pdfTeX warning: pdflatex (file ./figures/Fig3/subject07.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<figures/Fig3/subject07.pdf, id=317, 344.48701pt x 73.10843pt>
+File: figures/Fig3/subject07.pdf Graphic file (type pdf)
+<use figures/Fig3/subject07.pdf>
+Package pdftex.def Info: figures/Fig3/subject07.pdf  used on input line 488.
+(pdftex.def)             Requested size: 345.0pt x 73.22089pt.
+
+
+pdfTeX warning: pdflatex (file ./figures/Fig3/rest_of_subjects.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<figures/Fig3/rest_of_subjects.pdf, id=318, 339.35184pt x 183.18135pt>
+File: figures/Fig3/rest_of_subjects.pdf Graphic file (type pdf)
+<use figures/Fig3/rest_of_subjects.pdf>
+Package pdftex.def Info: figures/Fig3/rest_of_subjects.pdf  used on input line 491.
+(pdftex.def)             Requested size: 345.0pt x 186.23315pt.
+
+Overfull \hbox (6.66666pt too wide) in paragraph at lines 488--492
+ [][] 
  []
 
-<figures/Fig3/subject08-listening.pdf, id=321, 127.37587pt x 66.27518pt>
-File: figures/Fig3/subject08-listening.pdf Graphic file (type pdf)
-<use figures/Fig3/subject08-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject08-listening.pdf  used on input line 492.
-(pdftex.def)             Requested size: 113.85063pt x 59.23752pt.
-<figures/Fig3/subject09-listening.pdf, id=322, 127.37587pt x 69.83447pt>
-File: figures/Fig3/subject09-listening.pdf Graphic file (type pdf)
-<use figures/Fig3/subject09-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject09-listening.pdf  used on input line 492.
-(pdftex.def)             Requested size: 113.85063pt x 62.41887pt.
-<figures/Fig3/subject01-listening.pdf, id=323, 127.37587pt x 75.8624pt>
-File: figures/Fig3/subject01-listening.pdf Graphic file (type pdf)
-<use figures/Fig3/subject01-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject01-listening.pdf  used on input line 492.
-(pdftex.def)             Requested size: 113.85063pt x 67.80669pt.
-<figures/Fig3/subject02-listening.pdf, id=324, 127.37587pt x 66.05118pt>
-File: figures/Fig3/subject02-listening.pdf Graphic file (type pdf)
-<use figures/Fig3/subject02-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject02-listening.pdf  used on input line 492.
-(pdftex.def)             Requested size: 113.85063pt x 59.03732pt.
-<figures/Fig3/subject05-listening.pdf, id=325, 127.37587pt x 73.44992pt>
-File: figures/Fig3/subject05-listening.pdf Graphic file (type pdf)
-<use figures/Fig3/subject05-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject05-listening.pdf  used on input line 492.
-(pdftex.def)             Requested size: 113.85063pt x 65.65039pt.
-<figures/Fig3/subject03-listening.pdf, id=326, 127.37587pt x 71.08084pt>
-File: figures/Fig3/subject03-listening.pdf Graphic file (type pdf)
-<use figures/Fig3/subject03-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject03-listening.pdf  used on input line 492.
-(pdftex.def)             Requested size: 113.85063pt x 63.53288pt.
-<figures/Fig3/subject04-listening.pdf, id=327, 127.37587pt x 69.6027pt>
-File: figures/Fig3/subject04-listening.pdf Graphic file (type pdf)
-<use figures/Fig3/subject04-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject04-listening.pdf  used on input line 492.
-(pdftex.def)             Requested size: 113.85063pt x 62.21172pt.
-<figures/Fig3/subject06-listening.pdf, id=328, 127.37587pt x 67.74701pt>
-File: figures/Fig3/subject06-listening.pdf Graphic file (type pdf)
-<use figures/Fig3/subject06-listening.pdf>
-Package pdftex.def Info: figures/Fig3/subject06-listening.pdf  used on input line 492.
-(pdftex.def)             Requested size: 113.85063pt x 60.55305pt.
+
+Overfull \hbox (6.66666pt too wide) in paragraph at lines 488--492
+ [] 
+ []
+
+[11
+
+]
 <figures/Fig4/roi_dominance_2d.pdf, id=329, 379.24498pt x 369.3047pt>
 File: figures/Fig4/roi_dominance_2d.pdf Graphic file (type pdf)
 <use figures/Fig4/roi_dominance_2d.pdf>
-Package pdftex.def Info: figures/Fig4/roi_dominance_2d.pdf  used on input line 500.
+Package pdftex.def Info: figures/Fig4/roi_dominance_2d.pdf  used on input line 508.
 (pdftex.def)             Requested size: 345.0pt x 335.97765pt.
-
-Overfull \hbox (4.51952pt too wide) in paragraph at lines 510--510
+ [12 <./figures/Fig3/subject07.pdf> <./figures/Fig3/rest_of_subjects.pdf>] [13 <./figures/Fig4/roi_dominance_2d.pdf>]
+Overfull \hbox (4.51952pt too wide) in paragraph at lines 519--519
 [][]\OT1/cmr/bx/n/12 Verb sen-si-tiv-ity is more preva-lent across lan-guage ROIs 
  []
 
-[11] [12 <./figures/Fig3/subject07-listening.pdf> <./figures/Fig3/subject08-listening.pdf> <./figures/Fig3/subject09-listening.pdf> <./figures/Fig3/subject01-listening.pdf> <./figures/Fig3/subject02-listening.pdf> <./figures/Fig3/subject05-listening.pdf> <./figures/Fig3/subject03-listening.pdf> <./figures/Fig3/subject04-listening.pdf> <./figures/Fig3/subject06-listening.pdf>] [13 <./figures/Fig4/roi_dominance_2d.pdf>] [14] [15]
-Overfull \hbox (2.2779pt too wide) in paragraph at lines 536--536
+[14
+
+] [15] [16]
+Overfull \hbox (2.2779pt too wide) in paragraph at lines 552--552
 [][]\OT1/cmr/m/n/10 Caucheteux, Char-lotte, Alexan-dre Gram-fort, and Jean-Remi King (July 1, 2021).
  []
 
-[16] [17] [18]
-<figures/Sup1/subject07-reading.pdf, id=645, 240.29774pt x 165.0165pt>
-File: figures/Sup1/subject07-reading.pdf Graphic file (type pdf)
-<use figures/Sup1/subject07-reading.pdf>
-Package pdftex.def Info: figures/Sup1/subject07-reading.pdf  used on input line 544.
-(pdftex.def)             Requested size: 224.2479pt x 153.9925pt.
+[17] [18] [19]
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 544--544
-[] 
- []
+pdfTeX warning: pdflatex (file ./figures/Sup1/baseline.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<figures/Sup1/baseline.pdf, id=820, 342.22356pt x 190.77673pt>
+File: figures/Sup1/baseline.pdf Graphic file (type pdf)
+<use figures/Sup1/baseline.pdf>
+Package pdftex.def Info: figures/Sup1/baseline.pdf  used on input line 557.
+(pdftex.def)             Requested size: 345.0pt x 192.3249pt.
 
-<figures/Sup1/subject08-reading.pdf, id=646, 127.37587pt x 66.27518pt>
-File: figures/Sup1/subject08-reading.pdf Graphic file (type pdf)
-<use figures/Sup1/subject08-reading.pdf>
-Package pdftex.def Info: figures/Sup1/subject08-reading.pdf  used on input line 544.
-(pdftex.def)             Requested size: 113.85063pt x 59.23752pt.
-<figures/Sup1/subject09-reading.pdf, id=647, 127.37587pt x 69.83447pt>
-File: figures/Sup1/subject09-reading.pdf Graphic file (type pdf)
-<use figures/Sup1/subject09-reading.pdf>
-Package pdftex.def Info: figures/Sup1/subject09-reading.pdf  used on input line 544.
-(pdftex.def)             Requested size: 113.85063pt x 62.41887pt.
-<figures/Sup1/subject01-reading.pdf, id=648, 127.37587pt x 75.8624pt>
-File: figures/Sup1/subject01-reading.pdf Graphic file (type pdf)
-<use figures/Sup1/subject01-reading.pdf>
-Package pdftex.def Info: figures/Sup1/subject01-reading.pdf  used on input line 544.
-(pdftex.def)             Requested size: 113.85063pt x 67.80669pt.
-<figures/Sup1/subject02-reading.pdf, id=649, 127.37587pt x 66.05118pt>
-File: figures/Sup1/subject02-reading.pdf Graphic file (type pdf)
-<use figures/Sup1/subject02-reading.pdf>
-Package pdftex.def Info: figures/Sup1/subject02-reading.pdf  used on input line 544.
-(pdftex.def)             Requested size: 113.85063pt x 59.03732pt.
-<figures/Sup1/subject05-reading.pdf, id=650, 127.37587pt x 73.44992pt>
-File: figures/Sup1/subject05-reading.pdf Graphic file (type pdf)
-<use figures/Sup1/subject05-reading.pdf>
-Package pdftex.def Info: figures/Sup1/subject05-reading.pdf  used on input line 544.
-(pdftex.def)             Requested size: 113.85063pt x 65.65039pt.
-<figures/Sup1/subject03-reading.pdf, id=651, 127.37587pt x 71.08084pt>
-File: figures/Sup1/subject03-reading.pdf Graphic file (type pdf)
-<use figures/Sup1/subject03-reading.pdf>
-Package pdftex.def Info: figures/Sup1/subject03-reading.pdf  used on input line 544.
-(pdftex.def)             Requested size: 113.85063pt x 63.53288pt.
-<figures/Sup1/subject04-reading.pdf, id=652, 127.37587pt x 69.6027pt>
-File: figures/Sup1/subject04-reading.pdf Graphic file (type pdf)
-<use figures/Sup1/subject04-reading.pdf>
-Package pdftex.def Info: figures/Sup1/subject04-reading.pdf  used on input line 544.
-(pdftex.def)             Requested size: 113.85063pt x 62.21172pt.
-<figures/Sup1/subject06-reading.pdf, id=653, 127.37587pt x 67.74701pt>
-File: figures/Sup1/subject06-reading.pdf Graphic file (type pdf)
-<use figures/Sup1/subject06-reading.pdf>
-Package pdftex.def Info: figures/Sup1/subject06-reading.pdf  used on input line 544.
-(pdftex.def)             Requested size: 113.85063pt x 60.55305pt.
-[19 <./figures/Sup1/subject07-reading.pdf> <./figures/Sup1/subject08-reading.pdf> <./figures/Sup1/subject09-reading.pdf> <./figures/Sup1/subject01-reading.pdf> <./figures/Sup1/subject02-reading.pdf> <./figures/Sup1/subject05-reading.pdf> <./figures/Sup1/subject03-reading.pdf> <./figures/Sup1/subject04-reading.pdf> <./figures/Sup1/subject06-reading.pdf>] (LaTeX_out/thesis.aux)
+
+pdfTeX warning: pdflatex (file ./figures/Sup2/lexical.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<figures/Sup2/lexical.pdf, id=821, 342.22356pt x 211.5082pt>
+File: figures/Sup2/lexical.pdf Graphic file (type pdf)
+<use figures/Sup2/lexical.pdf>
+Package pdftex.def Info: figures/Sup2/lexical.pdf  used on input line 562.
+(pdftex.def)             Requested size: 345.0pt x 213.22461pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[20 <./figures/Sup1/baseline.pdf>] [21 <./figures/Sup2/lexical.pdf>] (LaTeX_out/thesis.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
@@ -1260,18 +1208,18 @@ Package logreq Info: Writing requests to 'thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 36456 strings out of 474116
- 707258 string characters out of 5743681
- 1952187 words of memory out of 5000000
- 58179 multiletter control sequences out of 15000+600000
+ 36218 strings out of 474116
+ 699316 string characters out of 5743681
+ 1948187 words of memory out of 5000000
+ 57939 multiletter control sequences out of 15000+600000
  569597 words of font info for 78 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
- 84i,13n,93p,2170b,2033s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,13n,93p,2157b,2037s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on LaTeX_out/thesis.pdf (19 pages, 5592730 bytes).
+Output written on LaTeX_out/thesis.pdf (21 pages, 11663917 bytes).
 PDF statistics:
- 911 PDF objects out of 1000 (max. 8388607)
- 556 compressed objects within 6 object streams
- 78 named destinations out of 1000 (max. 500000)
- 128 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1493 PDF objects out of 1728 (max. 8388607)
+ 1001 compressed objects within 11 object streams
+ 76 named destinations out of 1000 (max. 500000)
+ 58 words of extra memory for PDF output out of 10000 (max. 10000000)
 

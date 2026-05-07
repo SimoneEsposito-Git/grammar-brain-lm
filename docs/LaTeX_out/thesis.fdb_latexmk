@@ -1,13 +1,13 @@
 # Fdb version 4
-["biber LaTeX_out/thesis"] 1777561123.54866 "LaTeX_out/thesis.bcf" "LaTeX_out/thesis.bbl" "LaTeX_out/thesis" 1777564590.0626 0
-  "LaTeX_out/thesis.bcf" 1777564589.87999 112031 3153c309e9f35288a157fcefef469ddf "pdflatex"
-  "refs.bib" 1777555391.77754 73589 c1688eafa6832c1fad615c574a2383fa ""
+["biber LaTeX_out/thesis"] 1778073349.21755 "LaTeX_out/thesis.bcf" "LaTeX_out/thesis.bbl" "LaTeX_out/thesis" 1778147845.12017 0
+  "LaTeX_out/thesis.bcf" 1778147844.99565 111887 d7bac5bb32912e8ba11f84e56a380c76 "pdflatex"
+  "refs.bib" 1778073339.99281 73914 7cc02af5279e6e6451155eb148a6f3ea ""
   (generated)
   "LaTeX_out/thesis.bbl"
   "LaTeX_out/thesis.blg"
   (rewritten before read)
-["pdflatex"] 1777564586.99501 "/Users/simoneesposito/Desktop/Uni/WiSe 25_26 FINAL BOSS/nonsense/docs/thesis.tex" "LaTeX_out/thesis.pdf" "thesis" 1777564590.06288 0
-  "/Users/simoneesposito/Desktop/Uni/WiSe 25_26 FINAL BOSS/nonsense/docs/thesis.tex" 1777564580.30481 56618 0ecc058233134870c4198ce961470cca ""
+["pdflatex"] 1778147843.04228 "/Users/simoneesposito/Desktop/Uni/WiSe 25_26 FINAL BOSS/nonsense/docs/thesis.tex" "LaTeX_out/thesis.pdf" "thesis" 1778147845.12046 0
+  "/Users/simoneesposito/Desktop/Uni/WiSe 25_26 FINAL BOSS/nonsense/docs/thesis.tex" 1778147842.74316 51059 8842af175cf32bb113cf414db94f687f ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm" 1136768653 1408 5937f58aa508ea2cea4901c07d10f5fe ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
@@ -181,6 +181,9 @@
   "/usr/local/texlive/2024/texmf-dist/tex/latex/caption/caption3.sty" 1696191071 72619 ee90b6612147680fd73c3b1406a74245 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/caption/subcaption.sty" 1690576852 12494 0c0cdb824278a4d51cefeb2e79901315 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/collectbox/collectbox.sty" 1666037909 9124 59c3b56f1a073de66e3eea35f9c173c8 ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.cfg" 1429144587 7068 06f8d141725d114847527a66439066b6 ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.def" 1663185836 21994 2bc2a882df92d97dbce35c06bb1d3541 ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.sty" 1663185836 62761 3c92d495a9e03d7254b9a3266aa17164 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/environ/environ.sty" 1399239813 4378 f429f0da968c278653359293040a8f52 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty" 1579991033 13886 d1306dcf79a944f6988e688c1785f9ce ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/etoolbox/etoolbox.sty" 1601931149 46845 3b58f70c6e861a13d927bff09d35ecbc ""
@@ -252,10 +255,10 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1729862870.68926 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1729862716 8221430 c4792e46438310cb6499e796e60b68b9 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "LaTeX_out/thesis.aux" 1777564589.82911 19887 77bb3ec7398f226920501d7446ddd37c "pdflatex"
-  "LaTeX_out/thesis.bbl" 1777561126.35568 107686 1db03b64d06dcff2c7d4bd3c3830c65b "biber LaTeX_out/thesis"
-  "LaTeX_out/thesis.out" 1777564588.54495 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "LaTeX_out/thesis.run.xml" 1777564589.88096 2349 f1d558fcbaf9d548ff7ceb3cfe34e740 "pdflatex"
+  "LaTeX_out/thesis.aux" 1778147844.98552 20368 301bd5451bd5f10da30cac81f58830c1 "pdflatex"
+  "LaTeX_out/thesis.bbl" 1778073352.01307 109216 4d6825613aec083580ceb2e3a7818487 "biber LaTeX_out/thesis"
+  "LaTeX_out/thesis.out" 1778147844.01416 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "LaTeX_out/thesis.run.xml" 1778147844.99635 2349 f1d558fcbaf9d548ff7ceb3cfe34e740 "pdflatex"
   "figures/Fig1/Fig1_alternative.pdf" 1774115736.6418 53633 43b2e6dbea6d7465c2cb6a898fbf9c7f ""
   "figures/Fig2/pos_distribution.pdf" 1774707113.10458 14275 72ad1198dc740f9ca7357883f994dbe8 ""
   "figures/Fig2/subject07-listening-all.pdf" 1774708234.48865 492349 4aee7c912b195d03c6d30ab963a8d75e ""
@@ -265,7 +268,7 @@
   "figures/Fig4/roi_dominance_2d.pdf" 1776019129.82153 21087 695f5608e160730118900202455d545b ""
   "figures/Sup1/baseline.pdf" 1777558909.87129 3421940 aaf982b0ec0df632e5c150b98f5b66d7 ""
   "figures/Sup2/lexical.pdf" 1777562139.76598 3071758 c3b3bd4691d07ab334ff4e250161b2b4 ""
-  "thesis.tex" 1777564580.30481 56618 0ecc058233134870c4198ce961470cca ""
+  "thesis.tex" 1778147842.74316 51059 8842af175cf32bb113cf414db94f687f ""
   (generated)
   "LaTeX_out/thesis.aux"
   "LaTeX_out/thesis.bcf"

@@ -240,7 +240,7 @@ def plot_2d_dominance(stats_all: dict, n_subjects: int,
         ax.set_xlim(0.02, 0.06)
         ax.set_xticks([0.02, 0.03,0.04,0.05, 0.06])
         ax.invert_yaxis()
-        ax.set_xlabel("Δr", fontsize=8)
+        ax.set_xlabel("Mean Performance Drop", fontsize=8)
         ax.set_title(title, fontsize=12, pad=10)
         ax.tick_params(axis="x", labelsize=8)
         ax.xaxis.grid(True, linewidth=0.5, color="lightgray", zorder=0)

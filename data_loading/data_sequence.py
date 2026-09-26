@@ -1,3 +1,6 @@
+# DataSequence is adapted from HuthLab/deep-fMRI-dataset
+# (https://github.com/HuthLab/deep-fMRI-dataset), MIT License, Copyright (c) 2023 HuthLab.
+
 import numpy as np
 import itertools as itools
 from text_lite.regression.interpdata import sincinterp2D, gabor_xfm2D, lanczosinterp2D

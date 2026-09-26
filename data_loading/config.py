@@ -1,3 +1,9 @@
+"""Project-wide constants: subjects, stories, paths, and analysis settings.
+
+Paths are relative to the working directory the pipeline is run from (the
+repo root); see README.md for the expected layout of data/ and outputs/.
+"""
+
 from pathlib import Path
 
 # Experiment configurations

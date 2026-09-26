@@ -1,3 +1,6 @@
+# TRFile is adapted from HuthLab/deep-fMRI-dataset
+# (https://github.com/HuthLab/deep-fMRI-dataset), MIT License, Copyright (c) 2023 HuthLab.
+
 import logging
 import numpy as np
 import os

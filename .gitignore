@@ -3,11 +3,24 @@
 __pycache__/
 *.pyc
 .DS_Store
-responses/*
+.ipynb_checkpoints/
 responses/*
 data/*
 outputs/old/*
 outputs/debug/*
+outputs/images/*
 wget-log
 scripts/explorer.ipynb
-outputs/images/*
+
+# LaTeX build artifacts (docs/LaTeX_out/thesis.pdf is tracked on purpose)
+docs/LaTeX_out/*.aux
+docs/LaTeX_out/*.bbl
+docs/LaTeX_out/*.bbl-SAVE-ERROR
+docs/LaTeX_out/*.bcf
+docs/LaTeX_out/*.blg
+docs/LaTeX_out/*.fdb_latexmk
+docs/LaTeX_out/*.fls
+docs/LaTeX_out/*.log
+docs/LaTeX_out/*.out
+docs/LaTeX_out/*.run.xml
+docs/LaTeX_out/*.synctex.gz

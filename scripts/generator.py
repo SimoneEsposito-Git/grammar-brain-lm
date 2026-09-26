@@ -1,7 +1,7 @@
 import os
 import argparse
 from data_loading import config
-from main import pipeline
+from src.grammar_brain.main import pipeline
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
 def generate_results(subjects, modalities, modes, override=False, verbose=False):
